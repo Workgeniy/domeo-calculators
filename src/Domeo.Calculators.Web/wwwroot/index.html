@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Свет и электрика — Domeo</title>
+<style>
+  :root {
+    --ground: #EEF1F4;
+    --surface: #FFFFFF;
+    --surface-2: #F6F8FA;
+    --sunken: #E7ECF0;
+    --ink: #111A21;
+    --ink-2: #45535E;
+    --ink-3: #78868F;
+    --line: #D2DAE1;
+    --line-strong: #B7C3CC;
+    --accent: #A05427;
+    --accent-ink: #FFFFFF;
+    --accent-soft: rgba(160, 84, 39, 0.10);
+    --second: #1C6A5E;
+    --shadow: 0 1px 2px rgba(17, 26, 33, 0.06), 0 8px 24px -16px rgba(17, 26, 33, 0.28);
+    --mono: Consolas, "DejaVu Sans Mono", "Liberation Mono", ui-monospace, monospace;
+    --sans: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #0D1317;
+      --surface: #151E24;
+      --surface-2: #1B252C;
+      --sunken: #101820;
+      --ink: #E7EDF2;
+      --ink-2: #A6B4BF;
+      --ink-3: #71808B;
+      --line: #27333B;
+      --line-strong: #38464F;
+      --accent: #DE8A50;
+      --accent-ink: #17120E;
+      --accent-soft: rgba(222, 138, 80, 0.14);
+      --second: #4FB2A0;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 8px 24px -16px rgba(0, 0, 0, 0.8);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #0D1317;
+    --surface: #151E24;
+    --surface-2: #1B252C;
+    --sunken: #101820;
+    --ink: #E7EDF2;
+    --ink-2: #A6B4BF;
+    --ink-3: #71808B;
+    --line: #27333B;
+    --line-strong: #38464F;
+    --accent: #DE8A50;
+    --accent-ink: #17120E;
+    --accent-soft: rgba(222, 138, 80, 0.14);
+    --second: #4FB2A0;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.5), 0 8px 24px -16px rgba(0, 0, 0, 0.8);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 32px 20px 64px; display: flex; flex-direction: column; gap: 28px; }
+
+  .masthead { display: flex; flex-direction: column; gap: 10px; padding-bottom: 22px; border-bottom: 2px solid var(--ink); }
+
+  .stamp {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-3); display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center;
+  }
+
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--second); display: inline-block; }
+  .dot.bad { background: #B4432F; }
+
+  h1 { margin: 0; font-family: var(--mono); font-size: clamp(26px, 4.2vw, 38px); font-weight: 700; letter-spacing: -0.02em; text-wrap: balance; }
+  .lede { margin: 0; max-width: 62ch; color: var(--ink-2); }
+
+  .instrument { background: var(--surface); border: 1px solid var(--line); border-radius: 3px; box-shadow: var(--shadow); overflow: hidden; }
+
+  .instrument > header {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px;
+    padding: 14px 20px; background: var(--surface-2); border-bottom: 1px solid var(--line);
+  }
+
+  .instrument > header h2 { margin: 0; font-family: var(--mono); font-size: 17px; font-weight: 700; letter-spacing: -0.01em; }
+
+  .norm { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); margin-left: auto; }
+
+  .panel { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); }
+  @media (max-width: 800px) { .panel { grid-template-columns: minmax(0, 1fr); } }
+
+  .controls { padding: 20px; display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+  .readout { padding: 20px; background: var(--sunken); border-left: 1px solid var(--line); display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  @media (max-width: 800px) { .readout { border-left: none; border-top: 1px solid var(--line); } }
+
+  .field { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+  .field > label, .group > .glabel { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+  .row { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 14px; }
+
+  input[type="number"] {
+    width: 100%; padding: 9px 11px; background: var(--surface); color: var(--ink);
+    border: 1px solid var(--line-strong); border-radius: 2px;
+    font-family: var(--mono); font-size: 15px; font-variant-numeric: tabular-nums;
+  }
+
+  input[type="number"]:focus-visible, .chip:focus-visible, .toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .group { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  .chip {
+    padding: 6px 11px; background: var(--surface); color: var(--ink-2);
+    border: 1px solid var(--line-strong); border-radius: 2px;
+    font-family: var(--mono); font-size: 12.5px; cursor: pointer;
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
+  }
+
+  .chip:hover { border-color: var(--accent); color: var(--ink); }
+  .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .chip .sub { opacity: 0.7; }
+
+  .hero-metric { display: flex; flex-direction: column; gap: 2px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+
+  .hero-metric .value {
+    font-family: var(--mono); font-size: clamp(38px, 7vw, 54px); font-weight: 700;
+    line-height: 1; letter-spacing: -0.03em; color: var(--accent); font-variant-numeric: tabular-nums;
+  }
+
+  .hero-metric .caption { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+
+  dl.metrics { margin: 0; display: flex; flex-direction: column; gap: 9px; }
+  dl.metrics > div { display: flex; align-items: baseline; gap: 10px; }
+  dl.metrics dt { font-size: 13.5px; color: var(--ink-2); white-space: nowrap; }
+  dl.metrics .dots { flex: 1; border-bottom: 1px dotted var(--line-strong); transform: translateY(-3px); min-width: 12px; }
+  dl.metrics dd { margin: 0; font-family: var(--mono); font-size: 14px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  .rooms { display: grid; grid-template-columns: repeat(auto-fit, minmax(238px, 1fr)); gap: 12px; }
+
+  .room { border: 1px solid var(--line); border-radius: 2px; background: var(--surface-2); padding: 12px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .room[data-on="true"] { background: var(--surface); border-color: var(--line-strong); }
+  .room > header { display: flex; align-items: center; gap: 8px; }
+  .room h3 { margin: 0; font-family: var(--mono); font-size: 13.5px; font-weight: 700; }
+
+  .toggle {
+    margin-left: auto; width: 38px; height: 21px; padding: 2px; border-radius: 11px;
+    border: 1px solid var(--line-strong); background: var(--sunken); cursor: pointer; display: flex;
+    transition: background 0.14s, border-color 0.14s;
+  }
+
+  .toggle[aria-pressed="true"] { background: var(--second); border-color: var(--second); }
+  .toggle .knob { width: 15px; height: 15px; border-radius: 50%; background: var(--surface); box-shadow: 0 1px 2px rgba(0,0,0,0.3); transition: transform 0.14s; }
+  .toggle[aria-pressed="true"] .knob { transform: translateX(17px); }
+
+  .room .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .room .field > label { font-size: 10px; letter-spacing: 0.07em; }
+  .room input[type="number"] { padding: 5px 7px; font-size: 13px; }
+  .room .hint { font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); }
+
+  .table-scroll { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+
+  caption { text-align: left; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); padding: 0 0 10px; }
+
+  th, td { padding: 7px 10px; text-align: right; font-size: 13.5px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); font-weight: 400; }
+  th:first-child, td:first-child { text-align: left; }
+  tbody td { font-family: var(--mono); }
+  tbody td:first-child { font-family: var(--sans); }
+  tfoot td { font-family: var(--mono); font-weight: 700; border-bottom: none; border-top: 2px solid var(--ink); }
+  tfoot td:first-child { font-family: var(--sans); }
+
+  .notes { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 3px; padding: 18px 20px; display: flex; flex-direction: column; gap: 10px; }
+  .notes h2 { margin: 0; font-family: var(--mono); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .notes ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
+  .notes li { color: var(--ink-2); font-size: 14px; }
+  .notes strong { color: var(--ink); font-weight: 600; }
+
+  code { font-family: var(--mono); font-size: 0.92em; background: var(--accent-soft); padding: 1px 5px; border-radius: 2px; }
+  .foot { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); letter-spacing: 0.04em; }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="stamp">
+      <span id="status"><span class="dot"></span> считает бэкенд</span>
+      <span>localhost:5099</span>
+      <span>справочники сняты 19.08.2026</span>
+    </div>
+    <h1>Свет и электрика</h1>
+    <p class="lede">
+      Расчёт идёт на сервере — той же библиотекой <code>Domeo.Calculators</code>, что покрыта
+      golden-тестами. Страница только рисует: своей копии формул и справочников у неё нет.
+    </p>
+  </header>
+
+  <section class="instrument">
+    <header>
+      <h2>Освещённость помещения</h2>
+      <span class="norm">POST /api/lighting</span>
+    </header>
+    <div class="panel">
+      <div class="controls">
+        <div class="row">
+          <div class="field">
+            <label for="l-area">Площадь, м²</label>
+            <input type="number" id="l-area" min="1" max="500" step="0.5" value="18">
+          </div>
+          <div class="field">
+            <label for="l-height">Высота потолка, м</label>
+            <input type="number" id="l-height" min="2" max="6" step="0.1" value="2.7">
+          </div>
+        </div>
+        <div class="group">
+          <span class="glabel" id="l-room-label">Тип помещения</span>
+          <div class="chips" id="l-rooms" role="group" aria-labelledby="l-room-label"></div>
+        </div>
+        <div class="group">
+          <span class="glabel" id="l-wall-label">Цвет стен</span>
+          <div class="chips" id="l-walls" role="group" aria-labelledby="l-wall-label"></div>
+        </div>
+        <div class="group">
+          <span class="glabel" id="l-lamp-label">Тип лампы</span>
+          <div class="chips" id="l-lamps" role="group" aria-labelledby="l-lamp-label"></div>
+        </div>
+        <div class="group">
+          <span class="glabel" id="l-preset-label">Пресеты светильников</span>
+          <div class="chips" id="l-presets" role="group" aria-labelledby="l-preset-label"></div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="l-watt">Мощность, Вт</label>
+            <input type="number" id="l-watt" min="1" max="500" step="1" value="12">
+          </div>
+          <div class="field">
+            <label for="l-hours">Часов в день</label>
+            <input type="number" id="l-hours" min="1" max="24" step="1" value="6">
+          </div>
+          <div class="field">
+            <label for="l-tariff">Тариф, ₽/кВт·ч</label>
+            <input type="number" id="l-tariff" min="0" step="0.1" value="6.5">
+          </div>
+        </div>
+      </div>
+      <div class="readout" id="l-readout" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section class="instrument">
+    <header>
+      <h2>Электрофурнитура на квартиру</h2>
+      <span class="norm">POST /api/electrical</span>
+    </header>
+    <div class="panel">
+      <div class="controls">
+        <div class="group">
+          <span class="glabel" id="e-tier-label">Ценовой уровень</span>
+          <div class="chips" id="e-tiers" role="group" aria-labelledby="e-tier-label"></div>
+        </div>
+        <div class="group">
+          <span class="glabel">Комнаты</span>
+          <div class="rooms" id="e-rooms"></div>
+        </div>
+      </div>
+      <div class="readout" id="e-readout" aria-live="polite"></div>
+    </div>
+    <div class="controls" style="border-top:1px solid var(--line)">
+      <div class="table-scroll"><table id="e-table"></table></div>
+    </div>
+  </section>
+
+  <section class="notes">
+    <h2>Что здесь неточного — и это намеренно</h2>
+    <ul>
+      <li><strong>Рамки всегда одинарные.</strong> В прайсе есть рамки на 2–5 постов, но оригинал
+        берёт цену одинарной на каждую точку. Сборки в блоки вышли бы дешевле.</li>
+      <li><strong>Проходные считаются по цене обычных выключателей</strong>, хотя стоят дороже.</li>
+      <li><strong>Наценки за влагозащиту нет</strong> — ванная считается как сухая комната,
+        хотя IP44 там заявлен в описании.</li>
+      <li><strong>Коэффициент высоты ступенчатый:</strong> 2.70 м даёт 1.0, а 2.71 м — уже 1.2.</li>
+      <li><strong>Месяц всегда 30 дней</strong>, метраж кабеля — грубая эвристика
+        <code>точки × (√площадь + 1.5)</code>.</li>
+    </ul>
+    <p class="foot">Порт намеренно точный: сначала копия под golden-тестами, правки — следующим шагом.</p>
+  </section>
+
+</div>
+
+<script>
+const nf = new Intl.NumberFormat("ru-RU");
+let ref = null;
+let light = { roomType: "living", wallColor: "light", lampType: "led" };
+let tier = "budget";
+let rooms = {};
+let roomOrder = [];
+let presetByKey = {};
+
+function num(id) { return parseFloat(document.getElementById(id).value); }
+function metric(term, value) {
+  return "<div><dt>" + term + "</dt><span class='dots'></span><dd>" + value + "</dd></div>";
+}
+
+function setStatus(ok, text) {
+  document.getElementById("status").innerHTML =
+    "<span class='dot" + (ok ? "" : " bad") + "'></span> " + text;
+}
+
+async function post(url, body) {
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  });
+  if (!res.ok) throw new Error("HTTP " + res.status);
+  return res.json();
+}
+
+function debounce(fn, ms) {
+  let t = null;
+  return function () { clearTimeout(t); t = setTimeout(fn, ms); };
+}
+
+// ---------- освещённость ----------
+async function renderLighting() {
+  const box = document.getElementById("l-readout");
+  try {
+    const data = await post("/api/lighting", {
+      area: num("l-area"), height: num("l-height"),
+      roomType: light.roomType, wallColor: light.wallColor, lampType: light.lampType,
+      fixtureWatt: num("l-watt"), hoursPerDay: num("l-hours"), tariff: num("l-tariff")
+    });
+    setStatus(true, "считает бэкенд");
+
+    if (!data.ok) {
+      box.innerHTML = "<p style='color:var(--ink-2)'>" + data.reason + "</p>";
+      return;
+    }
+
+    const r = data.result;
+    box.innerHTML =
+      "<div class='hero-metric'><span class='value'>" + r.fixtureCount + "</span>" +
+      "<span class='caption'>светильников по " + r.fixtureWatt + " Вт</span></div>" +
+      "<dl class='metrics'>" +
+        metric("Норма для «" + r.roomName + "»", r.requiredLux + " лк") +
+        metric("Нужный поток", nf.format(r.requiredLumens) + " лм") +
+        metric("Поток светильника", nf.format(r.fixtureLumen) + " лм") +
+        metric("Коэффициент высоты", "×" + r.heightCoeff) +
+        metric("Общая мощность", r.totalWatt + " Вт") +
+        metric("Расход", r.monthlyKwhFormatted + " кВт·ч/мес") +
+        metric("Стоимость", nf.format(+r.monthlyCostFormatted) + " ₽/мес") +
+      "</dl>";
+  } catch (err) {
+    setStatus(false, "сервер не отвечает");
+    box.innerHTML = "<p style='color:var(--ink-2)'>Не удалось получить расчёт: " + err.message + "</p>";
+  }
+}
+
+// ---------- электрофурнитура ----------
+async function renderElectrical() {
+  const box = document.getElementById("e-readout");
+  try {
+    const data = await post("/api/electrical", { rooms: rooms, tier: tier });
+    setStatus(true, "считает бэкенд");
+    if (!data.ok) { box.innerHTML = "<p>" + data.reason + "</p>"; return; }
+
+    const r = data.result;
+    box.innerHTML =
+      "<div class='hero-metric'><span class='value'>" + nf.format(r.totalCost) + " ₽</span>" +
+      "<span class='caption'>итого · " + r.tierLabel + "</span></div>" +
+      "<dl class='metrics'>" +
+        metric("Розетки 220В", r.totalOutlets + " шт.") +
+        metric("Выключатели", r.totalSwitches + " шт.") +
+        metric("USB / ТВ / интернет", r.totalUsb + " / " + r.totalTv + " / " + r.totalInternet) +
+        metric("Точек всего", r.totalBoxes + " шт.") +
+        metric("Подрозетники", r.totalBoxes + " шт.") +
+        metric("Рамки", r.totalFrames + " шт.") +
+        metric("Кабель", nf.format(r.totalCableMeters) + " м") +
+      "</dl>";
+
+    let html = "<caption>Разбивка по комнатам</caption><thead><tr>" +
+      "<th>Комната</th><th>Розетки</th><th>Выкл.</th><th>USB</th><th>ТВ</th>" +
+      "<th>Инет</th><th>Кабель</th><th>Стоимость</th></tr></thead><tbody>";
+
+    if (r.roomBreakdown.length === 0) {
+      html += "<tr><td colspan='8' style='text-align:left;color:var(--ink-3)'>Все комнаты выключены</td></tr>";
+    }
+    for (const b of r.roomBreakdown) {
+      html += "<tr><td>" + b.label + "</td><td>" + b.outlets + "</td><td>" + b.switches +
+        "</td><td>" + b.usb + "</td><td>" + b.tv + "</td><td>" + b.internet +
+        "</td><td>" + b.cable + " м</td><td>" + nf.format(b.cost) + " ₽</td></tr>";
+    }
+    html += "</tbody><tfoot><tr><td>Итого</td><td>" + r.totalOutlets + "</td><td>" + r.totalSwitches +
+      "</td><td>" + r.totalUsb + "</td><td>" + r.totalTv + "</td><td>" + r.totalInternet +
+      "</td><td>" + nf.format(r.totalCableMeters) + " м</td><td>" + nf.format(r.totalCost) + " ₽</td></tr></tfoot>";
+
+    document.getElementById("e-table").innerHTML = html;
+  } catch (err) {
+    setStatus(false, "сервер не отвечает");
+    box.innerHTML = "<p style='color:var(--ink-2)'>Не удалось получить расчёт: " + err.message + "</p>";
+  }
+}
+
+// ---------- сборка управления ----------
+function chipGroup(host, items, isActive, onPick) {
+  host.innerHTML = "";
+  for (const item of items) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip";
+    b.innerHTML = item.html;
+    b.setAttribute("aria-pressed", String(isActive(item)));
+    b.addEventListener("click", function () { onPick(item); });
+    host.appendChild(b);
+  }
+}
+
+function buildLightingControls() {
+  chipGroup(document.getElementById("l-rooms"),
+    ref.lighting.roomTypes.map(r => ({ id: r.id, html: r.name + " <span class='sub'>" + r.lux + "</span>" })),
+    i => light.roomType === i.id,
+    i => { light.roomType = i.id; buildLightingControls(); renderLighting(); });
+
+  chipGroup(document.getElementById("l-walls"),
+    ref.lighting.wallColors.map(w => ({ id: w.id, html: w.name })),
+    i => light.wallColor === i.id,
+    i => { light.wallColor = i.id; buildLightingControls(); renderLighting(); });
+
+  chipGroup(document.getElementById("l-lamps"),
+    ref.lighting.lampTypes.map(l => ({ id: l.id, html: l.name + " <span class='sub'>" + l.efficiency + "</span>" })),
+    i => light.lampType === i.id,
+    i => { light.lampType = i.id; buildLightingControls(); renderLighting(); });
+
+  chipGroup(document.getElementById("l-presets"),
+    ref.lighting.fixturePresets.map(p => ({ id: p.name, watt: p.watt, html: p.name + " <span class='sub'>" + p.watt + "Вт</span>" })),
+    i => num("l-watt") === i.watt,
+    i => { document.getElementById("l-watt").value = i.watt; buildLightingControls(); renderLighting(); });
+}
+
+function buildTierControls() {
+  chipGroup(document.getElementById("e-tiers"),
+    ref.electrical.priceTiers.map(t => ({ id: t.key, html: t.tier.tier + " <span class='sub'>" + t.tier.label + "</span>" })),
+    i => tier === i.id,
+    i => { tier = i.id; buildTierControls(); renderElectrical(); });
+}
+
+function buildRooms() {
+  const host = document.getElementById("e-rooms");
+  host.innerHTML = "";
+
+  for (const key of roomOrder) {
+    const preset = presetByKey[key];
+    const state = rooms[key];
+
+    const card = document.createElement("div");
+    card.className = "room";
+    card.dataset.on = String(state.enabled);
+
+    const head = document.createElement("header");
+    head.innerHTML = "<h3>" + preset.label + "</h3>";
+
+    const toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "toggle";
+    toggle.setAttribute("aria-pressed", String(state.enabled));
+    toggle.setAttribute("aria-label", "Учитывать «" + preset.label + "»");
+    toggle.innerHTML = "<span class='knob'></span>";
+    toggle.addEventListener("click", function () {
+      state.enabled = !state.enabled;
+      buildRooms();
+      renderElectrical();
+    });
+    head.appendChild(toggle);
+    card.appendChild(head);
+
+    if (state.enabled) {
+      const fields = [
+        { k: "area", label: "Площадь", min: 1, max: 200 },
+        { k: "count", label: "Комнат", min: 1, max: 10 },
+        { k: "outlets", label: "Розетки", min: 0, max: 20 },
+        { k: "switches", label: "Выкл.", min: 0, max: 10 },
+        { k: "passthrough", label: "Проходн.", min: 0, max: 10 },
+        { k: "usb", label: "USB", min: 0, max: 10 },
+        { k: "tv", label: "ТВ", min: 0, max: 5 },
+        { k: "internet", label: "Инет", min: 0, max: 5 }
+      ];
+
+      const grid = document.createElement("div");
+      grid.className = "grid";
+      const push = debounce(renderElectrical, 140);
+
+      for (const f of fields) {
+        const wrap = document.createElement("div");
+        wrap.className = "field";
+        const id = "e-" + key + "-" + f.k;
+        wrap.innerHTML = "<label for='" + id + "'>" + f.label + "</label>";
+
+        const input = document.createElement("input");
+        input.type = "number";
+        input.id = id;
+        input.min = f.min;
+        input.max = f.max;
+        input.value = state[f.k];
+        input.addEventListener("input", function () {
+          const v = parseFloat(input.value);
+          state[f.k] = isNaN(v) ? f.min : v;
+          push();
+        });
+
+        wrap.appendChild(input);
+        grid.appendChild(wrap);
+      }
+
+      card.appendChild(grid);
+
+      const hint = document.createElement("span");
+      hint.className = "hint";
+      hint.textContent = "рекомендация: " + preset.outletsMin + "–" + preset.outletsMax + " розеток";
+      card.appendChild(hint);
+    }
+
+    host.appendChild(card);
+  }
+}
+
+async function boot() {
+  try {
+    const res = await fetch("/api/reference");
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    ref = await res.json();
+  } catch (err) {
+    setStatus(false, "справочники не загрузились");
+    return;
+  }
+
+  roomOrder = ref.electrical.roomOrder;
+  for (const item of ref.electrical.roomPresets) presetByKey[item.key] = item.preset;
+  rooms = ref.electrical.defaultRooms;
+
+  const pushLight = debounce(renderLighting, 140);
+  for (const id of ["l-area", "l-height", "l-watt", "l-hours", "l-tariff"]) {
+    document.getElementById(id).addEventListener("input", function () {
+      buildLightingControls();
+      pushLight();
+    });
+  }
+
+  buildLightingControls();
+  buildTierControls();
+  buildRooms();
+  await renderLighting();
+  await renderElectrical();
+}
+
+boot();
+</script>
+</body>
+</html>

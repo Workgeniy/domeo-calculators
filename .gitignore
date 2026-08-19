@@ -5,3 +5,4 @@ node_modules/
 .vs/
 .DS_Store
 TestResults/
+.claude/settings.local.json
