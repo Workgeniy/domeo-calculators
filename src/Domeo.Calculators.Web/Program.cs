@@ -6,8 +6,12 @@ using Domeo.Calculators.Reference;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-// Порт фиксируем, чтобы ссылка была предсказуемой между запусками.
-builder.WebHost.UseUrls("http://localhost:5099");
+// Локально порт фиксируем, чтобы ссылка была предсказуемой между запусками.
+// В контейнере адрес задаёт ASPNETCORE_URLS — тогда не перебиваем.
+if (string.IsNullOrEmpty(builder.Configuration["ASPNETCORE_URLS"]))
+{
+    builder.WebHost.UseUrls("http://localhost:5099");
+}
 
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
@@ -16,6 +20,17 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 });
 
 WebApplication app = builder.Build();
+
+// За обратным прокси приложение живёт на префиксе (например /calc).
+// Локально PathBase пуст — адреса остаются от корня.
+string pathBase = (builder.Configuration["PathBase"] ?? string.Empty).Trim().TrimEnd('/');
+if (pathBase.Length > 0)
+{
+    // Ведущий слеш обязателен, иначе PathString падает. Дописываем сами:
+    // значение легко приезжает без него из окружения.
+    if (!pathBase.StartsWith('/')) pathBase = "/" + pathBase;
+    app.UsePathBase(pathBase);
+}
 
 app.UseDefaultFiles();
 app.UseStaticFiles();

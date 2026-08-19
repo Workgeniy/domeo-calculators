@@ -340,7 +340,7 @@ function debounce(fn, ms) {
 async function renderLighting() {
   const box = document.getElementById("l-readout");
   try {
-    const data = await post("/api/lighting", {
+    const data = await post("api/lighting", {
       area: num("l-area"), height: num("l-height"),
       roomType: light.roomType, wallColor: light.wallColor, lampType: light.lampType,
       fixtureWatt: num("l-watt"), hoursPerDay: num("l-hours"), tariff: num("l-tariff")
@@ -375,7 +375,7 @@ async function renderLighting() {
 async function renderElectrical() {
   const box = document.getElementById("e-readout");
   try {
-    const data = await post("/api/electrical", { rooms: rooms, tier: tier });
+    const data = await post("api/electrical", { rooms: rooms, tier: tier });
     setStatus(true, "считает бэкенд");
     if (!data.ok) { box.innerHTML = "<p>" + data.reason + "</p>"; return; }
 
@@ -540,7 +540,7 @@ function buildRooms() {
 
 async function boot() {
   try {
-    const res = await fetch("/api/reference");
+    const res = await fetch("api/reference");
     if (!res.ok) throw new Error("HTTP " + res.status);
     ref = await res.json();
   } catch (err) {

@@ -15,6 +15,7 @@
 | `src/Domeo.Calculators` | Порт обоих калькуляторов на C# |
 | `tests/Domeo.Calculators.Tests` | Golden-тесты: сверка порта с оригиналом |
 | `src/Domeo.Calculators.Web` | Локальный сервер: API + страница |
+| [deploy/README.md](deploy/README.md) | Развёртывание на стенде и откат |
 | `tools/golden/generate.mjs` | Снятие эталона с оригинального кода через Node |
 
 ## Коротко по итогам разведки
@@ -30,7 +31,13 @@ Next.js, оттуда и извлечены.
 Объём логики небольшой: ~20 строк арифметики и 3–4 таблицы на калькулятор. Обе формулы
 выписаны дословно и лежат в спеках.
 
-## Запуск
+## Тестовый стенд
+
+**https://testdesign.domeohome.ru/calc/** — открыт, без авторизации.
+Живёт на ВМ `domeo-testdesign` рядом с backend, подробности и откат — в
+[deploy/README.md](deploy/README.md).
+
+## Запуск локально
 
 ```bash
 dotnet run --project src/Domeo.Calculators.Web
