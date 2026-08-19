@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Domeo.Calculators.Tests" />
+  </ItemGroup>
+
+  <!-- Справочники — единственный источник правды, лежат в /data и встраиваются как ресурс. -->
+  <ItemGroup>
+    <EmbeddedResource Include="../../data/lighting.json" LogicalName="Domeo.Calculators.Data.lighting.json" />
+    <EmbeddedResource Include="../../data/outlets.json" LogicalName="Domeo.Calculators.Data.outlets.json" />
+  </ItemGroup>
+
+</Project>

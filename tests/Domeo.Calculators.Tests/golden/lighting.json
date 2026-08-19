@@ -1,0 +1,1683 @@
+[
+  {
+    "name": "дефолт",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 1200,
+      "fixtureCount": 3,
+      "fixtureWatt": 12,
+      "totalWatt": 36,
+      "monthlyKwh": "6.5",
+      "monthlyCost": "42",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "высота 2",
+    "input": {
+      "area": 18,
+      "height": 2,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 1200,
+      "fixtureCount": 3,
+      "fixtureWatt": 12,
+      "totalWatt": 36,
+      "monthlyKwh": "6.5",
+      "monthlyCost": "42",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "высота 2.7",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 1200,
+      "fixtureCount": 3,
+      "fixtureWatt": 12,
+      "totalWatt": 36,
+      "monthlyKwh": "6.5",
+      "monthlyCost": "42",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "высота 2.71",
+    "input": {
+      "area": 18,
+      "height": 2.71,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 3240,
+      "fixtureLumen": 1200,
+      "fixtureCount": 3,
+      "fixtureWatt": 12,
+      "totalWatt": 36,
+      "monthlyKwh": "6.5",
+      "monthlyCost": "42",
+      "heightCoeff": 1.2,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "высота 2.8",
+    "input": {
+      "area": 18,
+      "height": 2.8,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 3240,
+      "fixtureLumen": 1200,
+      "fixtureCount": 3,
+      "fixtureWatt": 12,
+      "totalWatt": 36,
+      "monthlyKwh": "6.5",
+      "monthlyCost": "42",
+      "heightCoeff": 1.2,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "высота 3",
+    "input": {
+      "area": 18,
+      "height": 3,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 3240,
+      "fixtureLumen": 1200,
+      "fixtureCount": 3,
+      "fixtureWatt": 12,
+      "totalWatt": 36,
+      "monthlyKwh": "6.5",
+      "monthlyCost": "42",
+      "heightCoeff": 1.2,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "высота 3.01",
+    "input": {
+      "area": 18,
+      "height": 3.01,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 4050,
+      "fixtureLumen": 1200,
+      "fixtureCount": 4,
+      "fixtureWatt": 12,
+      "totalWatt": 48,
+      "monthlyKwh": "8.6",
+      "monthlyCost": "56",
+      "heightCoeff": 1.5,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "высота 3.2",
+    "input": {
+      "area": 18,
+      "height": 3.2,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 4050,
+      "fixtureLumen": 1200,
+      "fixtureCount": 4,
+      "fixtureWatt": 12,
+      "totalWatt": 48,
+      "monthlyKwh": "8.6",
+      "monthlyCost": "56",
+      "heightCoeff": 1.5,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "высота 3.5",
+    "input": {
+      "area": 18,
+      "height": 3.5,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 4050,
+      "fixtureLumen": 1200,
+      "fixtureCount": 4,
+      "fixtureWatt": 12,
+      "totalWatt": 48,
+      "monthlyKwh": "8.6",
+      "monthlyCost": "56",
+      "heightCoeff": 1.5,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "высота 3.51",
+    "input": {
+      "area": 18,
+      "height": 3.51,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 5400,
+      "fixtureLumen": 1200,
+      "fixtureCount": 5,
+      "fixtureWatt": 12,
+      "totalWatt": 60,
+      "monthlyKwh": "10.8",
+      "monthlyCost": "70",
+      "heightCoeff": 2,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "высота 4",
+    "input": {
+      "area": 18,
+      "height": 4,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 5400,
+      "fixtureLumen": 1200,
+      "fixtureCount": 5,
+      "fixtureWatt": 12,
+      "totalWatt": 60,
+      "monthlyKwh": "10.8",
+      "monthlyCost": "70",
+      "heightCoeff": 2,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "высота 6",
+    "input": {
+      "area": 18,
+      "height": 6,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 5400,
+      "fixtureLumen": 1200,
+      "fixtureCount": 5,
+      "fixtureWatt": 12,
+      "totalWatt": 60,
+      "monthlyKwh": "10.8",
+      "monthlyCost": "70",
+      "heightCoeff": 2,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "комната living",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 1200,
+      "fixtureCount": 3,
+      "fixtureWatt": 12,
+      "totalWatt": 36,
+      "monthlyKwh": "6.5",
+      "monthlyCost": "42",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "комната bedroom",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "bedroom",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 100,
+      "requiredLumens": 1800,
+      "fixtureLumen": 1200,
+      "fixtureCount": 2,
+      "fixtureWatt": 12,
+      "totalWatt": 24,
+      "monthlyKwh": "4.3",
+      "monthlyCost": "28",
+      "heightCoeff": 1,
+      "roomName": "Спальня"
+    }
+  },
+  {
+    "name": "комната kitchen",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "kitchen",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 200,
+      "requiredLumens": 3600,
+      "fixtureLumen": 1200,
+      "fixtureCount": 3,
+      "fixtureWatt": 12,
+      "totalWatt": 36,
+      "monthlyKwh": "6.5",
+      "monthlyCost": "42",
+      "heightCoeff": 1,
+      "roomName": "Кухня"
+    }
+  },
+  {
+    "name": "комната bathroom",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "bathroom",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 200,
+      "requiredLumens": 3600,
+      "fixtureLumen": 1200,
+      "fixtureCount": 3,
+      "fixtureWatt": 12,
+      "totalWatt": 36,
+      "monthlyKwh": "6.5",
+      "monthlyCost": "42",
+      "heightCoeff": 1,
+      "roomName": "Ванная"
+    }
+  },
+  {
+    "name": "комната office",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "office",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 300,
+      "requiredLumens": 5400,
+      "fixtureLumen": 1200,
+      "fixtureCount": 5,
+      "fixtureWatt": 12,
+      "totalWatt": 60,
+      "monthlyKwh": "10.8",
+      "monthlyCost": "70",
+      "heightCoeff": 1,
+      "roomName": "Кабинет"
+    }
+  },
+  {
+    "name": "комната nursery",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "nursery",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 200,
+      "requiredLumens": 3600,
+      "fixtureLumen": 1200,
+      "fixtureCount": 3,
+      "fixtureWatt": 12,
+      "totalWatt": 36,
+      "monthlyKwh": "6.5",
+      "monthlyCost": "42",
+      "heightCoeff": 1,
+      "roomName": "Детская"
+    }
+  },
+  {
+    "name": "комната hallway",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "hallway",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 100,
+      "requiredLumens": 1800,
+      "fixtureLumen": 1200,
+      "fixtureCount": 2,
+      "fixtureWatt": 12,
+      "totalWatt": 24,
+      "monthlyKwh": "4.3",
+      "monthlyCost": "28",
+      "heightCoeff": 1,
+      "roomName": "Коридор"
+    }
+  },
+  {
+    "name": "комната garage",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "garage",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 100,
+      "requiredLumens": 1800,
+      "fixtureLumen": 1200,
+      "fixtureCount": 2,
+      "fixtureWatt": 12,
+      "totalWatt": 24,
+      "monthlyKwh": "4.3",
+      "monthlyCost": "28",
+      "heightCoeff": 1,
+      "roomName": "Гараж"
+    }
+  },
+  {
+    "name": "стены light",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 1200,
+      "fixtureCount": 3,
+      "fixtureWatt": 12,
+      "totalWatt": 36,
+      "monthlyKwh": "6.5",
+      "monthlyCost": "42",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "стены medium",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "medium",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 3780,
+      "fixtureLumen": 1200,
+      "fixtureCount": 4,
+      "fixtureWatt": 12,
+      "totalWatt": 48,
+      "monthlyKwh": "8.6",
+      "monthlyCost": "56",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "стены dark",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "dark",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 6300,
+      "fixtureLumen": 1200,
+      "fixtureCount": 6,
+      "fixtureWatt": 12,
+      "totalWatt": 72,
+      "monthlyKwh": "13.0",
+      "monthlyCost": "84",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "лампа led",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 1200,
+      "fixtureCount": 3,
+      "fixtureWatt": 12,
+      "totalWatt": 36,
+      "monthlyKwh": "6.5",
+      "monthlyCost": "42",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "лампа fluorescent",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "fluorescent",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 720,
+      "fixtureCount": 4,
+      "fixtureWatt": 12,
+      "totalWatt": 48,
+      "monthlyKwh": "8.6",
+      "monthlyCost": "56",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "лампа halogen",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "halogen",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 240,
+      "fixtureCount": 12,
+      "fixtureWatt": 12,
+      "totalWatt": 144,
+      "monthlyKwh": "25.9",
+      "monthlyCost": "168",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "лампа incandescent",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "incandescent",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 144,
+      "fixtureCount": 19,
+      "fixtureWatt": 12,
+      "totalWatt": 228,
+      "monthlyKwh": "41.0",
+      "monthlyCost": "267",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "площадь 1",
+    "input": {
+      "area": 1,
+      "height": 2.7,
+      "roomType": "office",
+      "wallColor": "medium",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 300,
+      "requiredLumens": 420,
+      "fixtureLumen": 1200,
+      "fixtureCount": 1,
+      "fixtureWatt": 12,
+      "totalWatt": 12,
+      "monthlyKwh": "2.2",
+      "monthlyCost": "14",
+      "heightCoeff": 1,
+      "roomName": "Кабинет"
+    }
+  },
+  {
+    "name": "площадь 1.5",
+    "input": {
+      "area": 1.5,
+      "height": 2.7,
+      "roomType": "office",
+      "wallColor": "medium",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 300,
+      "requiredLumens": 630,
+      "fixtureLumen": 1200,
+      "fixtureCount": 1,
+      "fixtureWatt": 12,
+      "totalWatt": 12,
+      "monthlyKwh": "2.2",
+      "monthlyCost": "14",
+      "heightCoeff": 1,
+      "roomName": "Кабинет"
+    }
+  },
+  {
+    "name": "площадь 9.5",
+    "input": {
+      "area": 9.5,
+      "height": 2.7,
+      "roomType": "office",
+      "wallColor": "medium",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 300,
+      "requiredLumens": 3990,
+      "fixtureLumen": 1200,
+      "fixtureCount": 4,
+      "fixtureWatt": 12,
+      "totalWatt": 48,
+      "monthlyKwh": "8.6",
+      "monthlyCost": "56",
+      "heightCoeff": 1,
+      "roomName": "Кабинет"
+    }
+  },
+  {
+    "name": "площадь 50",
+    "input": {
+      "area": 50,
+      "height": 2.7,
+      "roomType": "office",
+      "wallColor": "medium",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 300,
+      "requiredLumens": 21000,
+      "fixtureLumen": 1200,
+      "fixtureCount": 18,
+      "fixtureWatt": 12,
+      "totalWatt": 216,
+      "monthlyKwh": "38.9",
+      "monthlyCost": "253",
+      "heightCoeff": 1,
+      "roomName": "Кабинет"
+    }
+  },
+  {
+    "name": "площадь 120.5",
+    "input": {
+      "area": 120.5,
+      "height": 2.7,
+      "roomType": "office",
+      "wallColor": "medium",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 300,
+      "requiredLumens": 50610,
+      "fixtureLumen": 1200,
+      "fixtureCount": 43,
+      "fixtureWatt": 12,
+      "totalWatt": 516,
+      "monthlyKwh": "92.9",
+      "monthlyCost": "604",
+      "heightCoeff": 1,
+      "roomName": "Кабинет"
+    }
+  },
+  {
+    "name": "площадь 500",
+    "input": {
+      "area": 500,
+      "height": 2.7,
+      "roomType": "office",
+      "wallColor": "medium",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 300,
+      "requiredLumens": 210000,
+      "fixtureLumen": 1200,
+      "fixtureCount": 175,
+      "fixtureWatt": 12,
+      "totalWatt": 2100,
+      "monthlyKwh": "378.0",
+      "monthlyCost": "2457",
+      "heightCoeff": 1,
+      "roomName": "Кабинет"
+    }
+  },
+  {
+    "name": "мощность 1",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 1,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 100,
+      "fixtureCount": 27,
+      "fixtureWatt": 1,
+      "totalWatt": 27,
+      "monthlyKwh": "4.9",
+      "monthlyCost": "32",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "мощность 7",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 7,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 700,
+      "fixtureCount": 4,
+      "fixtureWatt": 7,
+      "totalWatt": 28,
+      "monthlyKwh": "5.0",
+      "monthlyCost": "33",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "мощность 36",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 36,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 3600,
+      "fixtureCount": 1,
+      "fixtureWatt": 36,
+      "totalWatt": 36,
+      "monthlyKwh": "6.5",
+      "monthlyCost": "42",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "мощность 100",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 100,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 10000,
+      "fixtureCount": 1,
+      "fixtureWatt": 100,
+      "totalWatt": 100,
+      "monthlyKwh": "18.0",
+      "monthlyCost": "117",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "мощность 500",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 500,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 50000,
+      "fixtureCount": 1,
+      "fixtureWatt": 500,
+      "totalWatt": 500,
+      "monthlyKwh": "90.0",
+      "monthlyCost": "585",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "пресет Точечный LED",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "kitchen",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 7,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 200,
+      "requiredLumens": 3600,
+      "fixtureLumen": 700,
+      "fixtureCount": 6,
+      "fixtureWatt": 7,
+      "totalWatt": 42,
+      "monthlyKwh": "7.6",
+      "monthlyCost": "49",
+      "heightCoeff": 1,
+      "roomName": "Кухня"
+    }
+  },
+  {
+    "name": "пресет LED-панель 60x60",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "kitchen",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 36,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 200,
+      "requiredLumens": 3600,
+      "fixtureLumen": 3600,
+      "fixtureCount": 1,
+      "fixtureWatt": 36,
+      "totalWatt": 36,
+      "monthlyKwh": "6.5",
+      "monthlyCost": "42",
+      "heightCoeff": 1,
+      "roomName": "Кухня"
+    }
+  },
+  {
+    "name": "пресет Люстра LED E27",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "kitchen",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 200,
+      "requiredLumens": 3600,
+      "fixtureLumen": 1200,
+      "fixtureCount": 3,
+      "fixtureWatt": 12,
+      "totalWatt": 36,
+      "monthlyKwh": "6.5",
+      "monthlyCost": "42",
+      "heightCoeff": 1,
+      "roomName": "Кухня"
+    }
+  },
+  {
+    "name": "пресет Трековый LED",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "kitchen",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 15,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 200,
+      "requiredLumens": 3600,
+      "fixtureLumen": 1500,
+      "fixtureCount": 3,
+      "fixtureWatt": 15,
+      "totalWatt": 45,
+      "monthlyKwh": "8.1",
+      "monthlyCost": "53",
+      "heightCoeff": 1,
+      "roomName": "Кухня"
+    }
+  },
+  {
+    "name": "пресет LED лента (1 м)",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "kitchen",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 14,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 200,
+      "requiredLumens": 3600,
+      "fixtureLumen": 1400,
+      "fixtureCount": 3,
+      "fixtureWatt": 14,
+      "totalWatt": 42,
+      "monthlyKwh": "7.6",
+      "monthlyCost": "49",
+      "heightCoeff": 1,
+      "roomName": "Кухня"
+    }
+  },
+  {
+    "name": "пресет Люминесцентная T8",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "kitchen",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 36,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 200,
+      "requiredLumens": 3600,
+      "fixtureLumen": 3600,
+      "fixtureCount": 1,
+      "fixtureWatt": 36,
+      "totalWatt": 36,
+      "monthlyKwh": "6.5",
+      "monthlyCost": "42",
+      "heightCoeff": 1,
+      "roomName": "Кухня"
+    }
+  },
+  {
+    "name": "часов 1",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 1,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 1200,
+      "fixtureCount": 3,
+      "fixtureWatt": 12,
+      "totalWatt": 36,
+      "monthlyKwh": "1.1",
+      "monthlyCost": "7",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "часов 5",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 5,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 1200,
+      "fixtureCount": 3,
+      "fixtureWatt": 12,
+      "totalWatt": 36,
+      "monthlyKwh": "5.4",
+      "monthlyCost": "35",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "часов 12",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 12,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 1200,
+      "fixtureCount": 3,
+      "fixtureWatt": 12,
+      "totalWatt": 36,
+      "monthlyKwh": "13.0",
+      "monthlyCost": "84",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "часов 24",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 24,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 1200,
+      "fixtureCount": 3,
+      "fixtureWatt": 12,
+      "totalWatt": 36,
+      "monthlyKwh": "25.9",
+      "monthlyCost": "168",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "тариф 0",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 0
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 1200,
+      "fixtureCount": 3,
+      "fixtureWatt": 12,
+      "totalWatt": 36,
+      "monthlyKwh": "6.5",
+      "monthlyCost": "0",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "тариф 0.1",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 0.1
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 1200,
+      "fixtureCount": 3,
+      "fixtureWatt": 12,
+      "totalWatt": 36,
+      "monthlyKwh": "6.5",
+      "monthlyCost": "1",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "тариф 5",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 1200,
+      "fixtureCount": 3,
+      "fixtureWatt": 12,
+      "totalWatt": 36,
+      "monthlyKwh": "6.5",
+      "monthlyCost": "32",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "тариф 6.5",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 1200,
+      "fixtureCount": 3,
+      "fixtureWatt": 12,
+      "totalWatt": 36,
+      "monthlyKwh": "6.5",
+      "monthlyCost": "42",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "тариф 99.9",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 99.9
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 1200,
+      "fixtureCount": 3,
+      "fixtureWatt": 12,
+      "totalWatt": 36,
+      "monthlyKwh": "6.5",
+      "monthlyCost": "647",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "максимум",
+    "input": {
+      "area": 500,
+      "height": 6,
+      "roomType": "office",
+      "wallColor": "dark",
+      "lampType": "incandescent",
+      "fixtureWatt": 500,
+      "hoursPerDay": 24,
+      "tariff": 99.9
+    },
+    "expected": {
+      "requiredLux": 300,
+      "requiredLumens": 700000,
+      "fixtureLumen": 6000,
+      "fixtureCount": 117,
+      "fixtureWatt": 500,
+      "totalWatt": 58500,
+      "monthlyKwh": "42120.0",
+      "monthlyCost": "4207788",
+      "heightCoeff": 2,
+      "roomName": "Кабинет"
+    }
+  },
+  {
+    "name": "минимум",
+    "input": {
+      "area": 1,
+      "height": 2,
+      "roomType": "bedroom",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 500,
+      "hoursPerDay": 1,
+      "tariff": 0
+    },
+    "expected": {
+      "requiredLux": 100,
+      "requiredLumens": 100,
+      "fixtureLumen": 50000,
+      "fixtureCount": 1,
+      "fixtureWatt": 500,
+      "totalWatt": 500,
+      "monthlyKwh": "15.0",
+      "monthlyCost": "0",
+      "heightCoeff": 1,
+      "roomName": "Спальня"
+    }
+  },
+  {
+    "name": "невалид: площадь 0",
+    "input": {
+      "area": 0,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": null
+  },
+  {
+    "name": "невалид: высота 0",
+    "input": {
+      "area": 18,
+      "height": 0,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": null
+  },
+  {
+    "name": "невалид: мощность 0",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 0,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": null
+  },
+  {
+    "name": "невалид: тип комнаты",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "nope",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 6,
+      "tariff": 6.5
+    },
+    "expected": null
+  },
+  {
+    "name": "округление W=5 h=1",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 5,
+      "hoursPerDay": 1,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 500,
+      "fixtureCount": 6,
+      "fixtureWatt": 5,
+      "totalWatt": 30,
+      "monthlyKwh": "0.9",
+      "monthlyCost": "6",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "округление W=15 h=1",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 15,
+      "hoursPerDay": 1,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 1500,
+      "fixtureCount": 2,
+      "fixtureWatt": 15,
+      "totalWatt": 30,
+      "monthlyKwh": "0.9",
+      "monthlyCost": "6",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "округление W=25 h=1",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 25,
+      "hoursPerDay": 1,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 2500,
+      "fixtureCount": 2,
+      "fixtureWatt": 25,
+      "totalWatt": 50,
+      "monthlyKwh": "1.5",
+      "monthlyCost": "10",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "округление W=5 h=3",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 5,
+      "hoursPerDay": 3,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 500,
+      "fixtureCount": 6,
+      "fixtureWatt": 5,
+      "totalWatt": 30,
+      "monthlyKwh": "2.7",
+      "monthlyCost": "18",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "округление W=12 h=5",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 12,
+      "hoursPerDay": 5,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 1200,
+      "fixtureCount": 3,
+      "fixtureWatt": 12,
+      "totalWatt": 36,
+      "monthlyKwh": "5.4",
+      "monthlyCost": "35",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "округление W=7 h=5",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 7,
+      "hoursPerDay": 5,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 700,
+      "fixtureCount": 4,
+      "fixtureWatt": 7,
+      "totalWatt": 28,
+      "monthlyKwh": "4.2",
+      "monthlyCost": "27",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "округление W=35 h=1",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 35,
+      "hoursPerDay": 1,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 3500,
+      "fixtureCount": 1,
+      "fixtureWatt": 35,
+      "totalWatt": 35,
+      "monthlyKwh": "1.1",
+      "monthlyCost": "7",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "округление W=45 h=1",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 45,
+      "hoursPerDay": 1,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 4500,
+      "fixtureCount": 1,
+      "fixtureWatt": 45,
+      "totalWatt": 45,
+      "monthlyKwh": "1.3",
+      "monthlyCost": "9",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "округление W=55 h=1",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 55,
+      "hoursPerDay": 1,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 5500,
+      "fixtureCount": 1,
+      "fixtureWatt": 55,
+      "totalWatt": 55,
+      "monthlyKwh": "1.6",
+      "monthlyCost": "11",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  },
+  {
+    "name": "округление W=5 h=7",
+    "input": {
+      "area": 18,
+      "height": 2.7,
+      "roomType": "living",
+      "wallColor": "light",
+      "lampType": "led",
+      "fixtureWatt": 5,
+      "hoursPerDay": 7,
+      "tariff": 6.5
+    },
+    "expected": {
+      "requiredLux": 150,
+      "requiredLumens": 2700,
+      "fixtureLumen": 500,
+      "fixtureCount": 6,
+      "fixtureWatt": 5,
+      "totalWatt": 30,
+      "monthlyKwh": "6.3",
+      "monthlyCost": "41",
+      "heightCoeff": 1,
+      "roomName": "Гостиная"
+    }
+  }
+]

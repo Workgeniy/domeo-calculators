@@ -1,0 +1,2677 @@
+[
+  {
+    "name": "дефолт / budget",
+    "input": {
+      "rooms": {
+        "kitchen": {
+          "enabled": true,
+          "area": 10,
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "living": {
+          "enabled": true,
+          "area": 20,
+          "count": 1,
+          "outlets": 8,
+          "switches": 2,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "bedroom": {
+          "enabled": true,
+          "area": 15,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "bathroom": {
+          "enabled": true,
+          "area": 5,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "hallway": {
+          "enabled": true,
+          "area": 8,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1
+        },
+        "nursery": {
+          "enabled": false,
+          "area": 14,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "office": {
+          "enabled": false,
+          "area": 12,
+          "count": 1,
+          "outlets": 7,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 0,
+          "internet": 1
+        }
+      },
+      "tier": "budget"
+    },
+    "expected": {
+      "totalOutlets": 29,
+      "totalSwitches": 10,
+      "totalUsb": 6,
+      "totalTv": 3,
+      "totalInternet": 2,
+      "totalBoxes": 50,
+      "totalFrames": 50,
+      "totalCableMeters": 255,
+      "totalCost": 25500,
+      "roomBreakdown": [
+        {
+          "key": "kitchen",
+          "label": "Кухня",
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0,
+          "cable": 70,
+          "cost": 7725
+        },
+        {
+          "key": "living",
+          "label": "Гостиная",
+          "count": 1,
+          "outlets": 8,
+          "switches": 3,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1,
+          "cable": 90,
+          "cost": 7925
+        },
+        {
+          "key": "bedroom",
+          "label": "Спальня",
+          "count": 1,
+          "outlets": 5,
+          "switches": 2,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0,
+          "cable": 54,
+          "cost": 5900
+        },
+        {
+          "key": "bathroom",
+          "label": "Ванная",
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0,
+          "cable": 15,
+          "cost": 1510
+        },
+        {
+          "key": "hallway",
+          "label": "Прихожая",
+          "count": 1,
+          "outlets": 3,
+          "switches": 2,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1,
+          "cable": 26,
+          "cost": 2440
+        }
+      ],
+      "tierLabel": "Schneider Electric Glossa"
+    }
+  },
+  {
+    "name": "дефолт / medium",
+    "input": {
+      "rooms": {
+        "kitchen": {
+          "enabled": true,
+          "area": 10,
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "living": {
+          "enabled": true,
+          "area": 20,
+          "count": 1,
+          "outlets": 8,
+          "switches": 2,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "bedroom": {
+          "enabled": true,
+          "area": 15,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "bathroom": {
+          "enabled": true,
+          "area": 5,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "hallway": {
+          "enabled": true,
+          "area": 8,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1
+        },
+        "nursery": {
+          "enabled": false,
+          "area": 14,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "office": {
+          "enabled": false,
+          "area": 12,
+          "count": 1,
+          "outlets": 7,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 0,
+          "internet": 1
+        }
+      },
+      "tier": "medium"
+    },
+    "expected": {
+      "totalOutlets": 29,
+      "totalSwitches": 10,
+      "totalUsb": 6,
+      "totalTv": 3,
+      "totalInternet": 2,
+      "totalBoxes": 50,
+      "totalFrames": 50,
+      "totalCableMeters": 255,
+      "totalCost": 48550,
+      "roomBreakdown": [
+        {
+          "key": "kitchen",
+          "label": "Кухня",
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0,
+          "cable": 70,
+          "cost": 14675
+        },
+        {
+          "key": "living",
+          "label": "Гостиная",
+          "count": 1,
+          "outlets": 8,
+          "switches": 3,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1,
+          "cable": 90,
+          "cost": 15075
+        },
+        {
+          "key": "bedroom",
+          "label": "Спальня",
+          "count": 1,
+          "outlets": 5,
+          "switches": 2,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0,
+          "cable": 54,
+          "cost": 11150
+        },
+        {
+          "key": "bathroom",
+          "label": "Ванная",
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0,
+          "cable": 15,
+          "cost": 2920
+        },
+        {
+          "key": "hallway",
+          "label": "Прихожая",
+          "count": 1,
+          "outlets": 3,
+          "switches": 2,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1,
+          "cable": 26,
+          "cost": 4730
+        }
+      ],
+      "tierLabel": "Legrand Valena Life"
+    }
+  },
+  {
+    "name": "дефолт / premium",
+    "input": {
+      "rooms": {
+        "kitchen": {
+          "enabled": true,
+          "area": 10,
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "living": {
+          "enabled": true,
+          "area": 20,
+          "count": 1,
+          "outlets": 8,
+          "switches": 2,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "bedroom": {
+          "enabled": true,
+          "area": 15,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "bathroom": {
+          "enabled": true,
+          "area": 5,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "hallway": {
+          "enabled": true,
+          "area": 8,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1
+        },
+        "nursery": {
+          "enabled": false,
+          "area": 14,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "office": {
+          "enabled": false,
+          "area": 12,
+          "count": 1,
+          "outlets": 7,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 0,
+          "internet": 1
+        }
+      },
+      "tier": "premium"
+    },
+    "expected": {
+      "totalOutlets": 29,
+      "totalSwitches": 10,
+      "totalUsb": 6,
+      "totalTv": 3,
+      "totalInternet": 2,
+      "totalBoxes": 50,
+      "totalFrames": 50,
+      "totalCableMeters": 255,
+      "totalCost": 95450,
+      "roomBreakdown": [
+        {
+          "key": "kitchen",
+          "label": "Кухня",
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0,
+          "cable": 70,
+          "cost": 28875
+        },
+        {
+          "key": "living",
+          "label": "Гостиная",
+          "count": 1,
+          "outlets": 8,
+          "switches": 3,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1,
+          "cable": 90,
+          "cost": 29675
+        },
+        {
+          "key": "bedroom",
+          "label": "Спальня",
+          "count": 1,
+          "outlets": 5,
+          "switches": 2,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0,
+          "cable": 54,
+          "cost": 22050
+        },
+        {
+          "key": "bathroom",
+          "label": "Ванная",
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0,
+          "cable": 15,
+          "cost": 5660
+        },
+        {
+          "key": "hallway",
+          "label": "Прихожая",
+          "count": 1,
+          "outlets": 3,
+          "switches": 2,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1,
+          "cable": 26,
+          "cost": 9190
+        }
+      ],
+      "tierLabel": "ABB Zenit"
+    }
+  },
+  {
+    "name": "все комнаты включены",
+    "input": {
+      "rooms": {
+        "kitchen": {
+          "enabled": true,
+          "area": 10,
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "living": {
+          "enabled": true,
+          "area": 20,
+          "count": 1,
+          "outlets": 8,
+          "switches": 2,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "bedroom": {
+          "enabled": true,
+          "area": 15,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "bathroom": {
+          "enabled": true,
+          "area": 5,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "hallway": {
+          "enabled": true,
+          "area": 8,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1
+        },
+        "nursery": {
+          "enabled": true,
+          "area": 14,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "office": {
+          "enabled": true,
+          "area": 12,
+          "count": 1,
+          "outlets": 7,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 0,
+          "internet": 1
+        }
+      },
+      "tier": "medium"
+    },
+    "expected": {
+      "totalOutlets": 41,
+      "totalSwitches": 13,
+      "totalUsb": 10,
+      "totalTv": 4,
+      "totalInternet": 4,
+      "totalBoxes": 72,
+      "totalFrames": 72,
+      "totalCableMeters": 368,
+      "totalCost": 72460,
+      "roomBreakdown": [
+        {
+          "key": "kitchen",
+          "label": "Кухня",
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0,
+          "cable": 70,
+          "cost": 14675
+        },
+        {
+          "key": "living",
+          "label": "Гостиная",
+          "count": 1,
+          "outlets": 8,
+          "switches": 3,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1,
+          "cable": 90,
+          "cost": 15075
+        },
+        {
+          "key": "bedroom",
+          "label": "Спальня",
+          "count": 1,
+          "outlets": 5,
+          "switches": 2,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0,
+          "cable": 54,
+          "cost": 11150
+        },
+        {
+          "key": "bathroom",
+          "label": "Ванная",
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0,
+          "cable": 15,
+          "cost": 2920
+        },
+        {
+          "key": "hallway",
+          "label": "Прихожая",
+          "count": 1,
+          "outlets": 3,
+          "switches": 2,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1,
+          "cable": 26,
+          "cost": 4730
+        },
+        {
+          "key": "nursery",
+          "label": "Детская",
+          "count": 1,
+          "outlets": 5,
+          "switches": 2,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1,
+          "cable": 58,
+          "cost": 12155
+        },
+        {
+          "key": "office",
+          "label": "Кабинет",
+          "count": 1,
+          "outlets": 7,
+          "switches": 1,
+          "usb": 2,
+          "tv": 0,
+          "internet": 1,
+          "cable": 55,
+          "cost": 11755
+        }
+      ],
+      "tierLabel": "Legrand Valena Life"
+    }
+  },
+  {
+    "name": "все комнаты выключены",
+    "input": {
+      "rooms": {
+        "kitchen": {
+          "enabled": false,
+          "area": 10,
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "living": {
+          "enabled": false,
+          "area": 20,
+          "count": 1,
+          "outlets": 8,
+          "switches": 2,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "bedroom": {
+          "enabled": false,
+          "area": 15,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "bathroom": {
+          "enabled": false,
+          "area": 5,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "hallway": {
+          "enabled": false,
+          "area": 8,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1
+        },
+        "nursery": {
+          "enabled": false,
+          "area": 14,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "office": {
+          "enabled": false,
+          "area": 12,
+          "count": 1,
+          "outlets": 7,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 0,
+          "internet": 1
+        }
+      },
+      "tier": "budget"
+    },
+    "expected": {
+      "totalOutlets": 0,
+      "totalSwitches": 0,
+      "totalUsb": 0,
+      "totalTv": 0,
+      "totalInternet": 0,
+      "totalBoxes": 0,
+      "totalFrames": 0,
+      "totalCableMeters": 0,
+      "totalCost": 0,
+      "roomBreakdown": [],
+      "tierLabel": "Schneider Electric Glossa"
+    }
+  },
+  {
+    "name": "только кухня",
+    "input": {
+      "rooms": {
+        "kitchen": {
+          "enabled": true,
+          "area": 10,
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "living": {
+          "enabled": false,
+          "area": 20,
+          "count": 1,
+          "outlets": 8,
+          "switches": 2,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "bedroom": {
+          "enabled": false,
+          "area": 15,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "bathroom": {
+          "enabled": false,
+          "area": 5,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "hallway": {
+          "enabled": false,
+          "area": 8,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1
+        },
+        "nursery": {
+          "enabled": false,
+          "area": 14,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "office": {
+          "enabled": false,
+          "area": 12,
+          "count": 1,
+          "outlets": 7,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 0,
+          "internet": 1
+        }
+      },
+      "tier": "premium"
+    },
+    "expected": {
+      "totalOutlets": 10,
+      "totalSwitches": 2,
+      "totalUsb": 2,
+      "totalTv": 1,
+      "totalInternet": 0,
+      "totalBoxes": 15,
+      "totalFrames": 15,
+      "totalCableMeters": 70,
+      "totalCost": 28875,
+      "roomBreakdown": [
+        {
+          "key": "kitchen",
+          "label": "Кухня",
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0,
+          "cable": 70,
+          "cost": 28875
+        }
+      ],
+      "tierLabel": "ABB Zenit"
+    }
+  },
+  {
+    "name": "несколько одинаковых комнат",
+    "input": {
+      "rooms": {
+        "kitchen": {
+          "enabled": true,
+          "area": 10,
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "living": {
+          "enabled": true,
+          "area": 20,
+          "count": 1,
+          "outlets": 8,
+          "switches": 2,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "bedroom": {
+          "enabled": true,
+          "area": 15,
+          "count": 3,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "bathroom": {
+          "enabled": true,
+          "area": 5,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "hallway": {
+          "enabled": true,
+          "area": 8,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1
+        },
+        "nursery": {
+          "enabled": true,
+          "area": 14,
+          "count": 2,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "office": {
+          "enabled": false,
+          "area": 12,
+          "count": 1,
+          "outlets": 7,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 0,
+          "internet": 1
+        }
+      },
+      "tier": "medium"
+    },
+    "expected": {
+      "totalOutlets": 49,
+      "totalSwitches": 18,
+      "totalUsb": 14,
+      "totalTv": 7,
+      "totalInternet": 4,
+      "totalBoxes": 92,
+      "totalFrames": 92,
+      "totalCableMeters": 479,
+      "totalCost": 95160,
+      "roomBreakdown": [
+        {
+          "key": "kitchen",
+          "label": "Кухня",
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0,
+          "cable": 70,
+          "cost": 14675
+        },
+        {
+          "key": "living",
+          "label": "Гостиная",
+          "count": 1,
+          "outlets": 8,
+          "switches": 3,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1,
+          "cable": 90,
+          "cost": 15075
+        },
+        {
+          "key": "bedroom",
+          "label": "Спальня",
+          "count": 3,
+          "outlets": 15,
+          "switches": 6,
+          "usb": 6,
+          "tv": 3,
+          "internet": 0,
+          "cable": 162,
+          "cost": 33450
+        },
+        {
+          "key": "bathroom",
+          "label": "Ванная",
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0,
+          "cable": 15,
+          "cost": 2920
+        },
+        {
+          "key": "hallway",
+          "label": "Прихожая",
+          "count": 1,
+          "outlets": 3,
+          "switches": 2,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1,
+          "cable": 26,
+          "cost": 4730
+        },
+        {
+          "key": "nursery",
+          "label": "Детская",
+          "count": 2,
+          "outlets": 10,
+          "switches": 4,
+          "usb": 4,
+          "tv": 2,
+          "internet": 2,
+          "cable": 116,
+          "cost": 24310
+        }
+      ],
+      "tierLabel": "Legrand Valena Life"
+    }
+  },
+  {
+    "name": "count = 0 (падает в 1)",
+    "input": {
+      "rooms": {
+        "kitchen": {
+          "enabled": true,
+          "area": 10,
+          "count": 0,
+          "outlets": 10,
+          "switches": 2,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "living": {
+          "enabled": true,
+          "area": 20,
+          "count": 1,
+          "outlets": 8,
+          "switches": 2,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "bedroom": {
+          "enabled": true,
+          "area": 15,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "bathroom": {
+          "enabled": true,
+          "area": 5,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "hallway": {
+          "enabled": true,
+          "area": 8,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1
+        },
+        "nursery": {
+          "enabled": false,
+          "area": 14,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "office": {
+          "enabled": false,
+          "area": 12,
+          "count": 1,
+          "outlets": 7,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 0,
+          "internet": 1
+        }
+      },
+      "tier": "budget"
+    },
+    "expected": {
+      "totalOutlets": 29,
+      "totalSwitches": 10,
+      "totalUsb": 6,
+      "totalTv": 3,
+      "totalInternet": 2,
+      "totalBoxes": 50,
+      "totalFrames": 50,
+      "totalCableMeters": 255,
+      "totalCost": 25500,
+      "roomBreakdown": [
+        {
+          "key": "kitchen",
+          "label": "Кухня",
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0,
+          "cable": 70,
+          "cost": 7725
+        },
+        {
+          "key": "living",
+          "label": "Гостиная",
+          "count": 1,
+          "outlets": 8,
+          "switches": 3,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1,
+          "cable": 90,
+          "cost": 7925
+        },
+        {
+          "key": "bedroom",
+          "label": "Спальня",
+          "count": 1,
+          "outlets": 5,
+          "switches": 2,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0,
+          "cable": 54,
+          "cost": 5900
+        },
+        {
+          "key": "bathroom",
+          "label": "Ванная",
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0,
+          "cable": 15,
+          "cost": 1510
+        },
+        {
+          "key": "hallway",
+          "label": "Прихожая",
+          "count": 1,
+          "outlets": 3,
+          "switches": 2,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1,
+          "cable": 26,
+          "cost": 2440
+        }
+      ],
+      "tierLabel": "Schneider Electric Glossa"
+    }
+  },
+  {
+    "name": "всё по максимуму",
+    "input": {
+      "rooms": {
+        "kitchen": {
+          "enabled": true,
+          "area": 200,
+          "count": 10,
+          "outlets": 20,
+          "switches": 10,
+          "passthrough": 10,
+          "usb": 10,
+          "tv": 5,
+          "internet": 5
+        },
+        "living": {
+          "enabled": true,
+          "area": 200,
+          "count": 10,
+          "outlets": 20,
+          "switches": 10,
+          "passthrough": 10,
+          "usb": 10,
+          "tv": 5,
+          "internet": 5
+        },
+        "bedroom": {
+          "enabled": true,
+          "area": 200,
+          "count": 10,
+          "outlets": 20,
+          "switches": 10,
+          "passthrough": 10,
+          "usb": 10,
+          "tv": 5,
+          "internet": 5
+        },
+        "bathroom": {
+          "enabled": true,
+          "area": 200,
+          "count": 10,
+          "outlets": 20,
+          "switches": 10,
+          "passthrough": 10,
+          "usb": 10,
+          "tv": 5,
+          "internet": 5
+        },
+        "hallway": {
+          "enabled": true,
+          "area": 200,
+          "count": 10,
+          "outlets": 20,
+          "switches": 10,
+          "passthrough": 10,
+          "usb": 10,
+          "tv": 5,
+          "internet": 5
+        },
+        "nursery": {
+          "enabled": true,
+          "area": 200,
+          "count": 10,
+          "outlets": 20,
+          "switches": 10,
+          "passthrough": 10,
+          "usb": 10,
+          "tv": 5,
+          "internet": 5
+        },
+        "office": {
+          "enabled": true,
+          "area": 200,
+          "count": 10,
+          "outlets": 20,
+          "switches": 10,
+          "passthrough": 10,
+          "usb": 10,
+          "tv": 5,
+          "internet": 5
+        }
+      },
+      "tier": "premium"
+    },
+    "expected": {
+      "totalOutlets": 1400,
+      "totalSwitches": 1400,
+      "totalUsb": 700,
+      "totalTv": 350,
+      "totalInternet": 350,
+      "totalBoxes": 4200,
+      "totalFrames": 4200,
+      "totalCableMeters": 65702,
+      "totalCost": 9023000,
+      "roomBreakdown": [
+        {
+          "key": "kitchen",
+          "label": "Кухня",
+          "count": 10,
+          "outlets": 200,
+          "switches": 200,
+          "usb": 100,
+          "tv": 50,
+          "internet": 50,
+          "cable": 9386,
+          "cost": 1289000
+        },
+        {
+          "key": "living",
+          "label": "Гостиная",
+          "count": 10,
+          "outlets": 200,
+          "switches": 200,
+          "usb": 100,
+          "tv": 50,
+          "internet": 50,
+          "cable": 9386,
+          "cost": 1289000
+        },
+        {
+          "key": "bedroom",
+          "label": "Спальня",
+          "count": 10,
+          "outlets": 200,
+          "switches": 200,
+          "usb": 100,
+          "tv": 50,
+          "internet": 50,
+          "cable": 9386,
+          "cost": 1289000
+        },
+        {
+          "key": "bathroom",
+          "label": "Ванная",
+          "count": 10,
+          "outlets": 200,
+          "switches": 200,
+          "usb": 100,
+          "tv": 50,
+          "internet": 50,
+          "cable": 9386,
+          "cost": 1289000
+        },
+        {
+          "key": "hallway",
+          "label": "Прихожая",
+          "count": 10,
+          "outlets": 200,
+          "switches": 200,
+          "usb": 100,
+          "tv": 50,
+          "internet": 50,
+          "cable": 9386,
+          "cost": 1289000
+        },
+        {
+          "key": "nursery",
+          "label": "Детская",
+          "count": 10,
+          "outlets": 200,
+          "switches": 200,
+          "usb": 100,
+          "tv": 50,
+          "internet": 50,
+          "cable": 9386,
+          "cost": 1289000
+        },
+        {
+          "key": "office",
+          "label": "Кабинет",
+          "count": 10,
+          "outlets": 200,
+          "switches": 200,
+          "usb": 100,
+          "tv": 50,
+          "internet": 50,
+          "cable": 9386,
+          "cost": 1289000
+        }
+      ],
+      "tierLabel": "ABB Zenit"
+    }
+  },
+  {
+    "name": "все точки обнулены",
+    "input": {
+      "rooms": {
+        "kitchen": {
+          "enabled": true,
+          "area": 1,
+          "count": 1,
+          "outlets": 0,
+          "switches": 0,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "living": {
+          "enabled": true,
+          "area": 1,
+          "count": 1,
+          "outlets": 0,
+          "switches": 0,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "bedroom": {
+          "enabled": true,
+          "area": 1,
+          "count": 1,
+          "outlets": 0,
+          "switches": 0,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "bathroom": {
+          "enabled": true,
+          "area": 1,
+          "count": 1,
+          "outlets": 0,
+          "switches": 0,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "hallway": {
+          "enabled": true,
+          "area": 1,
+          "count": 1,
+          "outlets": 0,
+          "switches": 0,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "nursery": {
+          "enabled": true,
+          "area": 1,
+          "count": 1,
+          "outlets": 0,
+          "switches": 0,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "office": {
+          "enabled": true,
+          "area": 1,
+          "count": 1,
+          "outlets": 0,
+          "switches": 0,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        }
+      },
+      "tier": "budget"
+    },
+    "expected": {
+      "totalOutlets": 0,
+      "totalSwitches": 0,
+      "totalUsb": 0,
+      "totalTv": 0,
+      "totalInternet": 0,
+      "totalBoxes": 0,
+      "totalFrames": 0,
+      "totalCableMeters": 0,
+      "totalCost": 0,
+      "roomBreakdown": [
+        {
+          "key": "kitchen",
+          "label": "Кухня",
+          "count": 1,
+          "outlets": 0,
+          "switches": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0,
+          "cable": 0,
+          "cost": 0
+        },
+        {
+          "key": "living",
+          "label": "Гостиная",
+          "count": 1,
+          "outlets": 0,
+          "switches": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0,
+          "cable": 0,
+          "cost": 0
+        },
+        {
+          "key": "bedroom",
+          "label": "Спальня",
+          "count": 1,
+          "outlets": 0,
+          "switches": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0,
+          "cable": 0,
+          "cost": 0
+        },
+        {
+          "key": "bathroom",
+          "label": "Ванная",
+          "count": 1,
+          "outlets": 0,
+          "switches": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0,
+          "cable": 0,
+          "cost": 0
+        },
+        {
+          "key": "hallway",
+          "label": "Прихожая",
+          "count": 1,
+          "outlets": 0,
+          "switches": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0,
+          "cable": 0,
+          "cost": 0
+        },
+        {
+          "key": "nursery",
+          "label": "Детская",
+          "count": 1,
+          "outlets": 0,
+          "switches": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0,
+          "cable": 0,
+          "cost": 0
+        },
+        {
+          "key": "office",
+          "label": "Кабинет",
+          "count": 1,
+          "outlets": 0,
+          "switches": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0,
+          "cable": 0,
+          "cost": 0
+        }
+      ],
+      "tierLabel": "Schneider Electric Glossa"
+    }
+  },
+  {
+    "name": "кабель: площадь 1",
+    "input": {
+      "rooms": {
+        "kitchen": {
+          "enabled": false,
+          "area": 10,
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "living": {
+          "enabled": true,
+          "area": 1,
+          "count": 1,
+          "outlets": 8,
+          "switches": 2,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "bedroom": {
+          "enabled": false,
+          "area": 15,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "bathroom": {
+          "enabled": false,
+          "area": 5,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "hallway": {
+          "enabled": false,
+          "area": 8,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1
+        },
+        "nursery": {
+          "enabled": false,
+          "area": 14,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "office": {
+          "enabled": false,
+          "area": 12,
+          "count": 1,
+          "outlets": 7,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 0,
+          "internet": 1
+        }
+      },
+      "tier": "budget"
+    },
+    "expected": {
+      "totalOutlets": 8,
+      "totalSwitches": 3,
+      "totalUsb": 2,
+      "totalTv": 1,
+      "totalInternet": 1,
+      "totalBoxes": 15,
+      "totalFrames": 15,
+      "totalCableMeters": 38,
+      "totalCost": 7925,
+      "roomBreakdown": [
+        {
+          "key": "living",
+          "label": "Гостиная",
+          "count": 1,
+          "outlets": 8,
+          "switches": 3,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1,
+          "cable": 38,
+          "cost": 7925
+        }
+      ],
+      "tierLabel": "Schneider Electric Glossa"
+    }
+  },
+  {
+    "name": "кабель: площадь 2",
+    "input": {
+      "rooms": {
+        "kitchen": {
+          "enabled": false,
+          "area": 10,
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "living": {
+          "enabled": true,
+          "area": 2,
+          "count": 1,
+          "outlets": 8,
+          "switches": 2,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "bedroom": {
+          "enabled": false,
+          "area": 15,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "bathroom": {
+          "enabled": false,
+          "area": 5,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "hallway": {
+          "enabled": false,
+          "area": 8,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1
+        },
+        "nursery": {
+          "enabled": false,
+          "area": 14,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "office": {
+          "enabled": false,
+          "area": 12,
+          "count": 1,
+          "outlets": 7,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 0,
+          "internet": 1
+        }
+      },
+      "tier": "budget"
+    },
+    "expected": {
+      "totalOutlets": 8,
+      "totalSwitches": 3,
+      "totalUsb": 2,
+      "totalTv": 1,
+      "totalInternet": 1,
+      "totalBoxes": 15,
+      "totalFrames": 15,
+      "totalCableMeters": 44,
+      "totalCost": 7925,
+      "roomBreakdown": [
+        {
+          "key": "living",
+          "label": "Гостиная",
+          "count": 1,
+          "outlets": 8,
+          "switches": 3,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1,
+          "cable": 44,
+          "cost": 7925
+        }
+      ],
+      "tierLabel": "Schneider Electric Glossa"
+    }
+  },
+  {
+    "name": "кабель: площадь 3",
+    "input": {
+      "rooms": {
+        "kitchen": {
+          "enabled": false,
+          "area": 10,
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "living": {
+          "enabled": true,
+          "area": 3,
+          "count": 1,
+          "outlets": 8,
+          "switches": 2,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "bedroom": {
+          "enabled": false,
+          "area": 15,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "bathroom": {
+          "enabled": false,
+          "area": 5,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "hallway": {
+          "enabled": false,
+          "area": 8,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1
+        },
+        "nursery": {
+          "enabled": false,
+          "area": 14,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "office": {
+          "enabled": false,
+          "area": 12,
+          "count": 1,
+          "outlets": 7,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 0,
+          "internet": 1
+        }
+      },
+      "tier": "budget"
+    },
+    "expected": {
+      "totalOutlets": 8,
+      "totalSwitches": 3,
+      "totalUsb": 2,
+      "totalTv": 1,
+      "totalInternet": 1,
+      "totalBoxes": 15,
+      "totalFrames": 15,
+      "totalCableMeters": 49,
+      "totalCost": 7925,
+      "roomBreakdown": [
+        {
+          "key": "living",
+          "label": "Гостиная",
+          "count": 1,
+          "outlets": 8,
+          "switches": 3,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1,
+          "cable": 49,
+          "cost": 7925
+        }
+      ],
+      "tierLabel": "Schneider Electric Glossa"
+    }
+  },
+  {
+    "name": "кабель: площадь 5",
+    "input": {
+      "rooms": {
+        "kitchen": {
+          "enabled": false,
+          "area": 10,
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "living": {
+          "enabled": true,
+          "area": 5,
+          "count": 1,
+          "outlets": 8,
+          "switches": 2,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "bedroom": {
+          "enabled": false,
+          "area": 15,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "bathroom": {
+          "enabled": false,
+          "area": 5,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "hallway": {
+          "enabled": false,
+          "area": 8,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1
+        },
+        "nursery": {
+          "enabled": false,
+          "area": 14,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "office": {
+          "enabled": false,
+          "area": 12,
+          "count": 1,
+          "outlets": 7,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 0,
+          "internet": 1
+        }
+      },
+      "tier": "budget"
+    },
+    "expected": {
+      "totalOutlets": 8,
+      "totalSwitches": 3,
+      "totalUsb": 2,
+      "totalTv": 1,
+      "totalInternet": 1,
+      "totalBoxes": 15,
+      "totalFrames": 15,
+      "totalCableMeters": 57,
+      "totalCost": 7925,
+      "roomBreakdown": [
+        {
+          "key": "living",
+          "label": "Гостиная",
+          "count": 1,
+          "outlets": 8,
+          "switches": 3,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1,
+          "cable": 57,
+          "cost": 7925
+        }
+      ],
+      "tierLabel": "Schneider Electric Glossa"
+    }
+  },
+  {
+    "name": "кабель: площадь 7",
+    "input": {
+      "rooms": {
+        "kitchen": {
+          "enabled": false,
+          "area": 10,
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "living": {
+          "enabled": true,
+          "area": 7,
+          "count": 1,
+          "outlets": 8,
+          "switches": 2,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "bedroom": {
+          "enabled": false,
+          "area": 15,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "bathroom": {
+          "enabled": false,
+          "area": 5,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "hallway": {
+          "enabled": false,
+          "area": 8,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1
+        },
+        "nursery": {
+          "enabled": false,
+          "area": 14,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "office": {
+          "enabled": false,
+          "area": 12,
+          "count": 1,
+          "outlets": 7,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 0,
+          "internet": 1
+        }
+      },
+      "tier": "budget"
+    },
+    "expected": {
+      "totalOutlets": 8,
+      "totalSwitches": 3,
+      "totalUsb": 2,
+      "totalTv": 1,
+      "totalInternet": 1,
+      "totalBoxes": 15,
+      "totalFrames": 15,
+      "totalCableMeters": 63,
+      "totalCost": 7925,
+      "roomBreakdown": [
+        {
+          "key": "living",
+          "label": "Гостиная",
+          "count": 1,
+          "outlets": 8,
+          "switches": 3,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1,
+          "cable": 63,
+          "cost": 7925
+        }
+      ],
+      "tierLabel": "Schneider Electric Glossa"
+    }
+  },
+  {
+    "name": "кабель: площадь 10",
+    "input": {
+      "rooms": {
+        "kitchen": {
+          "enabled": false,
+          "area": 10,
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "living": {
+          "enabled": true,
+          "area": 10,
+          "count": 1,
+          "outlets": 8,
+          "switches": 2,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "bedroom": {
+          "enabled": false,
+          "area": 15,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "bathroom": {
+          "enabled": false,
+          "area": 5,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "hallway": {
+          "enabled": false,
+          "area": 8,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1
+        },
+        "nursery": {
+          "enabled": false,
+          "area": 14,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "office": {
+          "enabled": false,
+          "area": 12,
+          "count": 1,
+          "outlets": 7,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 0,
+          "internet": 1
+        }
+      },
+      "tier": "budget"
+    },
+    "expected": {
+      "totalOutlets": 8,
+      "totalSwitches": 3,
+      "totalUsb": 2,
+      "totalTv": 1,
+      "totalInternet": 1,
+      "totalBoxes": 15,
+      "totalFrames": 15,
+      "totalCableMeters": 70,
+      "totalCost": 7925,
+      "roomBreakdown": [
+        {
+          "key": "living",
+          "label": "Гостиная",
+          "count": 1,
+          "outlets": 8,
+          "switches": 3,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1,
+          "cable": 70,
+          "cost": 7925
+        }
+      ],
+      "tierLabel": "Schneider Electric Glossa"
+    }
+  },
+  {
+    "name": "кабель: площадь 12.5",
+    "input": {
+      "rooms": {
+        "kitchen": {
+          "enabled": false,
+          "area": 10,
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "living": {
+          "enabled": true,
+          "area": 12.5,
+          "count": 1,
+          "outlets": 8,
+          "switches": 2,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "bedroom": {
+          "enabled": false,
+          "area": 15,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "bathroom": {
+          "enabled": false,
+          "area": 5,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "hallway": {
+          "enabled": false,
+          "area": 8,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1
+        },
+        "nursery": {
+          "enabled": false,
+          "area": 14,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "office": {
+          "enabled": false,
+          "area": 12,
+          "count": 1,
+          "outlets": 7,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 0,
+          "internet": 1
+        }
+      },
+      "tier": "budget"
+    },
+    "expected": {
+      "totalOutlets": 8,
+      "totalSwitches": 3,
+      "totalUsb": 2,
+      "totalTv": 1,
+      "totalInternet": 1,
+      "totalBoxes": 15,
+      "totalFrames": 15,
+      "totalCableMeters": 76,
+      "totalCost": 7925,
+      "roomBreakdown": [
+        {
+          "key": "living",
+          "label": "Гостиная",
+          "count": 1,
+          "outlets": 8,
+          "switches": 3,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1,
+          "cable": 76,
+          "cost": 7925
+        }
+      ],
+      "tierLabel": "Schneider Electric Glossa"
+    }
+  },
+  {
+    "name": "кабель: площадь 17",
+    "input": {
+      "rooms": {
+        "kitchen": {
+          "enabled": false,
+          "area": 10,
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "living": {
+          "enabled": true,
+          "area": 17,
+          "count": 1,
+          "outlets": 8,
+          "switches": 2,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "bedroom": {
+          "enabled": false,
+          "area": 15,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "bathroom": {
+          "enabled": false,
+          "area": 5,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "hallway": {
+          "enabled": false,
+          "area": 8,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1
+        },
+        "nursery": {
+          "enabled": false,
+          "area": 14,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "office": {
+          "enabled": false,
+          "area": 12,
+          "count": 1,
+          "outlets": 7,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 0,
+          "internet": 1
+        }
+      },
+      "tier": "budget"
+    },
+    "expected": {
+      "totalOutlets": 8,
+      "totalSwitches": 3,
+      "totalUsb": 2,
+      "totalTv": 1,
+      "totalInternet": 1,
+      "totalBoxes": 15,
+      "totalFrames": 15,
+      "totalCableMeters": 85,
+      "totalCost": 7925,
+      "roomBreakdown": [
+        {
+          "key": "living",
+          "label": "Гостиная",
+          "count": 1,
+          "outlets": 8,
+          "switches": 3,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1,
+          "cable": 85,
+          "cost": 7925
+        }
+      ],
+      "tierLabel": "Schneider Electric Glossa"
+    }
+  },
+  {
+    "name": "кабель: площадь 99",
+    "input": {
+      "rooms": {
+        "kitchen": {
+          "enabled": false,
+          "area": 10,
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "living": {
+          "enabled": true,
+          "area": 99,
+          "count": 1,
+          "outlets": 8,
+          "switches": 2,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "bedroom": {
+          "enabled": false,
+          "area": 15,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "bathroom": {
+          "enabled": false,
+          "area": 5,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "hallway": {
+          "enabled": false,
+          "area": 8,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1
+        },
+        "nursery": {
+          "enabled": false,
+          "area": 14,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "office": {
+          "enabled": false,
+          "area": 12,
+          "count": 1,
+          "outlets": 7,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 0,
+          "internet": 1
+        }
+      },
+      "tier": "budget"
+    },
+    "expected": {
+      "totalOutlets": 8,
+      "totalSwitches": 3,
+      "totalUsb": 2,
+      "totalTv": 1,
+      "totalInternet": 1,
+      "totalBoxes": 15,
+      "totalFrames": 15,
+      "totalCableMeters": 172,
+      "totalCost": 7925,
+      "roomBreakdown": [
+        {
+          "key": "living",
+          "label": "Гостиная",
+          "count": 1,
+          "outlets": 8,
+          "switches": 3,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1,
+          "cable": 172,
+          "cost": 7925
+        }
+      ],
+      "tierLabel": "Schneider Electric Glossa"
+    }
+  },
+  {
+    "name": "кабель: площадь 200",
+    "input": {
+      "rooms": {
+        "kitchen": {
+          "enabled": false,
+          "area": 10,
+          "count": 1,
+          "outlets": 10,
+          "switches": 2,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "living": {
+          "enabled": true,
+          "area": 200,
+          "count": 1,
+          "outlets": 8,
+          "switches": 2,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "bedroom": {
+          "enabled": false,
+          "area": 15,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 0
+        },
+        "bathroom": {
+          "enabled": false,
+          "area": 5,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 0,
+          "tv": 0,
+          "internet": 0
+        },
+        "hallway": {
+          "enabled": false,
+          "area": 8,
+          "count": 1,
+          "outlets": 3,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 0,
+          "tv": 0,
+          "internet": 1
+        },
+        "nursery": {
+          "enabled": false,
+          "area": 14,
+          "count": 1,
+          "outlets": 5,
+          "switches": 1,
+          "passthrough": 1,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1
+        },
+        "office": {
+          "enabled": false,
+          "area": 12,
+          "count": 1,
+          "outlets": 7,
+          "switches": 1,
+          "passthrough": 0,
+          "usb": 2,
+          "tv": 0,
+          "internet": 1
+        }
+      },
+      "tier": "budget"
+    },
+    "expected": {
+      "totalOutlets": 8,
+      "totalSwitches": 3,
+      "totalUsb": 2,
+      "totalTv": 1,
+      "totalInternet": 1,
+      "totalBoxes": 15,
+      "totalFrames": 15,
+      "totalCableMeters": 235,
+      "totalCost": 7925,
+      "roomBreakdown": [
+        {
+          "key": "living",
+          "label": "Гостиная",
+          "count": 1,
+          "outlets": 8,
+          "switches": 3,
+          "usb": 2,
+          "tv": 1,
+          "internet": 1,
+          "cable": 235,
+          "cost": 7925
+        }
+      ],
+      "tierLabel": "Schneider Electric Glossa"
+    }
+  }
+]
