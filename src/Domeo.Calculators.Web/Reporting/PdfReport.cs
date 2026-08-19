@@ -49,15 +49,24 @@ public static class PdfReport
 
         canvas.Title("Расчёт освещения и электрики");
         canvas.Caption("Сформировано " + generatedAt.ToString("dd.MM.yyyy HH:mm", CultureInfo.GetCultureInfo("ru-RU")));
-        canvas.Gap(14);
+        canvas.Gap(10);
 
         DrawLighting(canvas, lightingInput, lighting);
-        canvas.Gap(18);
+        canvas.Gap(12);
         DrawElectrical(canvas, rooms, electrical);
 
-        canvas.Gap(16);
-        canvas.Note("Цены справочные, зафиксированы на 19.08.2026. Рамки посчитаны как одинарные — "
-                  + "сборка точек в блоки по 2–5 постов обойдётся дешевле. Нормы освещённости — СП 52.13330.2016.");
+        canvas.Gap(10);
+        canvas.Section("Что учтено неточно");
+        canvas.Bullets([
+            "Рамки посчитаны как одинарные. Сборка точек в блоки по 2–5 постов в одной рамке обойдётся дешевле.",
+            "Проходные выключатели посчитаны по цене обычных, хотя стоят дороже.",
+            "Наценки за влагозащиту нет: ванная считается как сухая комната, хотя там нужен IP44.",
+            "Поправка на высоту потолка ступенчатая: 2.70 м даёт 1.0, а 2.71 м — уже 1.2.",
+            "Расход электроэнергии считается из месяца в 30 дней; метраж кабеля — грубая оценка по площади, без учёта топологии щита.",
+        ]);
+        canvas.Gap(3);
+        canvas.Note("Цены справочные на 19.08.2026 — для сметы заменить своими. "
+                  + "Нормы: СП 52.13330.2016 (освещённость), ПУЭ и СП 256.1325800 (электрика).");
 
         using var stream = new MemoryStream();
         document.Save(stream);
@@ -113,6 +122,15 @@ public static class PdfReport
              ("Площадь на светильник", result.AreaPerFixtureFormatted + " м²"),
              ("Расход в месяц", result.MonthlyKwhFormatted + " кВт·ч"),
              ("Стоимость в месяц", result.MonthlyCostFormatted + " ₽")]);
+
+        canvas.Gap(6);
+        canvas.SubHeading("Рекомендация по размещению");
+        canvas.Tiles(result.FixtureCount, 24);
+        canvas.Gap(4);
+        canvas.Note("Равномерно распределите " + result.FixtureCount + " "
+                  + Plural(result.FixtureCount, "светильник", "светильника", "светильников")
+                  + " по площади " + Num(input.Area) + " м²"
+                  + (result.FixtureCount > 1 ? " — примерно " + result.AreaPerFixtureFormatted + " м² на светильник." : "."));
     }
 
     private static void DrawElectrical(Canvas canvas, IReadOnlyDictionary<string, RoomState> rooms, ElectricalResult result)
@@ -120,17 +138,30 @@ public static class PdfReport
         canvas.Section("Электрофурнитура на квартиру");
         canvas.SubHeading("Ценовой уровень: " + result.TierLabel);
 
-        double[] widths = [120, 52, 52, 60, 40, 34, 42, 52, 59];
-        string[] headers = ["Комната", "Площадь", "Розетки", "Выключ.", "USB", "ТВ", "Инет", "Кабель", "Сумма, ₽"];
+        double[] widths = [96, 38, 38, 44, 36, 46, 32, 28, 32, 44, 77];
+        string[] headers = ["Комната", "S, м²", "Кол-во", "Розетки", "Выкл.", "Проходн.", "USB", "ТВ", "Инет", "Кабель", "Сумма, ₽"];
         canvas.TableHeader(headers, widths);
+
+        int totalPassthrough = 0;
 
         foreach (RoomBreakdown b in result.RoomBreakdown)
         {
-            double area = rooms.TryGetValue(b.Key, out RoomState? state) ? state.Area : 0;
+            rooms.TryGetValue(b.Key, out RoomState? state);
+            double area = state?.Area ?? 0;
+
+            // В разбивке выключатели и проходные сложены — разделяем обратно для сметы.
+            int passthrough = (state?.Passthrough ?? 0) * b.Count;
+            int switches = b.Switches - passthrough;
+            totalPassthrough += passthrough;
+
             canvas.TableRow(
-                [b.Label, Num(area) + " м²", b.Outlets.ToString(CultureInfo.InvariantCulture),
-                 b.Switches.ToString(CultureInfo.InvariantCulture), b.Usb.ToString(CultureInfo.InvariantCulture),
-                 b.Tv.ToString(CultureInfo.InvariantCulture), b.Internet.ToString(CultureInfo.InvariantCulture),
+                [b.Label, Num(area), b.Count.ToString(CultureInfo.InvariantCulture),
+                 b.Outlets.ToString(CultureInfo.InvariantCulture),
+                 switches.ToString(CultureInfo.InvariantCulture),
+                 passthrough.ToString(CultureInfo.InvariantCulture),
+                 b.Usb.ToString(CultureInfo.InvariantCulture),
+                 b.Tv.ToString(CultureInfo.InvariantCulture),
+                 b.Internet.ToString(CultureInfo.InvariantCulture),
                  b.Cable + " м", Money(b.Cost)],
                 widths, bold: false);
         }
@@ -142,15 +173,16 @@ public static class PdfReport
         }
 
         canvas.TableRow(
-            ["Итого", "", result.TotalOutlets.ToString(CultureInfo.InvariantCulture),
-             result.TotalSwitches.ToString(CultureInfo.InvariantCulture),
+            ["Итого", "", "", result.TotalOutlets.ToString(CultureInfo.InvariantCulture),
+             (result.TotalSwitches - totalPassthrough).ToString(CultureInfo.InvariantCulture),
+             totalPassthrough.ToString(CultureInfo.InvariantCulture),
              result.TotalUsb.ToString(CultureInfo.InvariantCulture),
              result.TotalTv.ToString(CultureInfo.InvariantCulture),
              result.TotalInternet.ToString(CultureInfo.InvariantCulture),
              result.TotalCableMeters + " м", Money(result.TotalCost)],
             widths, bold: true);
 
-        canvas.Gap(12);
+        canvas.Gap(8);
         canvas.Banner("Итого " + Money(result.TotalCost) + " ₽  ·  " + result.TierLabel);
         canvas.Gap(8);
 
@@ -198,6 +230,9 @@ public static class PdfReport
         private readonly XFont _bodyBold = new(EmbeddedFontResolver.Family, 9, XFontStyleEx.Bold);
         private readonly XFont _small = new(EmbeddedFontResolver.Family, 7.5, XFontStyleEx.Regular);
         private readonly XFont _banner = new(EmbeddedFontResolver.Family, 15, XFontStyleEx.Bold);
+        private readonly XFont _cell = new(EmbeddedFontResolver.Family, 8, XFontStyleEx.Regular);
+        private readonly XFont _cellBold = new(EmbeddedFontResolver.Family, 8, XFontStyleEx.Bold);
+        private readonly XFont _tile = new(EmbeddedFontResolver.Family, 7, XFontStyleEx.Bold);
 
         public Canvas(PdfDocument document)
         {
@@ -289,7 +324,7 @@ public static class PdfReport
         {
             Reserve(20);
             _gfx.DrawRectangle(new XSolidBrush(Pale), new XRect(Margin, _y, ContentWidth, 16));
-            DrawCells(cells, widths, _bodyBold, Ink, 16);
+            DrawCells(cells, widths, _cellBold, Ink, 16);
             _y += 16;
         }
 
@@ -302,7 +337,7 @@ public static class PdfReport
                 _gfx.DrawRectangle(new XSolidBrush(Pale), new XRect(Margin, _y, ContentWidth, 15));
             }
 
-            DrawCells(cells, widths, bold ? _bodyBold : _body, Ink, 15);
+            DrawCells(cells, widths, bold ? _cellBold : _cell, Ink, 15);
             if (!bold) _gfx.DrawLine(new XPen(Line, 0.5), Margin, _y + 15, Margin + ContentWidth, _y + 15);
             _y += 15;
         }
@@ -320,16 +355,29 @@ public static class PdfReport
             }
         }
 
-        public void Note(string text)
+        public void Note(string text) => Wrapped(text, Margin, ContentWidth, _small, Muted, 10);
+
+        /// <summary>Список оговорок — те же, что под калькулятором на странице.</summary>
+        public void Bullets(string[] items)
         {
-            // Простой перенос по словам: строк мало, полноценная типографика тут не нужна.
-            var words = text.Split(' ');
+            foreach (string item in items)
+            {
+                Reserve(13);
+                _gfx.DrawString("—", _body, new XSolidBrush(Ink), new XRect(Margin, _y, 10, 11), XStringFormats.TopLeft);
+                Wrapped(item, Margin + 13, ContentWidth - 13, _body, Ink, 11.5);
+                _y += 3;
+            }
+        }
+
+        /// <summary>Простой перенос по словам: полноценная типографика тут не нужна.</summary>
+        private void Wrapped(string text, double x, double width, XFont font, XColor color, double lineHeight)
+        {
             var line = new System.Text.StringBuilder();
 
-            foreach (string word in words)
+            foreach (string word in text.Split(' '))
             {
                 string candidate = line.Length == 0 ? word : line + " " + word;
-                if (_gfx.MeasureString(candidate, _small).Width > ContentWidth)
+                if (line.Length > 0 && _gfx.MeasureString(candidate, font).Width > width)
                 {
                     Flush(line.ToString());
                     line.Clear().Append(word);
@@ -344,10 +392,35 @@ public static class PdfReport
 
             void Flush(string value)
             {
-                Reserve(12);
-                _gfx.DrawString(value, _small, new XSolidBrush(Muted), new XRect(Margin, _y, ContentWidth, 10), XStringFormats.TopLeft);
-                _y += 10;
+                Reserve(lineHeight + 2);
+                _gfx.DrawString(value, font, new XSolidBrush(color), new XRect(x, _y, width, lineHeight), XStringFormats.TopLeft);
+                _y += lineHeight;
             }
+        }
+
+        /// <summary>Схема размещения: плитка на светильник, как в калькуляторе.</summary>
+        public void Tiles(int count, int cap)
+        {
+            const double size = 21, gap = 4;
+            int shown = Math.Min(count, cap);
+            int total = shown + (count > cap ? 1 : 0);
+            int perRow = (int)((ContentWidth + gap) / (size + gap));
+            int rows = (int)Math.Ceiling(total / (double)perRow);
+
+            Reserve(rows * (size + gap));
+
+            for (int i = 0; i < total; i++)
+            {
+                double x = Margin + i % perRow * (size + gap);
+                double y = _y + i / perRow * (size + gap);
+                bool isOverflow = count > cap && i == total - 1;
+
+                _gfx.DrawRectangle(new XSolidBrush(isOverflow ? Pale : Yellow), new XRect(x, y, size, size));
+                string label = isOverflow ? "+" + (count - cap) : (i + 1).ToString(CultureInfo.InvariantCulture);
+                _gfx.DrawString(label, _tile, new XSolidBrush(Ink), new XRect(x, y, size, size), XStringFormats.Center);
+            }
+
+            _y += rows * (size + gap);
         }
     }
 }

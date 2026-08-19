@@ -319,8 +319,7 @@
       электрофурнитура на квартиру. Расчёт по нормам, результат сразу.
     </p>
     <div class="toolbar">
-      <button type="button" class="btn" id="btn-xlsx">Скачать Excel</button>
-      <button type="button" class="btn secondary" id="btn-pdf">Скачать PDF</button>
+      <button type="button" class="btn" id="btn-pdf">Скачать PDF</button>
     </div>
   </header>
 
@@ -786,9 +785,6 @@ async function boot() {
     });
   }
 
-  document.getElementById("btn-xlsx").addEventListener("click", function () {
-    downloadReport("btn-xlsx", "api/report/xlsx", "domeo-raschet.xlsx");
-  });
   document.getElementById("btn-pdf").addEventListener("click", function () {
     downloadReport("btn-pdf", "api/report/pdf", "domeo-raschet.pdf");
   });

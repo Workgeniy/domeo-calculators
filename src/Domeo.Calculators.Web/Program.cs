@@ -83,28 +83,6 @@ app.MapPost("/api/electrical", (ElectricalRequest request) =>
 });
 
 // Отчёт для передачи: обе части одним файлом.
-app.MapPost("/api/report/xlsx", (ReportRequest request) =>
-{
-    if (request.Lighting is null || request.Electrical?.Rooms is null || string.IsNullOrEmpty(request.Electrical.Tier))
-        return Results.BadRequest(new { ok = false, reason = "Нужны данные обоих калькуляторов." });
-
-    if (!ReferenceData.PriceTiers.ContainsKey(request.Electrical.Tier))
-        return Results.BadRequest(new { ok = false, reason = $"Неизвестный ценовой уровень: {request.Electrical.Tier}" });
-
-    LightingInput lightingInput = LightingInputRules.Normalize(request.Lighting);
-    Dictionary<string, RoomState> rooms = ElectricalInputRules.Normalize(request.Electrical.Rooms);
-
-    byte[] file = XlsxReport.Build(
-        lightingInput,
-        LightingCalculator.Calculate(lightingInput),
-        rooms,
-        ElectricalCalculator.Calculate(rooms, request.Electrical.Tier),
-        DateTimeOffset.Now);
-
-    string name = $"domeo-raschet-{DateTimeOffset.Now:yyyy-MM-dd-HHmm}.xlsx";
-    return Results.File(file, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", name);
-});
-
 app.MapPost("/api/report/pdf", (ReportRequest request) =>
 {
     if (request.Lighting is null || request.Electrical?.Rooms is null || string.IsNullOrEmpty(request.Electrical.Tier))
