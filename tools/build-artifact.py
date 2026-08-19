@@ -66,7 +66,8 @@ function localLighting(i) {
     fixtureLumen: Math.round(fixtureLumen), fixtureCount: count,
     fixtureWatt: i.fixtureWatt, totalWatt: totalWatt,
     monthlyKwhFormatted: kwh.toFixed(1), monthlyCostFormatted: (kwh * i.tariff).toFixed(0),
-    heightCoeff: hc, roomName: room.name } };
+    heightCoeff: hc, roomName: room.name,
+    areaPerFixtureFormatted: (i.area / count).toFixed(1) } };
 }
 
 function localElectrical(req) {

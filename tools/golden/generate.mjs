@@ -37,6 +37,8 @@ function calcLighting(area, height, roomId, wallId, lampId, fixtureWatt, hoursPe
     totalWatt: h,
     monthlyKwh: y.toFixed(1),
     monthlyCost: j.toFixed(0),
+    // блок «Рекомендация по размещению»: ~X м² на светильник
+    areaPerFixture: (area / p).toFixed(1),
     heightCoeff: l,
     roomName: t.name,
   };

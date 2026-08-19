@@ -41,6 +41,46 @@ public sealed record RoomState(
     }
 }
 
+/// <summary>
+/// Правила ввода из оригинала: обработчики onChange на полях комнаты.
+/// </summary>
+/// <remarks>
+/// Все числа тут целые — оригинал использует parseInt, поэтому 12.5 м² превращается
+/// в 12. Площадь и количество комнат не опускаются ниже 1, остальное — ниже 0.
+/// Расчёт этих правил не применяет: в оригинале они тоже живут только в UI.
+/// </remarks>
+public static class ElectricalInputRules
+{
+    /// <summary>Приводит состояние комнаты к допустимому виду: как onChange у оригинала.</summary>
+    public static RoomState Normalize(RoomState room)
+    {
+        ArgumentNullException.ThrowIfNull(room);
+
+        return room with
+        {
+            Area = Math.Max(1, Truncate(room.Area)),
+            Count = Math.Max(1, room.Count),
+            Outlets = Clamp(room.Outlets, 0, 20),
+            Switches = Math.Max(0, room.Switches),
+            Passthrough = Math.Max(0, room.Passthrough),
+            Usb = Math.Max(0, room.Usb),
+            Tv = Math.Max(0, room.Tv),
+            Internet = Math.Max(0, room.Internet),
+        };
+    }
+
+    public static Dictionary<string, RoomState> Normalize(IReadOnlyDictionary<string, RoomState> rooms)
+    {
+        ArgumentNullException.ThrowIfNull(rooms);
+        return rooms.ToDictionary(kv => kv.Key, kv => Normalize(kv.Value), StringComparer.Ordinal);
+    }
+
+    // parseInt отбрасывает дробную часть, а NaN оригинал заменяет на минимум.
+    private static double Truncate(double value) => double.IsNaN(value) ? 1 : Math.Truncate(value);
+
+    private static int Clamp(int value, int min, int max) => Math.Min(max, Math.Max(min, value));
+}
+
 public sealed record RoomBreakdown(
     string Key,
     string Label,

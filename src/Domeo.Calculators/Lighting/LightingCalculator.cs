@@ -21,6 +21,36 @@ public sealed record LightingInput(
     int HoursPerDay,
     double Tariff);
 
+/// <summary>
+/// Правила ввода из оригинала. На calcal.ru они живут в обработчиках onChange,
+/// то есть поле само «схлопывается» к допустимому значению прямо при наборе.
+/// </summary>
+/// <remarks>
+/// Расчёт эти правила не применяет — там их нет и в оригинале. Нормализация
+/// нужна на границе (UI и API), иначе, например, 100 часов в сутки дадут число.
+/// </remarks>
+public static class LightingInputRules
+{
+    /// <summary>Приводит ввод к допустимому виду: как onChange у оригинала.</summary>
+    public static LightingInput Normalize(LightingInput input)
+    {
+        ArgumentNullException.ThrowIfNull(input);
+
+        return input with
+        {
+            Area = Math.Max(0, Sane(input.Area)),
+            Height = Math.Max(0, Sane(input.Height)),
+            // Единственное поле с верхней границей: max(0, min(24, x)).
+            HoursPerDay = (int)Math.Max(0, Math.Min(24, input.HoursPerDay)),
+            Tariff = Math.Max(0, Sane(input.Tariff)),
+            FixtureWatt = Math.Max(1, input.FixtureWatt),
+        };
+    }
+
+    // parseFloat(...)||0 в оригинале превращает NaN в 0.
+    private static double Sane(double value) => double.IsNaN(value) ? 0 : value;
+}
+
 public sealed record LightingResult(
     int RequiredLux,
     int RequiredLumens,
@@ -33,7 +63,9 @@ public sealed record LightingResult(
     string MonthlyKwhFormatted,
     string MonthlyCostFormatted,
     double HeightCoeff,
-    string RoomName);
+    string RoomName,
+    double AreaPerFixture,
+    string AreaPerFixtureFormatted);
 
 /// <summary>
 /// Расчёт освещённости помещения — точный порт калькулятора с calcal.ru.
@@ -87,7 +119,10 @@ public static class LightingCalculator
             MonthlyKwhFormatted: JsNumber.ToFixed(monthlyKwh, 1),
             MonthlyCostFormatted: JsNumber.ToFixed(monthlyCost, 0),
             HeightCoeff: heightCoeff,
-            RoomName: room.Name);
+            RoomName: room.Name,
+            // Оригинал показывает это в блоке «Рекомендация по размещению».
+            AreaPerFixture: input.Area / fixtureCount,
+            AreaPerFixtureFormatted: JsNumber.ToFixed(input.Area / fixtureCount, 1));
     }
 
     /// <summary>Ступенчатая поправка на высоту потолка: &lt;=2.7 → 1.0, &lt;=3.0 → 1.2, &lt;=3.5 → 1.5, выше → 2.0.</summary>

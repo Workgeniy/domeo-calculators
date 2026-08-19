@@ -61,7 +61,8 @@ app.MapGet("/api/reference", () => Results.Ok(new
 // Считает библиотека — та же, что покрыта golden-тестами.
 app.MapPost("/api/lighting", (LightingInput input) =>
 {
-    LightingResult? result = LightingCalculator.Calculate(input);
+    // На границе применяем правила ввода оригинала: там они в обработчиках полей.
+    LightingResult? result = LightingCalculator.Calculate(LightingInputRules.Normalize(input));
     return result is null
         ? Results.Ok(new { ok = false, reason = "Площадь, высота и мощность должны быть больше нуля." })
         : Results.Ok(new { ok = true, result });
@@ -75,7 +76,8 @@ app.MapPost("/api/electrical", (ElectricalRequest request) =>
     if (!ReferenceData.PriceTiers.ContainsKey(request.Tier))
         return Results.BadRequest(new { ok = false, reason = $"Неизвестный ценовой уровень: {request.Tier}" });
 
-    ElectricalResult result = ElectricalCalculator.Calculate(request.Rooms, request.Tier);
+    ElectricalResult result = ElectricalCalculator.Calculate(
+        ElectricalInputRules.Normalize(request.Rooms), request.Tier);
     return Results.Ok(new { ok = true, result });
 });
 

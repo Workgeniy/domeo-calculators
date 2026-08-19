@@ -41,7 +41,7 @@ internal sealed record LightingCaseInput(
 internal sealed record LightingExpected(
     int RequiredLux, int RequiredLumens, int FixtureLumen, int FixtureCount,
     int FixtureWatt, int TotalWatt, string MonthlyKwh, string MonthlyCost,
-    double HeightCoeff, string RoomName);
+    double HeightCoeff, string RoomName, string AreaPerFixture);
 
 // ---------- электрофурнитура ----------
 

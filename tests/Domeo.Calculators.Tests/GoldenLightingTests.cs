@@ -40,5 +40,6 @@ public class GoldenLightingTests
         // Именно эти две строки видит пользователь — сверяем посимвольно.
         Assert.Equal(e.MonthlyKwh, actual.MonthlyKwhFormatted);
         Assert.Equal(e.MonthlyCost, actual.MonthlyCostFormatted);
+        Assert.Equal(e.AreaPerFixture, actual.AreaPerFixtureFormatted);
     }
 }
