@@ -3,13 +3,13 @@
   "chunk": "/_next/static/chunks/224b6a5bed7a0453.js",
   "capturedAt": "2026-08-19",
   "roomPresets": {
-    "kitchen":  { "label": "Кухня",    "outletsMin": 8, "outletsMax": 12, "switches": 2, "passthrough": 0, "usb": 2, "tv": 1, "internet": 0, "defaultArea": 10, "enabledByDefault": true, "icon": "🍳" },
-    "living":   { "label": "Гостиная", "outletsMin": 6, "outletsMax": 10, "switches": 2, "passthrough": 1, "usb": 2, "tv": 1, "internet": 1, "defaultArea": 20, "enabledByDefault": true, "icon": "🛋️" },
-    "bedroom":  { "label": "Спальня",  "outletsMin": 4, "outletsMax": 6,  "switches": 1, "passthrough": 1, "usb": 2, "tv": 1, "internet": 0, "defaultArea": 15, "enabledByDefault": true, "icon": "🛏️" },
-    "bathroom": { "label": "Ванная",   "outletsMin": 2, "outletsMax": 3,  "switches": 1, "passthrough": 0, "usb": 0, "tv": 0, "internet": 0, "defaultArea": 5,  "enabledByDefault": true, "icon": "🛁" },
-    "hallway":  { "label": "Прихожая", "outletsMin": 2, "outletsMax": 3,  "switches": 1, "passthrough": 1, "usb": 0, "tv": 0, "internet": 1, "defaultArea": 8,  "enabledByDefault": true, "icon": "🚪" },
-    "nursery":  { "label": "Детская",  "outletsMin": 4, "outletsMax": 6,  "switches": 1, "passthrough": 1, "usb": 2, "tv": 1, "internet": 1, "defaultArea": 14, "enabledByDefault": false, "icon": "🧸" },
-    "office":   { "label": "Кабинет",  "outletsMin": 6, "outletsMax": 8,  "switches": 1, "passthrough": 0, "usb": 2, "tv": 0, "internet": 1, "defaultArea": 12, "enabledByDefault": false, "icon": "💼" }
+    "kitchen":  { "label": "Кухня",    "outletsMin": 8, "outletsMax": 12, "switches": 2, "passthrough": 0, "usb": 2, "tv": 1, "internet": 0, "defaultArea": 10, "enabledByDefault": true, "icon": "🍳", "description": "Много техники: холодильник, плита, посудомойка, микроволновка, чайник, вытяжка" },
+    "living":   { "label": "Гостиная", "outletsMin": 6, "outletsMax": 10, "switches": 2, "passthrough": 1, "usb": 2, "tv": 1, "internet": 1, "defaultArea": 20, "enabledByDefault": true, "icon": "🛋️", "description": "ТВ, аудиосистема, торшеры, зарядные устройства, кондиционер" },
+    "bedroom":  { "label": "Спальня",  "outletsMin": 4, "outletsMax": 6,  "switches": 1, "passthrough": 1, "usb": 2, "tv": 1, "internet": 0, "defaultArea": 15, "enabledByDefault": true, "icon": "🛏️", "description": "Прикроватные розетки, ТВ, светильники, зарядки телефонов" },
+    "bathroom": { "label": "Ванная",   "outletsMin": 2, "outletsMax": 3,  "switches": 1, "passthrough": 0, "usb": 0, "tv": 0, "internet": 0, "defaultArea": 5,  "enabledByDefault": true, "icon": "🛁", "description": "Стиральная машина, фен, бойлер. Только влагозащищённые (IP44)" },
+    "hallway":  { "label": "Прихожая", "outletsMin": 2, "outletsMax": 3,  "switches": 1, "passthrough": 1, "usb": 0, "tv": 0, "internet": 1, "defaultArea": 8,  "enabledByDefault": true, "icon": "🚪", "description": "Роутер, сушилка для обуви, освещение с проходным выключателем" },
+    "nursery":  { "label": "Детская",  "outletsMin": 4, "outletsMax": 6,  "switches": 1, "passthrough": 1, "usb": 2, "tv": 1, "internet": 1, "defaultArea": 14, "enabledByDefault": false, "icon": "🧸", "description": "Компьютер, настольная лампа, ночник, зарядки. Розетки с защитой от детей" },
+    "office":   { "label": "Кабинет",  "outletsMin": 6, "outletsMax": 8,  "switches": 1, "passthrough": 0, "usb": 2, "tv": 0, "internet": 1, "defaultArea": 12, "enabledByDefault": false, "icon": "💼", "description": "Компьютер, монитор, принтер, настольная лампа, зарядные устройства" }
   },
   "priceTiers": {
     "budget":  { "label": "Schneider Electric Glossa", "tier": "Бюджет",  "outlet": 200, "switch": 250,  "usbOutlet": 1200, "tvOutlet": 350,  "internetOutlet": 350,  "frame1": 120, "frame2": 200, "frame3": 280,  "frame4": 360,  "frame5": 440,  "box": 45 },

@@ -191,6 +191,12 @@
   }
 
   .chip .ic { font-size: 16px; }
+
+  /* образец цвета стен — в оригинале кружок серого тона */
+  .swatch { width: 15px; height: 15px; border-radius: 50%; border: 1px solid rgba(10,10,10,0.22); }
+  .swatch[data-tone="light"]  { background: #F4F4F5; }
+  .swatch[data-tone="medium"] { background: #A1A1AA; }
+  .swatch[data-tone="dark"]   { background: #3F3F46; }
   .chip .sub { color: var(--ink-3); font-weight: 500; font-variant-numeric: tabular-nums; }
   .chip[aria-pressed="true"] .sub { color: var(--ink-2); }
 
@@ -262,6 +268,7 @@
   .room .field > label { font-size: 11px; font-weight: 600; color: var(--ink-2); }
   .room input[type="number"] { padding: 8px 10px; font-size: 14px; border-radius: 13px; background: var(--card-solid); }
   .room .hint { font-size: 11.5px; color: var(--ink-3); }
+  .room-desc { margin: 0; font-size: 11.5px; line-height: 1.45; color: var(--ink-3); }
 
   /* ---------- таблица ---------- */
   .table-scroll { overflow-x: auto; margin-top: 22px; border-radius: 24px; border: 1px solid var(--line-2); }
@@ -553,7 +560,9 @@ function buildLightingControls() {
     i => { light.roomType = i.id; buildLightingControls(); renderLighting(); });
 
   chipGroup(document.getElementById("l-walls"),
-    ref.lighting.wallColors.map(w => ({ id: w.id, html: w.name })),
+    ref.lighting.wallColors.map(w => ({
+      id: w.id, html: "<span class='swatch' data-tone='" + w.id + "'></span>" + w.name
+    })),
     i => light.wallColor === i.id,
     i => { light.wallColor = i.id; buildLightingControls(); renderLighting(); });
 
@@ -562,16 +571,24 @@ function buildLightingControls() {
       id: l.id, html: "<span class='ic'>" + l.icon + "</span>" + l.name + " <span class='sub'>" + l.efficiency + "</span>"
     })),
     i => light.lampType === i.id,
-    i => { light.lampType = i.id; buildLightingControls(); renderLighting(); });
+    i => {
+      light.lampType = i.id;
+      selectedPreset = null;   // оригинал: p(e.id), N(null)
+      buildLightingControls();
+      renderLighting();
+    });
 
   chipGroup(document.getElementById("l-presets"),
     ref.lighting.fixturePresets.map(p => ({
-      id: p.name, watt: p.watt, html: p.name + " <span class='sub'>" + p.watt + " Вт</span>"
+      id: p.name, watt: p.watt,
+      html: p.name + " <span class='sub'>" + p.watt + " Вт / " + p.lumen + " лм</span>"
     })),
     i => selectedPreset === i.id,
     i => {
+      // Оригинал: N(e.name), h(e.watt), p("led") — пресет переключает и тип лампы.
       selectedPreset = i.id;
       document.getElementById("l-watt").value = i.watt;
+      light.lampType = "led";
       buildLightingControls();
       renderLighting();
     });
@@ -614,6 +631,12 @@ function buildRooms() {
     });
     head.appendChild(toggle);
     card.appendChild(head);
+
+    // Оригинал показывает подсказку по комнате всегда, а не только у включённых.
+    const desc = document.createElement("p");
+    desc.className = "room-desc";
+    desc.textContent = preset.description;
+    card.appendChild(desc);
 
     if (state.enabled) {
       const fields = [

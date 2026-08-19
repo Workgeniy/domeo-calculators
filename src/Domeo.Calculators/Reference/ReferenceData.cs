@@ -12,7 +12,8 @@ public sealed record HeightCoeffStep(double? MaxHeight, double Coeff);
 
 public sealed record RoomPreset(
     string Label, int OutletsMin, int OutletsMax, int Switches, int Passthrough,
-    int Usb, int Tv, int Internet, double DefaultArea, bool EnabledByDefault, string Icon);
+    int Usb, int Tv, int Internet, double DefaultArea, bool EnabledByDefault, string Icon,
+    string Description);
 
 public sealed record PriceTier(
     string Label, string Tier, int Outlet, int Switch, int UsbOutlet, int TvOutlet,
