@@ -287,6 +287,67 @@
 
   .foot { color: var(--ink-3); font-size: 13px; text-align: center; }
 
+  /* ---------- кнопки отчёта ---------- */
+  .toolbar { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 20px; border-radius: 999px; cursor: pointer;
+    font-family: inherit; font-size: 14px; font-weight: 700;
+    border: 1px solid var(--ink); background: var(--ink); color: var(--ground);
+    transition: transform 0.12s, opacity 0.15s;
+  }
+
+  .btn:hover { transform: translateY(-1px); }
+  .btn:focus-visible { outline: 2px solid var(--yellow-deep); outline-offset: 3px; }
+  .btn[disabled] { opacity: 0.55; cursor: progress; transform: none; }
+
+  .btn.secondary { background: var(--yellow); border-color: var(--yellow-deep); color: var(--ink); }
+
+  /* Параметры текстом — нужны только на бумаге, на экране их заменяют сами поля. */
+  .print-params { display: none; }
+
+  /* ---------- печать ---------- */
+  @media print {
+    @page { size: A4; margin: 14mm; }
+
+    :root { --ground: #FFFFFF; }
+
+    body {
+      background: #FFFFFF;
+      font-size: 11pt;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .wrap { max-width: none; padding: 0; gap: 14px; }
+    .masthead { text-align: left; align-items: flex-start; padding: 0; }
+    h1 { font-size: 22pt; }
+    .lede { font-size: 10pt; max-width: none; }
+
+    /* органы управления и кнопки на бумаге не нужны */
+    .toolbar, .stack, .placement .grid { display: none !important; }
+
+    .print-params { display: block; margin-bottom: 12px; }
+    .print-params dl { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px 20px; }
+    .print-params dl > div { display: flex; gap: 8px; border-bottom: 1px dotted #CCC; padding: 2px 0; }
+    .print-params dt { color: #555; }
+    .print-params dd { margin: 0 0 0 auto; font-weight: 700; }
+
+    .card {
+      background: #FFFFFF; border: 1px solid #DDD; border-radius: 10px;
+      box-shadow: none; backdrop-filter: none; padding: 14px;
+      break-inside: avoid; page-break-inside: avoid;
+    }
+
+    .panel { grid-template-columns: minmax(0, 1fr); gap: 0; }
+    .hero { border-radius: 10px; padding: 14px; break-inside: avoid; }
+    .hero .value { font-size: 26pt; }
+    table { font-size: 10pt; }
+    tr, .placement { break-inside: avoid; }
+    .notes { break-before: auto; }
+  }
+
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
@@ -300,11 +361,16 @@
       Два калькулятора для ремонта: сколько нужно светильников и во сколько обойдётся
       электрофурнитура на квартиру. Расчёт по нормам, результат сразу.
     </p>
+    <div class="toolbar">
+      <button type="button" class="btn" id="btn-xlsx">Скачать Excel</button>
+      <button type="button" class="btn secondary" id="btn-print">Печать / PDF</button>
+    </div>
   </header>
 
   <section class="card">
     <h2><span class="ic">💡</span> Освещённость помещения</h2>
     <p class="sub">Расчёт по нормам СП 52.13330.2016</p>
+    <div class="print-params" id="l-print"></div>
 
     <div class="panel">
       <div class="stack">
@@ -362,6 +428,7 @@
   <section class="card">
     <h2><span class="ic">🔌</span> Электрофурнитура на квартиру</h2>
     <p class="sub">Розетки, выключатели и слаботочка с учётом норм ПУЭ</p>
+    <div class="print-params" id="e-print"></div>
 
     <div class="panel">
       <div class="stack">
@@ -471,6 +538,7 @@ async function renderLighting() {
         metric("Расход в месяц", r.monthlyKwhFormatted + " кВт·ч") +
         metric("Стоимость в месяц", nf.format(+r.monthlyCostFormatted) + " ₽") +
       "</dl>" + placement(r, num("l-area"));
+    fillPrintParams();
   } catch (err) {
     box.innerHTML = "<p class='empty'>Не удалось получить расчёт: " + err.message + "</p>";
   }
@@ -513,9 +581,48 @@ async function renderElectrical() {
       "</td><td>" + nf.format(r.totalCableMeters) + " м</td><td>" + nf.format(r.totalCost) + " ₽</td></tr></tfoot>";
 
     document.getElementById("e-table").innerHTML = html;
+    fillPrintParams();
   } catch (err) {
     box.innerHTML = "<p class='empty'>Не удалось получить расчёт: " + err.message + "</p>";
   }
+}
+
+function pairs(items) {
+  return "<dl>" + items.map(function (i) {
+    return "<div><dt>" + i[0] + "</dt><dd>" + i[1] + "</dd></div>";
+  }).join("") + "</dl>";
+}
+
+function nameOf(list, id, field) {
+  const found = list.find(function (x) { return x.id === id; });
+  return found ? found[field] : id;
+}
+
+// На бумаге поля ввода скрыты, поэтому вводные дублируются текстом.
+function fillPrintParams() {
+  document.getElementById("l-print").innerHTML = pairs([
+    ["Тип помещения", nameOf(ref.lighting.roomTypes, light.roomType, "name")],
+    ["Площадь", num("l-area") + " м²"],
+    ["Высота потолка", num("l-height") + " м"],
+    ["Цвет стен", nameOf(ref.lighting.wallColors, light.wallColor, "name")],
+    ["Тип лампы", nameOf(ref.lighting.lampTypes, light.lampType, "name")],
+    ["Мощность светильника", num("l-watt") + " Вт"],
+    ["Часов в день", num("l-hours")],
+    ["Тариф", num("l-tariff") + " ₽/кВт·ч"]
+  ]);
+
+  const on = roomOrder.filter(function (k) { return rooms[k].enabled; });
+  document.getElementById("e-print").innerHTML = pairs(
+    [["Ценовой уровень", tierLabel()]].concat(on.map(function (k) {
+      const r = rooms[k];
+      return [presetByKey[k].label, r.area + " м², " + r.outlets + " роз., " + (r.switches + r.passthrough) + " выкл."];
+    }))
+  );
+}
+
+function tierLabel() {
+  const found = ref.electrical.priceTiers.find(function (t) { return t.key === tier; });
+  return found ? found.tier.tier + " — " + found.tier.label : tier;
 }
 
 function chipGroup(host, items, isActive, onPick) {
@@ -671,6 +778,47 @@ function buildRooms() {
   }
 }
 
+async function downloadReport() {
+  const btn = document.getElementById("btn-xlsx");
+  const label = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = "Готовлю файл…";
+
+  try {
+    const res = await fetch("api/report/xlsx", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        lighting: {
+          area: num("l-area"), height: num("l-height"),
+          roomType: light.roomType, wallColor: light.wallColor, lampType: light.lampType,
+          fixtureWatt: num("l-watt"), hoursPerDay: num("l-hours"), tariff: num("l-tariff")
+        },
+        electrical: { rooms: rooms, tier: tier }
+      })
+    });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+
+    const blob = await res.blob();
+    const name = (res.headers.get("Content-Disposition") || "").match(/filename=\"?([^\";]+)/);
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = name ? name[1] : "domeo-raschet.xlsx";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    btn.textContent = "Не получилось: " + err.message;
+    setTimeout(function () { btn.textContent = label; btn.disabled = false; }, 4000);
+    return;
+  }
+
+  btn.textContent = label;
+  btn.disabled = false;
+}
+
 async function boot() {
   try {
     const res = await fetch("api/reference");
@@ -707,6 +855,9 @@ async function boot() {
       pushLight();
     });
   }
+
+  document.getElementById("btn-xlsx").addEventListener("click", downloadReport);
+  document.getElementById("btn-print").addEventListener("click", function () { window.print(); });
 
   buildLightingControls();
   buildTierControls();

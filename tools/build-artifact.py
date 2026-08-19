@@ -115,6 +115,11 @@ script = re.sub(r'  try \{\n    const res = await fetch\("api/reference"\);.*?\n
                 '  ref = REF;\n', script, flags=re.S)
 script = local + script
 
+# В артефакте нет сервера, поэтому выгрузка Excel убирается — остаётся печать.
+markup = re.sub(r'\s*<button type="button" class="btn" id="btn-xlsx">[^<]*</button>', '', markup)
+script = re.sub(r'async function downloadReport\(\) \{.*?\n\}\n\n', '', script, flags=re.S)
+script = re.sub(r'[ ]*document\.getElementById\("btn-xlsx"\)\.addEventListener[^\n]*\n', '', script)
+
 markup = markup.replace(
     'электрофурнитура на квартиру. Расчёт по нормам, результат сразу.',
     'электрофурнитура на квартиру. Автономная копия — рабочая версия считает на сервере.')
