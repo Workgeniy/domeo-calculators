@@ -14,6 +14,8 @@ if (string.IsNullOrEmpty(builder.Configuration["ASPNETCORE_URLS"]))
     builder.WebHost.UseUrls("http://localhost:5099");
 }
 
+builder.Services.AddSingleton<PagePdfRenderer>();
+
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
     options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
@@ -82,8 +84,8 @@ app.MapPost("/api/electrical", (ElectricalRequest request) =>
     return Results.Ok(new { ok = true, result });
 });
 
-// Отчёт для передачи: обе части одним файлом.
-app.MapPost("/api/report/pdf", (ReportRequest request) =>
+// Отчёт — это сама страница, снятая в PDF headless-браузером.
+app.MapPost("/api/report/pdf", async (ReportRequest request, PagePdfRenderer renderer, CancellationToken token) =>
 {
     if (request.Lighting is null || request.Electrical?.Rooms is null || string.IsNullOrEmpty(request.Electrical.Tier))
         return Results.BadRequest(new { ok = false, reason = "Нужны данные обоих калькуляторов." });
@@ -91,16 +93,17 @@ app.MapPost("/api/report/pdf", (ReportRequest request) =>
     if (!ReferenceData.PriceTiers.ContainsKey(request.Electrical.Tier))
         return Results.BadRequest(new { ok = false, reason = $"Неизвестный ценовой уровень: {request.Electrical.Tier}" });
 
-    LightingInput lightingInput = LightingInputRules.Normalize(request.Lighting);
-    Dictionary<string, RoomState> rooms = ElectricalInputRules.Normalize(request.Electrical.Rooms);
+    string state = JsonSerializer.Serialize(new
+    {
+        lighting = LightingInputRules.Normalize(request.Lighting),
+        electrical = new
+        {
+            rooms = ElectricalInputRules.Normalize(request.Electrical.Rooms),
+            tier = request.Electrical.Tier,
+        },
+    }, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
 
-    byte[] file = PdfReport.Build(
-        lightingInput,
-        LightingCalculator.Calculate(lightingInput),
-        rooms,
-        ElectricalCalculator.Calculate(rooms, request.Electrical.Tier),
-        DateTimeOffset.Now);
-
+    byte[] file = await renderer.RenderAsync(state, token);
     string name = $"domeo-raschet-{DateTimeOffset.Now:yyyy-MM-dd-HHmm}.pdf";
     return Results.File(file, "application/pdf", name);
 });

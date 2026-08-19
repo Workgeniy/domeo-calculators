@@ -305,6 +305,33 @@
   .btn.secondary { background: var(--yellow); border-color: var(--yellow-deep); color: var(--ink); }
 
 
+  /* ---------- печать: та же вёрстка, ужатая под A4 ---------- */
+  @media print {
+    @page { size: A4; margin: 7mm; }
+
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      background-attachment: initial;
+    }
+
+    /* Держим настольную ширину и масштабируем целиком: иначе лист уже 860px
+       и сетка схлопнулась бы в одну колонку, то есть вёрстка стала бы другой. */
+    .wrap { width: 1120px; max-width: none; zoom: 0.655; padding: 0 0 10px; gap: 18px; }
+
+    /* Медиазапросы считают ширину листа, а не масштаб, поэтому колонки задаём явно.
+       Карточки комнат не трогаем: auto-fit сам разложит их как на экране. */
+    .panel { grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr) !important; }
+
+    /* Карточку целиком не удерживаем — она выше страницы, и удержание
+       оставляло треть листа пустой. Не рвём только цельные блоки. */
+    .card { border-radius: 28px; }
+    .room, .hero, .placement, tr { break-inside: avoid; page-break-inside: avoid; }
+
+    .toolbar { display: none !important; }
+    .table-scroll { overflow: visible; }
+  }
+
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
@@ -748,6 +775,36 @@ async function downloadReport(buttonId, path, fallbackName) {
   btn.disabled = false;
 }
 
+// Печать открывает эту же страницу с состоянием в адресе — так PDF получается
+// из той же вёрстки, а не из отдельной, которую пришлось бы держать в синхроне.
+function applyPrintState() {
+  const raw = new URLSearchParams(location.search).get("print");
+  if (!raw) return false;
+
+  try {
+    const bytes = Uint8Array.from(atob(raw), function (c) { return c.charCodeAt(0); });
+    const state = JSON.parse(new TextDecoder().decode(bytes));
+
+    const l = state.lighting;
+    document.getElementById("l-area").value = l.area;
+    document.getElementById("l-height").value = l.height;
+    document.getElementById("l-watt").value = l.fixtureWatt;
+    document.getElementById("l-hours").value = l.hoursPerDay;
+    document.getElementById("l-tariff").value = l.tariff;
+    light.roomType = l.roomType;
+    light.wallColor = l.wallColor;
+    light.lampType = l.lampType;
+
+    tier = state.electrical.tier;
+    rooms = state.electrical.rooms;
+
+    document.documentElement.setAttribute("data-theme", "light");
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
 async function boot() {
   try {
     const res = await fetch("api/reference");
@@ -763,6 +820,8 @@ async function boot() {
   roomOrder = ref.electrical.roomOrder;
   for (const item of ref.electrical.roomPresets) presetByKey[item.key] = item.preset;
   rooms = ref.electrical.defaultRooms;
+
+  applyPrintState();
 
   // Правила ровно как в обработчиках оригинала: поле схлопывается при наборе.
   const clamps = {

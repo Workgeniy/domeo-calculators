@@ -51,7 +51,7 @@ dotnet run --project src/Domeo.Calculators.Web
 | `GET /api/reference` | Справочники и дефолтное состояние комнат |
 | `POST /api/lighting` | Расчёт освещённости |
 | `POST /api/electrical` | Комплектация и смета электрики |
-| `POST /api/report/pdf` | Отчёт A4 в PDF по обоим калькуляторам |
+| `POST /api/report/pdf` | PDF-снимок самой страницы с переданным состоянием |
 
 Консольный прогон без браузера:
 

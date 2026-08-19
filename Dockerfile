@@ -12,6 +12,14 @@ RUN dotnet publish src/Domeo.Calculators.Web/Domeo.Calculators.Web.csproj \
 
 # Рантайм
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
+
+# Отчёт — это снимок самой страницы, поэтому нужен браузер.
+# Шрифты отдельно: в образе .NET нет ни одного с кириллицей,
+# а без noto-color-emoji иконки комнат печатаются квадратами.
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends chromium fonts-dejavu-core fonts-noto-color-emoji \
+ && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 COPY --from=build /app/publish .
 
