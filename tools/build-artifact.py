@@ -115,8 +115,6 @@ script = re.sub(r'  try \{\n    const res = await fetch\("api/reference"\);.*?\n
                 '  ref = REF;\n', script, flags=re.S)
 script = local + script
 
-markup = markup.replace('<span class="dot"></span> Считает бэкенд',
-                        '<span class="dot"></span> Расчёт в браузере')
 markup = markup.replace(
     'электрофурнитура на квартиру. Расчёт по нормам, результат сразу.',
     'электрофурнитура на квартиру. Автономная копия — рабочая версия считает на сервере.')
