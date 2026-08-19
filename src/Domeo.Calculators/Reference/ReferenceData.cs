@@ -4,15 +4,15 @@ using System.Text.Json;
 
 namespace Domeo.Calculators.Reference;
 
-public sealed record RoomLightingNorm(string Id, string Name, int Lux);
+public sealed record RoomLightingNorm(string Id, string Name, int Lux, string Icon);
 public sealed record WallColor(string Id, string Name, double Coeff, string Desc);
-public sealed record LampType(string Id, string Name, int Efficiency);
+public sealed record LampType(string Id, string Name, int Efficiency, string Icon);
 public sealed record FixturePreset(string Name, int Watt, int Lumen);
 public sealed record HeightCoeffStep(double? MaxHeight, double Coeff);
 
 public sealed record RoomPreset(
     string Label, int OutletsMin, int OutletsMax, int Switches, int Passthrough,
-    int Usb, int Tv, int Internet, double DefaultArea, bool EnabledByDefault);
+    int Usb, int Tv, int Internet, double DefaultArea, bool EnabledByDefault, string Icon);
 
 public sealed record PriceTier(
     string Label, string Tier, int Outlet, int Switch, int UsbOutlet, int TvOutlet,

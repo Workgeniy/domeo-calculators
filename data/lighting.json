@@ -3,14 +3,14 @@
   "chunk": "/_next/static/chunks/387cb267058b45ea.js",
   "capturedAt": "2026-08-19",
   "roomTypes": [
-    { "id": "living",   "name": "Гостиная", "lux": 150 },
-    { "id": "bedroom",  "name": "Спальня",  "lux": 100 },
-    { "id": "kitchen",  "name": "Кухня",    "lux": 200 },
-    { "id": "bathroom", "name": "Ванная",   "lux": 200 },
-    { "id": "office",   "name": "Кабинет",  "lux": 300 },
-    { "id": "nursery",  "name": "Детская",  "lux": 200 },
-    { "id": "hallway",  "name": "Коридор",  "lux": 100 },
-    { "id": "garage",   "name": "Гараж",    "lux": 100 }
+    { "id": "living",   "name": "Гостиная", "lux": 150, "icon": "🛋" },
+    { "id": "bedroom",  "name": "Спальня",  "lux": 100, "icon": "🛏" },
+    { "id": "kitchen",  "name": "Кухня",    "lux": 200, "icon": "🍳" },
+    { "id": "bathroom", "name": "Ванная",   "lux": 200, "icon": "🚿" },
+    { "id": "office",   "name": "Кабинет",  "lux": 300, "icon": "💼" },
+    { "id": "nursery",  "name": "Детская",  "lux": 200, "icon": "🧸" },
+    { "id": "hallway",  "name": "Коридор",  "lux": 100, "icon": "🚪" },
+    { "id": "garage",   "name": "Гараж",    "lux": 100, "icon": "🚗" }
   ],
   "wallColors": [
     { "id": "light",  "name": "Светлые стены", "coeff": 0.7, "desc": "Белый, бежевый, пастельные тона" },
@@ -18,10 +18,10 @@
     { "id": "dark",   "name": "Тёмные стены",  "coeff": 0.3, "desc": "Коричневый, бордовый, тёмно-серый" }
   ],
   "lampTypes": [
-    { "id": "led",          "name": "LED (светодиодная)", "efficiency": 100 },
-    { "id": "fluorescent",  "name": "Люминесцентная",     "efficiency": 60 },
-    { "id": "halogen",      "name": "Галогенная",         "efficiency": 20 },
-    { "id": "incandescent", "name": "Накаливания",        "efficiency": 12 }
+    { "id": "led",          "name": "LED (светодиодная)", "efficiency": 100, "icon": "💡" },
+    { "id": "fluorescent",  "name": "Люминесцентная",     "efficiency": 60, "icon": "🔆" },
+    { "id": "halogen",      "name": "Галогенная",         "efficiency": 20, "icon": "🔅" },
+    { "id": "incandescent", "name": "Накаливания",        "efficiency": 12, "icon": "🔥" }
   ],
   "fixturePresets": [
     { "name": "Точечный LED",      "watt": 7,  "lumen": 700 },

@@ -3,13 +3,13 @@
   "chunk": "/_next/static/chunks/224b6a5bed7a0453.js",
   "capturedAt": "2026-08-19",
   "roomPresets": {
-    "kitchen":  { "label": "Кухня",    "outletsMin": 8, "outletsMax": 12, "switches": 2, "passthrough": 0, "usb": 2, "tv": 1, "internet": 0, "defaultArea": 10, "enabledByDefault": true },
-    "living":   { "label": "Гостиная", "outletsMin": 6, "outletsMax": 10, "switches": 2, "passthrough": 1, "usb": 2, "tv": 1, "internet": 1, "defaultArea": 20, "enabledByDefault": true },
-    "bedroom":  { "label": "Спальня",  "outletsMin": 4, "outletsMax": 6,  "switches": 1, "passthrough": 1, "usb": 2, "tv": 1, "internet": 0, "defaultArea": 15, "enabledByDefault": true },
-    "bathroom": { "label": "Ванная",   "outletsMin": 2, "outletsMax": 3,  "switches": 1, "passthrough": 0, "usb": 0, "tv": 0, "internet": 0, "defaultArea": 5,  "enabledByDefault": true },
-    "hallway":  { "label": "Прихожая", "outletsMin": 2, "outletsMax": 3,  "switches": 1, "passthrough": 1, "usb": 0, "tv": 0, "internet": 1, "defaultArea": 8,  "enabledByDefault": true },
-    "nursery":  { "label": "Детская",  "outletsMin": 4, "outletsMax": 6,  "switches": 1, "passthrough": 1, "usb": 2, "tv": 1, "internet": 1, "defaultArea": 14, "enabledByDefault": false },
-    "office":   { "label": "Кабинет",  "outletsMin": 6, "outletsMax": 8,  "switches": 1, "passthrough": 0, "usb": 2, "tv": 0, "internet": 1, "defaultArea": 12, "enabledByDefault": false }
+    "kitchen":  { "label": "Кухня",    "outletsMin": 8, "outletsMax": 12, "switches": 2, "passthrough": 0, "usb": 2, "tv": 1, "internet": 0, "defaultArea": 10, "enabledByDefault": true, "icon": "🍳" },
+    "living":   { "label": "Гостиная", "outletsMin": 6, "outletsMax": 10, "switches": 2, "passthrough": 1, "usb": 2, "tv": 1, "internet": 1, "defaultArea": 20, "enabledByDefault": true, "icon": "🛋️" },
+    "bedroom":  { "label": "Спальня",  "outletsMin": 4, "outletsMax": 6,  "switches": 1, "passthrough": 1, "usb": 2, "tv": 1, "internet": 0, "defaultArea": 15, "enabledByDefault": true, "icon": "🛏️" },
+    "bathroom": { "label": "Ванная",   "outletsMin": 2, "outletsMax": 3,  "switches": 1, "passthrough": 0, "usb": 0, "tv": 0, "internet": 0, "defaultArea": 5,  "enabledByDefault": true, "icon": "🛁" },
+    "hallway":  { "label": "Прихожая", "outletsMin": 2, "outletsMax": 3,  "switches": 1, "passthrough": 1, "usb": 0, "tv": 0, "internet": 1, "defaultArea": 8,  "enabledByDefault": true, "icon": "🚪" },
+    "nursery":  { "label": "Детская",  "outletsMin": 4, "outletsMax": 6,  "switches": 1, "passthrough": 1, "usb": 2, "tv": 1, "internet": 1, "defaultArea": 14, "enabledByDefault": false, "icon": "🧸" },
+    "office":   { "label": "Кабинет",  "outletsMin": 6, "outletsMax": 8,  "switches": 1, "passthrough": 0, "usb": 2, "tv": 0, "internet": 1, "defaultArea": 12, "enabledByDefault": false, "icon": "💼" }
   },
   "priceTiers": {
     "budget":  { "label": "Schneider Electric Glossa", "tier": "Бюджет",  "outlet": 200, "switch": 250,  "usbOutlet": 1200, "tvOutlet": 350,  "internetOutlet": 350,  "frame1": 120, "frame2": 200, "frame3": 280,  "frame4": 360,  "frame5": 440,  "box": 45 },
