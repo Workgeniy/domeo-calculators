@@ -1,0 +1,41 @@
+{
+  "source": "https://calcal.ru/osveshchyonnost-pomeshcheniya",
+  "chunk": "/_next/static/chunks/387cb267058b45ea.js",
+  "capturedAt": "2026-08-19",
+  "roomTypes": [
+    { "id": "living",   "name": "Гостиная", "lux": 150 },
+    { "id": "bedroom",  "name": "Спальня",  "lux": 100 },
+    { "id": "kitchen",  "name": "Кухня",    "lux": 200 },
+    { "id": "bathroom", "name": "Ванная",   "lux": 200 },
+    { "id": "office",   "name": "Кабинет",  "lux": 300 },
+    { "id": "nursery",  "name": "Детская",  "lux": 200 },
+    { "id": "hallway",  "name": "Коридор",  "lux": 100 },
+    { "id": "garage",   "name": "Гараж",    "lux": 100 }
+  ],
+  "wallColors": [
+    { "id": "light",  "name": "Светлые стены", "coeff": 0.7, "desc": "Белый, бежевый, пастельные тона" },
+    { "id": "medium", "name": "Средние стены", "coeff": 0.5, "desc": "Серый, зелёный, голубой" },
+    { "id": "dark",   "name": "Тёмные стены",  "coeff": 0.3, "desc": "Коричневый, бордовый, тёмно-серый" }
+  ],
+  "lampTypes": [
+    { "id": "led",          "name": "LED (светодиодная)", "efficiency": 100 },
+    { "id": "fluorescent",  "name": "Люминесцентная",     "efficiency": 60 },
+    { "id": "halogen",      "name": "Галогенная",         "efficiency": 20 },
+    { "id": "incandescent", "name": "Накаливания",        "efficiency": 12 }
+  ],
+  "fixturePresets": [
+    { "name": "Точечный LED",      "watt": 7,  "lumen": 700 },
+    { "name": "LED-панель 60x60",  "watt": 36, "lumen": 3600 },
+    { "name": "Люстра LED E27",    "watt": 12, "lumen": 1200 },
+    { "name": "Трековый LED",      "watt": 15, "lumen": 1500 },
+    { "name": "LED лента (1 м)",   "watt": 14, "lumen": 1000 },
+    { "name": "Люминесцентная T8", "watt": 36, "lumen": 2200 }
+  ],
+  "heightCoeff": [
+    { "maxHeight": 2.7, "coeff": 1.0 },
+    { "maxHeight": 3.0, "coeff": 1.2 },
+    { "maxHeight": 3.5, "coeff": 1.5 },
+    { "maxHeight": null, "coeff": 2.0 }
+  ],
+  "defaults": { "area": 18, "height": 2.7, "roomType": "living", "wallColor": "light", "lampType": "led", "fixtureWatt": 12, "hoursPerDay": 6, "tariff": 6.5 }
+}

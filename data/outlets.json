@@ -1,0 +1,24 @@
+{
+  "source": "https://calcal.ru/outlets-switches-calculator",
+  "chunk": "/_next/static/chunks/224b6a5bed7a0453.js",
+  "capturedAt": "2026-08-19",
+  "roomPresets": {
+    "kitchen":  { "label": "Кухня",    "outletsMin": 8, "outletsMax": 12, "switches": 2, "passthrough": 0, "usb": 2, "tv": 1, "internet": 0, "defaultArea": 10, "enabledByDefault": true },
+    "living":   { "label": "Гостиная", "outletsMin": 6, "outletsMax": 10, "switches": 2, "passthrough": 1, "usb": 2, "tv": 1, "internet": 1, "defaultArea": 20, "enabledByDefault": true },
+    "bedroom":  { "label": "Спальня",  "outletsMin": 4, "outletsMax": 6,  "switches": 1, "passthrough": 1, "usb": 2, "tv": 1, "internet": 0, "defaultArea": 15, "enabledByDefault": true },
+    "bathroom": { "label": "Ванная",   "outletsMin": 2, "outletsMax": 3,  "switches": 1, "passthrough": 0, "usb": 0, "tv": 0, "internet": 0, "defaultArea": 5,  "enabledByDefault": true },
+    "hallway":  { "label": "Прихожая", "outletsMin": 2, "outletsMax": 3,  "switches": 1, "passthrough": 1, "usb": 0, "tv": 0, "internet": 1, "defaultArea": 8,  "enabledByDefault": true },
+    "nursery":  { "label": "Детская",  "outletsMin": 4, "outletsMax": 6,  "switches": 1, "passthrough": 1, "usb": 2, "tv": 1, "internet": 1, "defaultArea": 14, "enabledByDefault": false },
+    "office":   { "label": "Кабинет",  "outletsMin": 6, "outletsMax": 8,  "switches": 1, "passthrough": 0, "usb": 2, "tv": 0, "internet": 1, "defaultArea": 12, "enabledByDefault": false }
+  },
+  "priceTiers": {
+    "budget":  { "label": "Schneider Electric Glossa", "tier": "Бюджет",  "outlet": 200, "switch": 250,  "usbOutlet": 1200, "tvOutlet": 350,  "internetOutlet": 350,  "frame1": 120, "frame2": 200, "frame3": 280,  "frame4": 360,  "frame5": 440,  "box": 45 },
+    "medium":  { "label": "Legrand Valena Life",       "tier": "Средний", "outlet": 400, "switch": 500,  "usbOutlet": 2200, "tvOutlet": 700,  "internetOutlet": 700,  "frame1": 250, "frame2": 420, "frame3": 600,  "frame4": 780,  "frame5": 960,  "box": 55 },
+    "premium": { "label": "ABB Zenit",                 "tier": "Премиум", "outlet": 800, "switch": 1000, "usbOutlet": 4500, "tvOutlet": 1400, "internetOutlet": 1400, "frame1": 500, "frame2": 850, "frame3": 1200, "frame4": 1550, "frame5": 1900, "box": 65 }
+  },
+  "notes": [
+    "frame2..frame5 объявлены в прайсе, но в расчёте НЕ используются — берётся только frame1 на каждую точку.",
+    "totalBoxes == totalFrames (обе величины равны числу точек).",
+    "Наценки за IP44 для ванной нет, хотя в описании упоминается."
+  ]
+}
