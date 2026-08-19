@@ -105,6 +105,28 @@ app.MapPost("/api/report/xlsx", (ReportRequest request) =>
     return Results.File(file, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", name);
 });
 
+app.MapPost("/api/report/pdf", (ReportRequest request) =>
+{
+    if (request.Lighting is null || request.Electrical?.Rooms is null || string.IsNullOrEmpty(request.Electrical.Tier))
+        return Results.BadRequest(new { ok = false, reason = "Нужны данные обоих калькуляторов." });
+
+    if (!ReferenceData.PriceTiers.ContainsKey(request.Electrical.Tier))
+        return Results.BadRequest(new { ok = false, reason = $"Неизвестный ценовой уровень: {request.Electrical.Tier}" });
+
+    LightingInput lightingInput = LightingInputRules.Normalize(request.Lighting);
+    Dictionary<string, RoomState> rooms = ElectricalInputRules.Normalize(request.Electrical.Rooms);
+
+    byte[] file = PdfReport.Build(
+        lightingInput,
+        LightingCalculator.Calculate(lightingInput),
+        rooms,
+        ElectricalCalculator.Calculate(rooms, request.Electrical.Tier),
+        DateTimeOffset.Now);
+
+    string name = $"domeo-raschet-{DateTimeOffset.Now:yyyy-MM-dd-HHmm}.pdf";
+    return Results.File(file, "application/pdf", name);
+});
+
 app.Run();
 
 internal sealed record ElectricalRequest(Dictionary<string, RoomState> Rooms, string Tier);

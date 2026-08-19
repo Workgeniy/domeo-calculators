@@ -304,49 +304,6 @@
 
   .btn.secondary { background: var(--yellow); border-color: var(--yellow-deep); color: var(--ink); }
 
-  /* Параметры текстом — нужны только на бумаге, на экране их заменяют сами поля. */
-  .print-params { display: none; }
-
-  /* ---------- печать ---------- */
-  @media print {
-    @page { size: A4; margin: 14mm; }
-
-    :root { --ground: #FFFFFF; }
-
-    body {
-      background: #FFFFFF;
-      font-size: 11pt;
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
-    }
-
-    .wrap { max-width: none; padding: 0; gap: 14px; }
-    .masthead { text-align: left; align-items: flex-start; padding: 0; }
-    h1 { font-size: 22pt; }
-    .lede { font-size: 10pt; max-width: none; }
-
-    /* органы управления и кнопки на бумаге не нужны */
-    .toolbar, .stack, .placement .grid { display: none !important; }
-
-    .print-params { display: block; margin-bottom: 12px; }
-    .print-params dl { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px 20px; }
-    .print-params dl > div { display: flex; gap: 8px; border-bottom: 1px dotted #CCC; padding: 2px 0; }
-    .print-params dt { color: #555; }
-    .print-params dd { margin: 0 0 0 auto; font-weight: 700; }
-
-    .card {
-      background: #FFFFFF; border: 1px solid #DDD; border-radius: 10px;
-      box-shadow: none; backdrop-filter: none; padding: 14px;
-      break-inside: avoid; page-break-inside: avoid;
-    }
-
-    .panel { grid-template-columns: minmax(0, 1fr); gap: 0; }
-    .hero { border-radius: 10px; padding: 14px; break-inside: avoid; }
-    .hero .value { font-size: 26pt; }
-    table { font-size: 10pt; }
-    tr, .placement { break-inside: avoid; }
-    .notes { break-before: auto; }
-  }
 
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
@@ -363,14 +320,13 @@
     </p>
     <div class="toolbar">
       <button type="button" class="btn" id="btn-xlsx">Скачать Excel</button>
-      <button type="button" class="btn secondary" id="btn-print">Печать / PDF</button>
+      <button type="button" class="btn secondary" id="btn-pdf">Скачать PDF</button>
     </div>
   </header>
 
   <section class="card">
     <h2><span class="ic">💡</span> Освещённость помещения</h2>
     <p class="sub">Расчёт по нормам СП 52.13330.2016</p>
-    <div class="print-params" id="l-print"></div>
 
     <div class="panel">
       <div class="stack">
@@ -428,7 +384,6 @@
   <section class="card">
     <h2><span class="ic">🔌</span> Электрофурнитура на квартиру</h2>
     <p class="sub">Розетки, выключатели и слаботочка с учётом норм ПУЭ</p>
-    <div class="print-params" id="e-print"></div>
 
     <div class="panel">
       <div class="stack">
@@ -479,6 +434,15 @@ let presetByKey = {};
 
 function num(id) { return parseFloat(document.getElementById(id).value); }
 
+// Русское склонение по числу: 1 светильник, 2 светильника, 5 светильников.
+function plural(count, one, few, many) {
+  const lastTwo = count % 100;
+  const last = count % 10;
+  if (last === 1 && lastTwo !== 11) return one;
+  if (last >= 2 && last <= 4 && (lastTwo < 12 || lastTwo > 14)) return few;
+  return many;
+}
+
 function metric(term, value) {
   return "<div><dt>" + term + "</dt><span class='sp'></span><dd>" + value + "</dd></div>";
 }
@@ -495,8 +459,9 @@ function placement(r, area) {
 
   return "<div class='placement'><span class='glabel'>Рекомендация по размещению</span>" +
     "<div class='grid'>" + cells + "</div>" +
-    "<p class='note'>Равномерно распределите " + r.fixtureCount +
-    " светильников по площади " + area + " м²" + perFixture + "</p></div>";
+    "<p class='note'>Равномерно распределите " + r.fixtureCount + " " +
+    plural(r.fixtureCount, "светильник", "светильника", "светильников") +
+    " по площади " + area + " м²" + perFixture + "</p></div>";
 }
 
 async function post(url, body) {
@@ -528,7 +493,8 @@ async function renderLighting() {
     const r = data.result;
     box.innerHTML =
       "<div class='hero'><div class='value'>" + r.fixtureCount + "</div>" +
-      "<div class='caption'>светильников по " + r.fixtureWatt + " Вт</div></div>" +
+      "<div class='caption'>" + plural(r.fixtureCount, "светильник", "светильника", "светильников") +
+      " по " + r.fixtureWatt + " Вт</div></div>" +
       "<dl class='metrics'>" +
         metric("Норма для «" + r.roomName + "»", r.requiredLux + " лк") +
         metric("Нужный световой поток", nf.format(r.requiredLumens) + " лм") +
@@ -538,7 +504,6 @@ async function renderLighting() {
         metric("Расход в месяц", r.monthlyKwhFormatted + " кВт·ч") +
         metric("Стоимость в месяц", nf.format(+r.monthlyCostFormatted) + " ₽") +
       "</dl>" + placement(r, num("l-area"));
-    fillPrintParams();
   } catch (err) {
     box.innerHTML = "<p class='empty'>Не удалось получить расчёт: " + err.message + "</p>";
   }
@@ -581,48 +546,9 @@ async function renderElectrical() {
       "</td><td>" + nf.format(r.totalCableMeters) + " м</td><td>" + nf.format(r.totalCost) + " ₽</td></tr></tfoot>";
 
     document.getElementById("e-table").innerHTML = html;
-    fillPrintParams();
   } catch (err) {
     box.innerHTML = "<p class='empty'>Не удалось получить расчёт: " + err.message + "</p>";
   }
-}
-
-function pairs(items) {
-  return "<dl>" + items.map(function (i) {
-    return "<div><dt>" + i[0] + "</dt><dd>" + i[1] + "</dd></div>";
-  }).join("") + "</dl>";
-}
-
-function nameOf(list, id, field) {
-  const found = list.find(function (x) { return x.id === id; });
-  return found ? found[field] : id;
-}
-
-// На бумаге поля ввода скрыты, поэтому вводные дублируются текстом.
-function fillPrintParams() {
-  document.getElementById("l-print").innerHTML = pairs([
-    ["Тип помещения", nameOf(ref.lighting.roomTypes, light.roomType, "name")],
-    ["Площадь", num("l-area") + " м²"],
-    ["Высота потолка", num("l-height") + " м"],
-    ["Цвет стен", nameOf(ref.lighting.wallColors, light.wallColor, "name")],
-    ["Тип лампы", nameOf(ref.lighting.lampTypes, light.lampType, "name")],
-    ["Мощность светильника", num("l-watt") + " Вт"],
-    ["Часов в день", num("l-hours")],
-    ["Тариф", num("l-tariff") + " ₽/кВт·ч"]
-  ]);
-
-  const on = roomOrder.filter(function (k) { return rooms[k].enabled; });
-  document.getElementById("e-print").innerHTML = pairs(
-    [["Ценовой уровень", tierLabel()]].concat(on.map(function (k) {
-      const r = rooms[k];
-      return [presetByKey[k].label, r.area + " м², " + r.outlets + " роз., " + (r.switches + r.passthrough) + " выкл."];
-    }))
-  );
-}
-
-function tierLabel() {
-  const found = ref.electrical.priceTiers.find(function (t) { return t.key === tier; });
-  return found ? found.tier.tier + " — " + found.tier.label : tier;
 }
 
 function chipGroup(host, items, isActive, onPick) {
@@ -778,24 +704,28 @@ function buildRooms() {
   }
 }
 
-async function downloadReport() {
-  const btn = document.getElementById("btn-xlsx");
+function currentPayload() {
+  return {
+    lighting: {
+      area: num("l-area"), height: num("l-height"),
+      roomType: light.roomType, wallColor: light.wallColor, lampType: light.lampType,
+      fixtureWatt: num("l-watt"), hoursPerDay: num("l-hours"), tariff: num("l-tariff")
+    },
+    electrical: { rooms: rooms, tier: tier }
+  };
+}
+
+async function downloadReport(buttonId, path, fallbackName) {
+  const btn = document.getElementById(buttonId);
   const label = btn.textContent;
   btn.disabled = true;
   btn.textContent = "Готовлю файл…";
 
   try {
-    const res = await fetch("api/report/xlsx", {
+    const res = await fetch(path, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        lighting: {
-          area: num("l-area"), height: num("l-height"),
-          roomType: light.roomType, wallColor: light.wallColor, lampType: light.lampType,
-          fixtureWatt: num("l-watt"), hoursPerDay: num("l-hours"), tariff: num("l-tariff")
-        },
-        electrical: { rooms: rooms, tier: tier }
-      })
+      body: JSON.stringify(currentPayload())
     });
     if (!res.ok) throw new Error("HTTP " + res.status);
 
@@ -804,7 +734,7 @@ async function downloadReport() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = name ? name[1] : "domeo-raschet.xlsx";
+    a.download = name ? name[1] : fallbackName;
     document.body.appendChild(a);
     a.click();
     a.remove();
@@ -856,8 +786,12 @@ async function boot() {
     });
   }
 
-  document.getElementById("btn-xlsx").addEventListener("click", downloadReport);
-  document.getElementById("btn-print").addEventListener("click", function () { window.print(); });
+  document.getElementById("btn-xlsx").addEventListener("click", function () {
+    downloadReport("btn-xlsx", "api/report/xlsx", "domeo-raschet.xlsx");
+  });
+  document.getElementById("btn-pdf").addEventListener("click", function () {
+    downloadReport("btn-pdf", "api/report/pdf", "domeo-raschet.pdf");
+  });
 
   buildLightingControls();
   buildTierControls();

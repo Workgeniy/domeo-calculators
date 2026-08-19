@@ -12,8 +12,16 @@
     <ProjectReference Include="../Domeo.Calculators/Domeo.Calculators.csproj" />
   </ItemGroup>
 
+  <!-- DejaVu Sans: в образе .NET нет шрифтов с кириллицей, поэтому кладём свои.
+       Лицензия DejaVu разрешает свободное распространение. -->
+  <ItemGroup>
+    <EmbeddedResource Include="Fonts/DejaVuSans.ttf" LogicalName="Domeo.Calculators.Web.Fonts.DejaVuSans.ttf" />
+    <EmbeddedResource Include="Fonts/DejaVuSans-Bold.ttf" LogicalName="Domeo.Calculators.Web.Fonts.DejaVuSans-Bold.ttf" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.105.1" />
+    <PackageReference Include="PDFsharp" Version="6.2.4" />
   </ItemGroup>
 
 </Project>
