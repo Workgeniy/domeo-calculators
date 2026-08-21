@@ -2,9 +2,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
-# Справочники нужны на этапе сборки: они вшиваются в библиотеку как EmbeddedResource.
-COPY data/ data/
-COPY src/Domeo.Calculators/ src/Domeo.Calculators/
 COPY src/Domeo.Calculators.Web/ src/Domeo.Calculators.Web/
 
 RUN dotnet publish src/Domeo.Calculators.Web/Domeo.Calculators.Web.csproj \

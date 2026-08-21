@@ -44,13 +44,15 @@
 
 ## Обновить версию
 
-Образ пока переносится напрямую, без реестра: у токена нет `write:packages`, а брать
-токен со стенда не стоит.
+Собираем **на самой ВМ**: в образе теперь Chromium, целиком он весит ~1.3 ГБ, и
+пересылать его на каждый выкат через `docker save` стало слишком долго. Исходники
+весят ~200 КБ, а слой с Chromium на ВМ закеширован, поэтому пересборка быстрая.
 
 ```bash
-docker build -t ghcr.io/workgeniy/domeo-calculators:live .
-docker save ghcr.io/workgeniy/domeo-calculators:live | gzip -1 | ssh testvm "gunzip | docker load"
-ssh testvm "cd /home/ubuntu/domeo/stage && docker compose up -d calc"
+tar -czf /tmp/calc-src.tgz Dockerfile .dockerignore src/Domeo.Calculators.Web
+scp /tmp/calc-src.tgz testvm:~/calc-build/
+ssh testvm "cd ~/calc-build && tar -xzf calc-src.tgz && docker build -t ghcr.io/workgeniy/domeo-calculators:live ."
+ssh testvm "cd /home/ubuntu/domeo/stage && docker compose up -d --force-recreate calc"
 ```
 
 Правильное решение — workflow в GitHub Actions: у него есть `GITHUB_TOKEN` с правом на

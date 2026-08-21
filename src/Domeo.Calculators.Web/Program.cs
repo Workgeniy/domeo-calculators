@@ -1,8 +1,5 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Domeo.Calculators.Electrical;
-using Domeo.Calculators.Lighting;
-using Domeo.Calculators.Reference;
 using Domeo.Calculators.Web.Reporting;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -24,8 +21,6 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 
 WebApplication app = builder.Build();
 
-// За обратным прокси приложение живёт на префиксе (например /calc).
-// Локально PathBase пуст — адреса остаются от корня.
 string pathBase = (builder.Configuration["PathBase"] ?? string.Empty).Trim().TrimEnd('/');
 if (pathBase.Length > 0)
 {
@@ -38,78 +33,23 @@ if (pathBase.Length > 0)
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-// Справочники отдаём целиком — страница не хранит своей копии данных.
-app.MapGet("/api/reference", () => Results.Ok(new
+// Отчёт — это сама страница опросника, снятая в PDF headless-браузером.
+// Ответы приходят как есть: их состав задаёт wwwroot/form.json, а не сервер.
+app.MapPost("/api/report/pdf", async (JsonElement answers, PagePdfRenderer renderer, CancellationToken token) =>
 {
-    lighting = new
-    {
-        roomTypes = ReferenceData.RoomTypes,
-        wallColors = ReferenceData.WallColors,
-        lampTypes = ReferenceData.LampTypes,
-        fixturePresets = ReferenceData.FixturePresets,
-    },
-    electrical = new
-    {
-        roomOrder = ReferenceData.RoomOrder,
-        roomPresets = ReferenceData.RoomOrder.Select(key => new
-        {
-            key,
-            preset = ReferenceData.RoomPresets[key],
-        }),
-        priceTiers = ReferenceData.PriceTiers.Select(kv => new { key = kv.Key, tier = kv.Value }),
-        defaultRooms = ElectricalCalculator.DefaultRooms(),
-    },
-}));
+    if (answers.ValueKind != JsonValueKind.Object)
+        return Results.BadRequest(new { ok = false, reason = "Ожидался объект с ответами." });
 
-// Считает библиотека — та же, что покрыта golden-тестами.
-app.MapPost("/api/lighting", (LightingInput input) =>
-{
-    // На границе применяем правила ввода оригинала: там они в обработчиках полей.
-    LightingResult? result = LightingCalculator.Calculate(LightingInputRules.Normalize(input));
-    return result is null
-        ? Results.Ok(new { ok = false, reason = "Площадь, высота и мощность должны быть больше нуля." })
-        : Results.Ok(new { ok = true, result });
-});
+    string state = answers.GetRawText();
 
-app.MapPost("/api/electrical", (ElectricalRequest request) =>
-{
-    if (request.Rooms is null || string.IsNullOrEmpty(request.Tier))
-        return Results.BadRequest(new { ok = false, reason = "Нужны комнаты и ценовой уровень." });
-
-    if (!ReferenceData.PriceTiers.ContainsKey(request.Tier))
-        return Results.BadRequest(new { ok = false, reason = $"Неизвестный ценовой уровень: {request.Tier}" });
-
-    ElectricalResult result = ElectricalCalculator.Calculate(
-        ElectricalInputRules.Normalize(request.Rooms), request.Tier);
-    return Results.Ok(new { ok = true, result });
-});
-
-// Отчёт — это сама страница, снятая в PDF headless-браузером.
-app.MapPost("/api/report/pdf", async (ReportRequest request, PagePdfRenderer renderer, CancellationToken token) =>
-{
-    if (request.Lighting is null || request.Electrical?.Rooms is null || string.IsNullOrEmpty(request.Electrical.Tier))
-        return Results.BadRequest(new { ok = false, reason = "Нужны данные обоих калькуляторов." });
-
-    if (!ReferenceData.PriceTiers.ContainsKey(request.Electrical.Tier))
-        return Results.BadRequest(new { ok = false, reason = $"Неизвестный ценовой уровень: {request.Electrical.Tier}" });
-
-    string state = JsonSerializer.Serialize(new
-    {
-        lighting = LightingInputRules.Normalize(request.Lighting),
-        electrical = new
-        {
-            rooms = ElectricalInputRules.Normalize(request.Electrical.Rooms),
-            tier = request.Electrical.Tier,
-        },
-    }, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+    // Состояние едет в адресе, поэтому ограничиваем размер.
+    const int limit = 64 * 1024;
+    if (state.Length > limit)
+        return Results.BadRequest(new { ok = false, reason = "Слишком много данных в опроснике." });
 
     byte[] file = await renderer.RenderAsync(state, token);
-    string name = $"domeo-raschet-{DateTimeOffset.Now:yyyy-MM-dd-HHmm}.pdf";
+    string name = $"peredacha-v-komplektaciyu-{DateTimeOffset.Now:yyyy-MM-dd-HHmm}.pdf";
     return Results.File(file, "application/pdf", name);
 });
 
 app.Run();
-
-internal sealed record ElectricalRequest(Dictionary<string, RoomState> Rooms, string Tier);
-
-internal sealed record ReportRequest(LightingInput Lighting, ElectricalRequest Electrical);

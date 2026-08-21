@@ -8,8 +8,4 @@
     <RootNamespace>Domeo.Calculators.Web</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="../Domeo.Calculators/Domeo.Calculators.csproj" />
-  </ItemGroup>
-
 </Project>
