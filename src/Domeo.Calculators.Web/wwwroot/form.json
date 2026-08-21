@@ -1,29 +1,27 @@
 {
   "title": "Передача проекта в комплектацию",
-  "lede": "Заполните опросник по проекту — он уйдёт в комплектацию. Готовый лист можно скачать в PDF и передать дальше.",
+  "lede": "Опросник заполняет дизайнер при передаче проекта в комплектацию. Готовый лист скачивается в PDF.",
   "source": "Опросник «передача лида в комплектацию.docx», 21.08.2026",
   "sections": [
     {
       "id": "lead",
-      "icon": "📋",
       "title": "Заявка",
       "fields": [
         { "id": "designer", "label": "Дизайнер", "type": "text" },
         { "id": "client", "label": "ФИО заказчика", "type": "text" },
-        { "id": "leadNumber", "label": "Номер лида", "type": "text" }
+        { "id": "leadNumber", "label": "Номер лида", "type": "text", "short": true }
       ]
     },
     {
       "id": "general",
-      "icon": "🏠",
       "title": "Общая информация",
       "fields": [
         {
           "id": "objectType", "label": "Тип объекта", "type": "choice",
           "options": ["квартира", "дом/коттедж", "коммерция"]
         },
-        { "id": "area", "label": "Площадь, м²", "type": "text" },
-        { "id": "ceiling", "label": "Высота потолков, м", "hint": "чистовой размер", "type": "text" },
+        { "id": "area", "label": "Площадь, м²", "type": "text", "short": true },
+        { "id": "ceiling", "label": "Высота потолков, м", "hint": "чистовой размер", "type": "text", "short": true },
         {
           "id": "condition", "label": "Состояние объекта", "type": "choice",
           "options": ["новостройка (бетон)", "white box", "вторичка"]
@@ -32,7 +30,6 @@
     },
     {
       "id": "budget",
-      "icon": "💰",
       "title": "Бюджет",
       "fields": [
         {
@@ -51,7 +48,6 @@
     },
     {
       "id": "stage",
-      "icon": "📐",
       "title": "Стадия дизайн-проекта",
       "fields": [
         {
@@ -62,7 +58,6 @@
     },
     {
       "id": "finishes",
-      "icon": "🎨",
       "title": "Отделочные материалы",
       "fields": [
         {
@@ -83,7 +78,6 @@
     },
     {
       "id": "lighting",
-      "icon": "💡",
       "title": "Освещение",
       "fields": [
         {
@@ -100,7 +94,6 @@
     },
     {
       "id": "door",
-      "icon": "🚪",
       "title": "Входная дверь",
       "fields": [
         {
@@ -111,7 +104,6 @@
     },
     {
       "id": "heating",
-      "icon": "🔥",
       "title": "Отопление",
       "fields": [
         {
@@ -122,7 +114,6 @@
     },
     {
       "id": "extra",
-      "icon": "📎",
       "title": "Материалы и примечания",
       "fields": [
         {
