@@ -1,5 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Domeo.Calculators.Reference;
+using Domeo.Calculators.Spec;
 using Domeo.Calculators.Web.Reporting;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -17,6 +19,8 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 {
     options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     options.SerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.Never;
+    // Уровень комфорта ездит строкой: "Standard", а не 1.
+    options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
 WebApplication app = builder.Build();
@@ -52,4 +56,45 @@ app.MapPost("/api/report/pdf", async (JsonElement answers, PagePdfRenderer rende
     return Results.File(file, "application/pdf", name);
 });
 
+// Справочник нормировочной модели: типы помещений и коэффициенты. Нужен интерфейсу,
+// чтобы построить форму и предзаполнить её по типу помещения.
+app.MapGet("/api/spec/reference", () => new
+{
+    defaultProfile = SpecReference.Default.Key,
+    coefficients = SpecReference.Coefficients,
+    profiles = SpecReference.Profiles.Values.Select(profile => new
+    {
+        key = profile.Key,
+        label = profile.Label,
+        rooms = profile.RoomOrder.Select(key => new { key, room = profile.Rooms[key] }),
+    }),
+});
+
+// Расчёт спецификации по помещениям. Цен не считает — это количества.
+app.MapPost("/api/spec", (SpecRequest request) =>
+{
+    if (request.Rooms is not { Count: > 0 })
+        return Results.BadRequest(new { ok = false, reason = "Нужно хотя бы одно помещение." });
+
+    const int limit = 100;
+    if (request.Rooms.Count > limit)
+        return Results.BadRequest(new { ok = false, reason = $"Не больше {limit} помещений за раз." });
+
+    try
+    {
+        return Results.Ok(SpecCalculator.Calculate(request.Rooms, request.Profile));
+    }
+    catch (ArgumentException error)
+    {
+        // Неизвестный тип помещения или профиль — это ошибка запроса, а не сервера.
+        // Хвост «(Parameter '…')» из ArgumentException наружу не отдаём.
+        string reason = error.Message.Split(" (Parameter")[0];
+        return Results.BadRequest(new { ok = false, reason });
+    }
+});
+
 app.Run();
+
+/// <param name="Profile">Профиль расчёта; пусто — модель Domeo.</param>
+/// <param name="Rooms">Помещения проекта.</param>
+internal sealed record SpecRequest(string? Profile, List<SpecRoomInput>? Rooms);

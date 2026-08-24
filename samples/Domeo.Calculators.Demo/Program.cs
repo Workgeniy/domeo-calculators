@@ -2,6 +2,7 @@ using System.Text;
 using Domeo.Calculators.Electrical;
 using Domeo.Calculators.Lighting;
 using Domeo.Calculators.Reference;
+using Domeo.Calculators.Spec;
 
 Console.OutputEncoding = Encoding.UTF8;
 
@@ -70,6 +71,50 @@ Console.WriteLine($"  Подрозетников: {budget.TotalBoxes} шт., р�
 Console.WriteLine("  (в оригинале это одна и та же величина — число точек)");
 
 Console.WriteLine();
+Header("СПЕЦИФИКАЦИЯ ПО ПОМЕЩЕНИЯМ");
+
+// Тот же объект, что и в эталоне: квартира 60 м² из исходной Excel-таблицы.
+SpecRoomInput[] flat =
+[
+    new() { RoomType = "hallway",  Name = "Прихожая", Area = 9.9,  Vacuum = true, Downlights = true, Pendants = true, LedStrip = true },
+    new() { RoomType = "kitchen",  Name = "Кухня",    Area = 11.3, Vacuum = true, Oven = true, Hob = true, Hood = true, Dishwasher = true, Fridge = true, Microwave = true, SmallAppliances = true, Track = true, Pendants = true },
+    new() { RoomType = "living",   Name = "Гостиная", Area = 13.3, Tv = 1, Vacuum = true, SmallAppliances = true, Downlights = true, Chandelier = true, Sconces = true, LedStrip = true },
+    new() { RoomType = "bedroom",  Name = "Спальня",  Area = 17.5, Tv = 1, Vacuum = true, SmallAppliances = true, Downlights = true, Chandelier = true, Sconces = true, LedStrip = true },
+    new() { RoomType = "wc",       Name = "Санузел",  Area = 1.2,  Downlights = true },
+    new() { RoomType = "bathroom", Name = "Ванная",   Area = 4.6,  SmallAppliances = true, Downlights = true },
+    new() { RoomType = "balcony",  Name = "Лоджия",   Area = 2.2,  Computers = 1, SmallAppliances = true, Downlights = true },
+];
+
+SpecCounts asInTable = SpecCalculator.Calculate(flat, "excel").Total;
+SpecCounts asInModel = SpecCalculator.Calculate(flat, "domeo").Total;
+
+Console.WriteLine("Квартира 60 м², 7 помещений — итог по двум профилям:");
+Console.WriteLine();
+Console.WriteLine($"  {"Позиция",-28}{"таблица",9}{"модель",9}");
+Console.WriteLine("  " + new string('-', 46));
+
+SpecRow("Обычные розетки", c => c.NormalSockets);
+SpecRow("Влагозащищённые розетки", c => c.WetSockets);
+SpecRow("Розетки ТВ", c => c.TvSockets);
+SpecRow("Розетки интернет", c => c.InternetSockets);
+SpecRow("Одноклавишные", c => c.SingleSwitches);
+SpecRow("Двухклавишные", c => c.DoubleSwitches);
+SpecRow("Проходные", c => c.PassThroughSwitches);
+SpecRow("Перекрёстные", c => c.CrossSwitches);
+SpecRow("Рамки", c => c.Frames);
+SpecRow("Шинопровод, м", c => c.TrackMeters);
+SpecRow("Трековые светильники", c => c.TrackFixtures);
+SpecRow("Точечные светильники", c => c.Downlights);
+SpecRow("Светодиодная лента, м", c => c.LedMeters);
+SpecRow("Люстры", c => c.Chandeliers);
+SpecRow("Подвесы", c => c.Pendants);
+SpecRow("Бра", c => c.Sconces);
+
+Console.WriteLine();
+Console.WriteLine("  «таблица» — дословный перенос исходного файла, «модель» — с восстановленным");
+Console.WriteLine("  справочником по типам помещений. Отличия разобраны в docs/calc-spec.md.");
+
+Console.WriteLine();
 Header("СПРАВОЧНИКИ");
 Console.WriteLine($"  типов помещений (освещение): {ReferenceData.RoomTypes.Count}");
 Console.WriteLine($"  цветов стен: {ReferenceData.WallColors.Count}, типов ламп: {ReferenceData.LampTypes.Count}");
@@ -77,6 +122,15 @@ Console.WriteLine($"  пресетов светильников: {ReferenceData.
 Console.WriteLine($"  комнат (электрика): {ReferenceData.RoomPresets.Count}, ценовых уровней: {ReferenceData.PriceTiers.Count}");
 
 return 0;
+
+void SpecRow(string label, Func<SpecCounts, int> pick)
+{
+    int table = pick(asInTable);
+    int model = pick(asInModel);
+    string mark = table == model ? "" : "  ←";
+
+    Console.WriteLine($"  {label,-28}{table,9}{model,9}{mark}");
+}
 
 void Header(string title)
 {

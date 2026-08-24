@@ -16,6 +16,7 @@
   <ItemGroup>
     <EmbeddedResource Include="../../data/lighting.json" LogicalName="Domeo.Calculators.Data.lighting.json" />
     <EmbeddedResource Include="../../data/outlets.json" LogicalName="Domeo.Calculators.Data.outlets.json" />
+    <EmbeddedResource Include="../../data/spec.json" LogicalName="Domeo.Calculators.Data.spec.json" />
   </ItemGroup>
 
 </Project>

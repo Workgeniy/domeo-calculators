@@ -1,5 +1,4 @@
 using System.Collections.ObjectModel;
-using System.Reflection;
 using System.Text.Json;
 
 namespace Domeo.Calculators.Reference;
@@ -47,7 +46,7 @@ public static class ReferenceData
 
     static ReferenceData()
     {
-        using JsonDocument lighting = JsonDocument.Parse(ReadResource("Domeo.Calculators.Data.lighting.json"));
+        using JsonDocument lighting = JsonDocument.Parse(EmbeddedResources.Read("Domeo.Calculators.Data.lighting.json"));
         JsonElement lightRoot = lighting.RootElement;
 
         RoomTypes = Deserialize<List<RoomLightingNorm>>(lightRoot, "roomTypes").AsReadOnly();
@@ -56,7 +55,7 @@ public static class ReferenceData
         FixturePresets = Deserialize<List<FixturePreset>>(lightRoot, "fixturePresets").AsReadOnly();
         HeightCoeffSteps = Deserialize<List<HeightCoeffStep>>(lightRoot, "heightCoeff").AsReadOnly();
 
-        using JsonDocument outlets = JsonDocument.Parse(ReadResource("Domeo.Calculators.Data.outlets.json"));
+        using JsonDocument outlets = JsonDocument.Parse(EmbeddedResources.Read("Domeo.Calculators.Data.outlets.json"));
         JsonElement outletsRoot = outlets.RootElement;
 
         JsonElement presets = outletsRoot.GetProperty("roomPresets");
@@ -83,13 +82,4 @@ public static class ReferenceData
 
     private static T Deserialize<T>(JsonElement root, string property) =>
         root.GetProperty(property).Deserialize<T>(Options)!;
-
-    private static string ReadResource(string name)
-    {
-        Assembly assembly = typeof(ReferenceData).Assembly;
-        using Stream stream = assembly.GetManifestResourceStream(name)
-            ?? throw new InvalidOperationException($"Встроенный ресурс не найден: {name}");
-        using var reader = new StreamReader(stream);
-        return reader.ReadToEnd();
-    }
 }

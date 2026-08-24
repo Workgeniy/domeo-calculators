@@ -1,29 +1,42 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Domeo.Calculators.Spec;
 
 namespace Domeo.Calculators.Tests;
 
 /// <summary>
-/// Загрузка golden-векторов, снятых с оригинального кода calcal.ru
-/// (tools/golden/generate.mjs). Файлы пересобираются только при изменении data/*.json.
+/// Загрузка эталонов: для калькуляторов calcal.ru они сняты с оригинального кода
+/// (tools/golden/generate.mjs), для нормировочной модели — с исходной таблицы
+/// (tools/golden/generate-spec.py). Пересобираются только при изменении исходников.
 /// </summary>
 internal static class GoldenCases
 {
     private static readonly JsonSerializerOptions Options = new()
     {
         PropertyNameCaseInsensitive = true,
+        Converters = { new JsonStringEnumConverter() },
     };
+
+    /// <summary>Эталон, у которого в корне объект, а не массив случаев.</summary>
+    public static T LoadDocument<T>(string fileName) =>
+        JsonSerializer.Deserialize<T>(File.ReadAllText(Path(fileName)), Options)
+            ?? throw new InvalidOperationException($"Пустой golden-файл: {fileName}");
 
     public static IEnumerable<object[]> Load<T>(string fileName)
     {
-        string path = Path.Combine(AppContext.BaseDirectory, "golden", fileName);
-        if (!File.Exists(path))
-            throw new FileNotFoundException($"Нет golden-файла {fileName}. Собрать: node tools/golden/generate.mjs", path);
-
-        List<T> cases = JsonSerializer.Deserialize<List<T>>(File.ReadAllText(path), Options)
+        List<T> cases = JsonSerializer.Deserialize<List<T>>(File.ReadAllText(Path(fileName)), Options)
             ?? throw new InvalidOperationException($"Пустой golden-файл: {fileName}");
 
         return cases.Select(c => new object[] { c! });
+    }
+
+    private static string Path(string fileName)
+    {
+        string path = System.IO.Path.Combine(AppContext.BaseDirectory, "golden", fileName);
+        if (!File.Exists(path))
+            throw new FileNotFoundException($"Нет golden-файла {fileName}. Как собрать — в README.", path);
+
+        return path;
     }
 }
 
@@ -64,3 +77,12 @@ internal sealed record ElectricalExpected(
 internal sealed record RoomBreakdownDto(
     string Key, string Label, int Count, int Outlets, int Switches,
     int Usb, int Tv, int Internet, int Cable, int Cost);
+
+// ---------- нормировочная модель (spec) ----------
+
+internal sealed record SpecGolden(string Source, string Note, List<SpecGoldenCase> Cases, SpecCounts Total);
+
+internal sealed record SpecGoldenCase(string Name, SpecRoomInput Input, SpecCounts Expected)
+{
+    public override string ToString() => Name;
+}

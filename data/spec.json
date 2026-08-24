@@ -1,0 +1,80 @@
+{
+  "source": "data/source/lighting-electrical.xlsx",
+  "capturedAt": "2026-08-24",
+  "about": "Нормировочная модель: из параметров помещения выводит количества розеток, выключателей и света. Цен не считает.",
+  "defaultProfile": "domeo",
+
+  "coefficients": {
+    "comfort": { "economy": 0.8, "standard": 1.0, "premium": 1.25 },
+    "socketsPerTv": 2,
+    "socketsPerComputer": 3,
+    "socketsPerFloorLamp": 1,
+    "socketsPerDeskLamp": 1,
+    "socketsPerAppliance": 1,
+    "smallApplianceSockets": 3,
+    "vanityWetSockets": 1,
+    "windowWidth": 2.0,
+    "ledSlack": 0.4,
+    "ledRuns": 2,
+    "areaPerDownlight": 1.2,
+    "minDownlights": 2,
+    "areaPerSconce": 8,
+    "chandeliersPerRoom": 1
+  },
+
+  "profiles": {
+    "excel": {
+      "label": "Как в исходной таблице",
+      "about": "Дословная копия формул из xlsx — эталон переноса. Все помещения считаются по одним и тем же коэффициентам: обращения к листу «Справочник» в таблице не работают (см. docs/calc-spec.md).",
+      "tvSocketsPerTv": 2,
+      "tvSocketsExtra": 1,
+      "internetSocketsPerComputer": 1,
+      "internetSocketsExtra": 1,
+      "singleSwitchBaseIsOne": true,
+      "wetAppliancesAlsoCountAsNormal": true,
+      "rooms": {
+        "hallway":      { "label": "Прихожая",       "socketsPerSqm": 5, "trackLines": 1.5, "trackStep": 1.0, "lightGroups": 1, "wet": false, "passThrough": 1, "pendants": 1, "sconceDoubleSwitch": false, "defaultVacuum": true,  "defaultTvSocket": 0, "defaultInternetSocket": 1 },
+        "wc":           { "label": "Санузел",        "socketsPerSqm": 5, "trackLines": 1.5, "trackStep": 1.0, "lightGroups": 1, "wet": true,  "passThrough": 0, "pendants": 1, "sconceDoubleSwitch": false, "defaultVacuum": false, "defaultTvSocket": 0, "defaultInternetSocket": 0 },
+        "bathroom":     { "label": "Ванная комната", "socketsPerSqm": 5, "trackLines": 1.5, "trackStep": 1.0, "lightGroups": 1, "wet": false, "passThrough": 0, "pendants": 1, "sconceDoubleSwitch": false, "defaultVacuum": false, "defaultTvSocket": 0, "defaultInternetSocket": 0 },
+        "living":       { "label": "Гостиная",       "socketsPerSqm": 5, "trackLines": 1.5, "trackStep": 1.0, "lightGroups": 2, "wet": false, "passThrough": 2, "pendants": 1, "sconceDoubleSwitch": false, "defaultVacuum": true,  "defaultTvSocket": 1, "defaultInternetSocket": 1 },
+        "kitchenLiving":{ "label": "Кухня-гостиная", "socketsPerSqm": 5, "trackLines": 1.5, "trackStep": 1.0, "lightGroups": 2, "wet": false, "passThrough": 2, "pendants": 2, "sconceDoubleSwitch": false, "defaultVacuum": true,  "defaultTvSocket": 1, "defaultInternetSocket": 1 },
+        "kitchen":      { "label": "Кухня",          "socketsPerSqm": 5, "trackLines": 1.5, "trackStep": 1.0, "lightGroups": 1, "wet": false, "passThrough": 0, "pendants": 2, "sconceDoubleSwitch": false, "defaultVacuum": false, "defaultTvSocket": 0, "defaultInternetSocket": 0 },
+        "bedroom":      { "label": "Спальня",        "socketsPerSqm": 5, "trackLines": 1.5, "trackStep": 1.0, "lightGroups": 2, "wet": false, "passThrough": 2, "pendants": 1, "sconceDoubleSwitch": true , "defaultVacuum": true,  "defaultTvSocket": 1, "defaultInternetSocket": 1 },
+        "nursery":      { "label": "Детская",        "socketsPerSqm": 5, "trackLines": 1.5, "trackStep": 1.0, "lightGroups": 2, "wet": false, "passThrough": 2, "pendants": 1, "sconceDoubleSwitch": false, "defaultVacuum": true,  "defaultTvSocket": 1, "defaultInternetSocket": 1 },
+        "wardrobe":     { "label": "Гардеробная",    "socketsPerSqm": 5, "trackLines": 1.5, "trackStep": 1.0, "lightGroups": 1, "wet": false, "passThrough": 0, "pendants": 1, "sconceDoubleSwitch": false, "defaultVacuum": true,  "defaultTvSocket": 0, "defaultInternetSocket": 0 },
+        "balcony":      { "label": "Лоджия",         "socketsPerSqm": 5, "trackLines": 1.5, "trackStep": 1.0, "lightGroups": 1, "wet": false, "passThrough": 0, "pendants": 1, "sconceDoubleSwitch": false, "defaultVacuum": false, "defaultTvSocket": 0, "defaultInternetSocket": 0 }
+      }
+    },
+
+    "domeo": {
+      "label": "Модель Domeo",
+      "about": "Та же модель с восстановленным справочником по типам помещений и починенными местами — список отличий от таблицы в docs/calc-spec.md.",
+      "tvSocketsPerTv": 1,
+      "tvSocketsExtra": 0,
+      "internetSocketsPerComputer": 1,
+      "internetSocketsExtra": 0,
+      "singleSwitchBaseIsOne": false,
+      "wetAppliancesAlsoCountAsNormal": false,
+      "rooms": {
+        "hallway":      { "label": "Прихожая",       "socketsPerSqm": 6, "trackLines": 1.5, "trackStep": 1.0, "lightGroups": 1, "wet": false, "passThrough": 1, "pendants": 1, "sconceDoubleSwitch": false, "defaultVacuum": true,  "defaultTvSocket": 0, "defaultInternetSocket": 1 },
+        "wc":           { "label": "Санузел",        "socketsPerSqm": 3, "trackLines": 1.0, "trackStep": 0.8, "lightGroups": 1, "wet": true,  "passThrough": 0, "pendants": 1, "sconceDoubleSwitch": false, "defaultVacuum": false, "defaultTvSocket": 0, "defaultInternetSocket": 0 },
+        "bathroom":     { "label": "Ванная комната", "socketsPerSqm": 3, "trackLines": 1.0, "trackStep": 0.8, "lightGroups": 1, "wet": true,  "passThrough": 0, "pendants": 1, "sconceDoubleSwitch": false, "defaultVacuum": false, "defaultTvSocket": 0, "defaultInternetSocket": 0 },
+        "living":       { "label": "Гостиная",       "socketsPerSqm": 5, "trackLines": 2.0, "trackStep": 1.0, "lightGroups": 2, "wet": false, "passThrough": 2, "pendants": 1, "sconceDoubleSwitch": false, "defaultVacuum": true,  "defaultTvSocket": 1, "defaultInternetSocket": 1 },
+        "kitchenLiving":{ "label": "Кухня-гостиная", "socketsPerSqm": 5, "trackLines": 2.0, "trackStep": 1.0, "lightGroups": 3, "wet": false, "passThrough": 2, "pendants": 2, "sconceDoubleSwitch": false, "defaultVacuum": true,  "defaultTvSocket": 1, "defaultInternetSocket": 1 },
+        "kitchen":      { "label": "Кухня",          "socketsPerSqm": 4, "trackLines": 1.5, "trackStep": 0.8, "lightGroups": 2, "wet": false, "passThrough": 0, "pendants": 2, "sconceDoubleSwitch": false, "defaultVacuum": false, "defaultTvSocket": 0, "defaultInternetSocket": 0 },
+        "bedroom":      { "label": "Спальня",        "socketsPerSqm": 5, "trackLines": 1.8, "trackStep": 1.1, "lightGroups": 2, "wet": false, "passThrough": 2, "pendants": 1, "sconceDoubleSwitch": true , "defaultVacuum": true,  "defaultTvSocket": 1, "defaultInternetSocket": 1 },
+        "nursery":      { "label": "Детская",        "socketsPerSqm": 5, "trackLines": 1.5, "trackStep": 1.0, "lightGroups": 2, "wet": false, "passThrough": 2, "pendants": 1, "sconceDoubleSwitch": false, "defaultVacuum": true,  "defaultTvSocket": 1, "defaultInternetSocket": 1 },
+        "wardrobe":     { "label": "Гардеробная",    "socketsPerSqm": 6, "trackLines": 1.0, "trackStep": 1.0, "lightGroups": 1, "wet": false, "passThrough": 0, "pendants": 1, "sconceDoubleSwitch": false, "defaultVacuum": true,  "defaultTvSocket": 0, "defaultInternetSocket": 0 },
+        "balcony":      { "label": "Лоджия",         "socketsPerSqm": 6, "trackLines": 1.0, "trackStep": 1.2, "lightGroups": 1, "wet": false, "passThrough": 0, "pendants": 1, "sconceDoubleSwitch": false, "defaultVacuum": false, "defaultTvSocket": 0, "defaultInternetSocket": 0 }
+      }
+    }
+  },
+
+  "notes": [
+    "Профиль excel — эталон переноса, а не рабочая модель: в нём воспроизведены и ошибки таблицы (ванная без влагозащищённых розеток, телевизор считается дважды, перекрёстные всегда 0).",
+    "Строки «Гардеробная» и «Лоджия» в исходном «Справочнике» отсутствовали, хотя в выпадающем списке они есть. Значения проставлены нами по ближайшему аналогу — требуют подтверждения.",
+    "defaultVacuum / defaultTvSocket / defaultInternetSocket — подсказки для предзаполнения формы, в расчёте не участвуют.",
+    "Коэффициент комфорта умножает только площадную часть розеток и базовые группы света: розетка холодильника от уровня комфорта не зависит.",
+    "areaPerDownlight = 1.2 м² на светильник — единственное число, откалиброванное по реальному объекту (см. docs/calc-spec.md)."
+  ]
+}
