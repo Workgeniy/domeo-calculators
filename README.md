@@ -59,7 +59,8 @@ Next.js, оттуда и извлечены.
 
 ## Тестовый стенд
 
-**https://testdesign.domeohome.ru/calc/** — опросник, открыт, без авторизации.
+**https://testdesign.domeohome.ru/calc/** — опросник в комплектацию, открыт, без авторизации.
+**https://testdesign.domeohome.ru/calc/lead/** — опросник расчётчику, там же.
 Живёт на ВМ `domeo-testdesign` рядом с backend, подробности и откат — в
 [deploy/README.md](deploy/README.md).
 

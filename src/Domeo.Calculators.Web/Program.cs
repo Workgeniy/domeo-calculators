@@ -39,20 +39,32 @@ app.UseStaticFiles();
 
 // Отчёт — это сама страница опросника, снятая в PDF headless-браузером.
 // Ответы приходят как есть: их состав задаёт wwwroot/form.json, а не сервер.
-app.MapPost("/api/report/pdf", async (JsonElement answers, PagePdfRenderer renderer, CancellationToken token) =>
+app.MapPost("/api/report/pdf", async (JsonElement request, PagePdfRenderer renderer, CancellationToken token) =>
 {
-    if (answers.ValueKind != JsonValueKind.Object)
+    if (request.ValueKind != JsonValueKind.Object)
         return Results.BadRequest(new { ok = false, reason = "Ожидался объект с ответами." });
 
-    string state = answers.GetRawText();
+    // Новый формат — { page, answers }. Старый — просто объект ответов,
+    // поэтому он продолжает работать и означает корневой бланк.
+    bool wrapped = request.TryGetProperty("answers", out JsonElement answers);
+    JsonElement payload = wrapped ? answers : request;
+
+    string page = string.Empty;
+    if (wrapped && request.TryGetProperty("page", out JsonElement pageValue) && pageValue.ValueKind == JsonValueKind.String)
+        page = pageValue.GetString() ?? string.Empty;
+
+    if (!Pages.TryGetValue(page, out string? fileName))
+        return Results.BadRequest(new { ok = false, reason = $"Неизвестный бланк: {page}" });
+
+    string state = payload.GetRawText();
 
     // Состояние едет в адресе, поэтому ограничиваем размер.
     const int limit = 64 * 1024;
     if (state.Length > limit)
         return Results.BadRequest(new { ok = false, reason = "Слишком много данных в опроснике." });
 
-    byte[] file = await renderer.RenderAsync(state, token);
-    string name = $"peredacha-v-komplektaciyu-{DateTimeOffset.Now:yyyy-MM-dd-HHmm}.pdf";
+    byte[] file = await renderer.RenderAsync(state, page, token);
+    string name = $"{fileName}-{DateTimeOffset.Now:yyyy-MM-dd-HHmm}.pdf";
     return Results.File(file, "application/pdf", name);
 });
 
@@ -98,3 +110,18 @@ app.Run();
 /// <param name="Profile">Профиль расчёта; пусто — модель Domeo.</param>
 /// <param name="Rooms">Помещения проекта.</param>
 internal sealed record SpecRequest(string? Profile, List<SpecRoomInput>? Rooms);
+
+/// <summary>
+/// Бланки, которые разрешено печатать, и имена файлов для них.
+/// Список закрытый: путь приходит от клиента и уходит в адрес для браузера.
+/// </summary>
+internal static class Pages
+{
+    private static readonly Dictionary<string, string> Known = new(StringComparer.Ordinal)
+    {
+        [""] = "peredacha-v-komplektaciyu",
+        ["lead"] = "peredacha-lida-raschetchiku",
+    };
+
+    public static bool TryGetValue(string page, out string? fileName) => Known.TryGetValue(page, out fileName);
+}

@@ -140,6 +140,37 @@
 
   .other-note { margin-top: 6px; }
 
+
+  /* ---------- повторяющиеся позиции ---------- */
+  .repeat { display: flex; flex-direction: column; gap: 10px; }
+
+  .repeat-item {
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--line-strong);
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+
+  .repeat-head { display: flex; align-items: baseline; gap: 12px; }
+
+  .repeat-title {
+    font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--ink-2);
+  }
+
+  .link {
+    border: none; background: none; padding: 0; cursor: pointer;
+    font-family: inherit; font-size: 13px; color: var(--focus);
+    text-decoration: underline; text-underline-offset: 2px;
+  }
+
+  .link:hover { color: var(--ink); }
+  .link:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+  .link.add { align-self: flex-start; font-weight: 600; text-decoration: none; }
+  .link.add:hover { text-decoration: underline; }
+
+  .section > h2 .hint { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--ink-3); }
+
   /* ---------- низ ---------- */
   .actions { padding-top: 26px; margin-top: 22px; border-top: 1px solid var(--line); display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 
@@ -165,8 +196,11 @@
     .wrap { width: 820px; max-width: none; padding: 0; zoom: 0.84; }
     .sheet { border: none; padding: 0; }
 
-    .actions { display: none !important; }
-    .section, .field { break-inside: avoid; page-break-inside: avoid; }
+    .actions, .link { display: none !important; }
+    .repeat-item { break-inside: avoid; page-break-inside: avoid; }
+    /* Раздел целиком не удерживаем — на длинном бланке это оставляло
+       по половине пустого листа. Не рвём только поля и позиции. */
+    .field { break-inside: avoid; page-break-inside: avoid; }
     .section > h2 { break-after: avoid; page-break-after: avoid; }
     textarea { min-height: 0; }
   }

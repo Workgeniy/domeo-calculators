@@ -23,13 +23,18 @@ public sealed class PagePdfRenderer(IConfiguration configuration, ILogger<PagePd
         @"C:\Program Files\Chromium\Application\chrome.exe",
     ];
 
-    public async Task<byte[]> RenderAsync(string stateJson, CancellationToken cancellationToken)
+    /// <param name="pagePath">Путь страницы внутри сайта: пусто — корневой бланк, иначе «lead».</param>
+    public async Task<byte[]> RenderAsync(string stateJson, string pagePath, CancellationToken cancellationToken)
     {
         ArgumentException.ThrowIfNullOrEmpty(stateJson);
 
         string browser = ResolveBrowser();
         string token = Convert.ToBase64String(Encoding.UTF8.GetBytes(stateJson));
-        string url = $"{SelfUrl()}/?print={Uri.EscapeDataString(token)}";
+
+        // Путь приходит снаружи, поэтому берём только имя из белого списка —
+        // иначе браузер можно было бы отправить на произвольный адрес.
+        string page = string.IsNullOrEmpty(pagePath) ? string.Empty : pagePath.Trim('/') + "/";
+        string url = $"{SelfUrl()}/{page}?print={Uri.EscapeDataString(token)}";
 
         string workDir = Path.Combine(Path.GetTempPath(), "calc-pdf-" + Guid.NewGuid().ToString("N"));
         Directory.CreateDirectory(workDir);
