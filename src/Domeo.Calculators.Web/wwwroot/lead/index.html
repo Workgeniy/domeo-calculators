@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Передача лида от продавца расчётчику</title>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<div class="wrap">
+  <div class="sheet">
+    <header class="masthead">
+      <h1 id="title">Передача лида от продавца расчётчику</h1>
+      <p class="lede" id="lede"></p>
+    </header>
+
+    <div id="form"></div>
+
+    <div class="actions">
+      <button type="button" class="btn" id="btn-pdf">Скачать PDF</button>
+      <p class="foot" id="foot"></p>
+    </div>
+  </div>
+</div>
+
+<script src="../app.js" data-form="form.json" data-api="../api/report/pdf" data-page="lead"></script>
+</body>
+</html>

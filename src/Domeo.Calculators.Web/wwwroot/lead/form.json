@@ -1,0 +1,224 @@
+{
+  "title": "Передача лида от продавца расчётчику",
+  "lede": "Опросник заполняет эксперт по интерьеру при передаче лида в расчёт. Готовый лист скачивается в PDF.",
+  "source": "Опросник «передача_лида_от продавца расчетчику_ТЗ.docx», 17.09.2026",
+  "pdfName": "peredacha-lida-raschetchiku",
+  "sections": [
+    {
+      "id": "lead",
+      "title": "Заявка",
+      "fields": [
+        { "id": "expert", "label": "Эксперт по интерьеру", "type": "text" },
+        { "id": "designer", "label": "Дизайнер", "type": "text" },
+        { "id": "client", "label": "ФИО заказчика", "type": "text" },
+        { "id": "leadNumber", "label": "Номер лида «продажа интерьеров»", "type": "text", "short": true }
+      ]
+    },
+    {
+      "id": "general",
+      "title": "Общая информация",
+      "fields": [
+        {
+          "id": "objectType", "label": "Тип объекта", "type": "choice",
+          "options": ["Квартира", "Дом/коттедж", "Коммерция"]
+        },
+        { "id": "area", "label": "Площадь, м²", "type": "text", "short": true },
+        { "id": "ceiling", "label": "Высота потолков, м", "hint": "чистовой размер", "type": "text", "short": true },
+        {
+          "id": "condition", "label": "Состояние объекта", "type": "choice",
+          "options": ["Новостройка (бетон)", "White box", "Вторичка"]
+        }
+      ]
+    },
+    {
+      "id": "stage",
+      "title": "Стадия реализации проекта",
+      "hint": "этап работ на объекте",
+      "fields": [
+        { "id": "worksStarted", "label": "Вышли работы", "type": "choice", "options": ["Да", "Нет"] },
+        { "id": "firstDelivery", "label": "Ориентировочная дата первой поставки", "type": "text", "short": true },
+        { "id": "foremanAssigned", "label": "Назначен ли прораб", "type": "choice", "options": ["Да", "Нет"] },
+        {
+          "id": "foremanName", "label": "ФИО прораба", "type": "text",
+          "showIf": { "field": "foremanAssigned", "equals": "Да" }
+        },
+        {
+          "id": "firstNeeds", "label": "Что нужно в первую очередь", "type": "textarea",
+          "hint": "информация от прораба, обязательно к расчёту"
+        }
+      ]
+    },
+    {
+      "id": "radiators",
+      "title": "Радиаторы и конвекторы",
+      "fields": [
+        { "id": "radiatorChoice", "label": "Выбор", "type": "choice", "options": ["Меняем", "Оставляем"] },
+        {
+          "id": "radiatorType", "label": "Тип", "hint": "если заменяем", "type": "choice",
+          "options": ["Биметалл", "Трубчатый"],
+          "showIf": { "field": "radiatorChoice", "equals": "Меняем" }
+        },
+        { "id": "radiatorBrand", "label": "Бренд", "type": "text", "showIf": { "field": "radiatorChoice", "equals": "Меняем" } },
+        { "id": "radiatorCollection", "label": "Коллекция", "type": "text", "showIf": { "field": "radiatorChoice", "equals": "Меняем" } },
+        { "id": "radiatorColor", "label": "Цвет", "type": "text", "showIf": { "field": "radiatorChoice", "equals": "Меняем" } },
+        { "id": "radiatorSections", "label": "Количество секций, шт.", "type": "text", "short": true, "showIf": { "field": "radiatorChoice", "equals": "Меняем" } },
+        { "id": "radiatorNotes", "label": "Примечания", "type": "textarea" }
+      ]
+    },
+    {
+      "id": "door",
+      "title": "Входная дверь",
+      "fields": [
+        {
+          "id": "doorAction", "label": "Действие", "type": "choice",
+          "options": ["Под замену", "Не меняем"],
+          "notes": { "Под замену": "Бренд, коллекция" }
+        },
+        { "id": "doorPanel", "label": "Нужна ли внутренняя панель", "type": "choice", "options": ["Да", "Нет"] },
+        {
+          "id": "doorPanelBrand", "label": "Бренд и коллекция панели", "type": "text",
+          "showIf": { "field": "doorPanel", "equals": "Да" }
+        },
+        { "id": "doorColor", "label": "Цвет", "type": "text" },
+        { "id": "doorSize", "label": "Размеры (В×Ш)", "type": "text", "short": true },
+        { "id": "doorNotes", "label": "Примечания", "type": "textarea" }
+      ]
+    },
+    {
+      "id": "walls",
+      "title": "Отделочные материалы — настенные покрытия",
+      "fields": [
+        {
+          "id": "walls", "label": "Вариант", "hint": "можно несколько", "type": "multi",
+          "options": ["Покраска", "Обои под покраску", "Обои", "Панели"],
+          "other": true
+        },
+        { "id": "wallsPaint", "label": "Покраска", "type": "text", "placeholder": "Бренд / коллекция", "showIf": { "field": "walls", "has": "Покраска" } },
+        { "id": "wallsPaintNotes", "label": "Примечания по покраске", "type": "textarea", "showIf": { "field": "walls", "has": "Покраска" } },
+        { "id": "wallsPaintable", "label": "Обои под покраску", "type": "text", "placeholder": "Бренд / коллекция", "showIf": { "field": "walls", "has": "Обои под покраску" } },
+        { "id": "wallsPaintableNotes", "label": "Примечания по обоям под покраску", "type": "textarea", "showIf": { "field": "walls", "has": "Обои под покраску" } },
+        { "id": "wallsPaper", "label": "Обои", "type": "text", "placeholder": "Бренд / коллекция", "showIf": { "field": "walls", "has": "Обои" } },
+        { "id": "wallsPaperNotes", "label": "Примечания по обоям", "type": "textarea", "showIf": { "field": "walls", "has": "Обои" } },
+        { "id": "wallsPanels", "label": "Панели", "type": "text", "placeholder": "Бренд / коллекция", "showIf": { "field": "walls", "has": "Панели" } },
+        { "id": "wallsPanelsNotes", "label": "Примечания по панелям", "type": "textarea", "showIf": { "field": "walls", "has": "Панели" } },
+        { "id": "wallsOtherBrand", "label": "Другой вариант", "type": "text", "placeholder": "Бренд / коллекция", "showIf": { "field": "walls", "has": "другой вариант" } },
+        { "id": "wallsOtherNotes", "label": "Примечания", "type": "textarea", "showIf": { "field": "walls", "has": "другой вариант" } }
+      ]
+    },
+    {
+      "id": "floors",
+      "title": "Отделочные материалы — напольные покрытия",
+      "fields": [
+        {
+          "id": "floors", "label": "Вариант", "hint": "можно несколько", "type": "multi",
+          "options": ["Кварцвинил", "Ламинат", "Инженерная доска", "Паркет"],
+          "other": true
+        },
+        { "id": "floorsBrand", "label": "Бренд / коллекция", "type": "text" },
+        { "id": "floorsColor", "label": "Цвет", "type": "text" },
+        { "id": "floorsNotes", "label": "Примечания", "type": "textarea" }
+      ]
+    },
+    {
+      "id": "tiles",
+      "title": "Керамогранит",
+      "hint": "добавьте нужное количество позиций",
+      "fields": [
+        {
+          "id": "tiles", "type": "repeat", "itemLabel": "Тип", "addLabel": "Добавить позицию",
+          "fields": [
+            { "id": "name", "label": "Наименование / тип", "type": "text" },
+            { "id": "brand", "label": "Бренд / коллекция", "type": "text" },
+            { "id": "size", "label": "Размер, мм", "type": "text", "short": true },
+            { "id": "notes", "label": "Примечания", "type": "textarea" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "plumbing",
+      "title": "Сантехника",
+      "fields": [
+        { "id": "plumbingMount", "label": "Тип установки", "type": "choice", "options": ["Встраиваемая", "Накладная"] },
+        { "id": "plumbingBrand", "label": "Бренд", "type": "text" },
+        { "id": "plumbingCollection", "label": "Коллекция", "type": "text" },
+        { "id": "plumbingColor", "label": "Цвет", "type": "text" },
+        { "id": "plumbingNotes", "label": "Примечания", "type": "textarea" }
+      ]
+    },
+    {
+      "id": "electrics",
+      "title": "Электрофурнитура",
+      "fields": [
+        { "id": "electricsBrand", "label": "Бренд", "type": "text" },
+        { "id": "electricsCollection", "label": "Коллекция", "type": "text" },
+        { "id": "electricsColor", "label": "Цвет", "type": "text" },
+        { "id": "electricsNotes", "label": "Примечания", "type": "textarea" }
+      ]
+    },
+    {
+      "id": "freeFurniture",
+      "title": "Отдельно стоящая мебель",
+      "fields": [
+        { "id": "freeFurnitureType", "label": "Вариант", "type": "choice", "options": ["Готовая", "Под заказ"] },
+        { "id": "freeFurnitureBrand", "label": "Бренд", "type": "text" },
+        { "id": "freeFurnitureNotes", "label": "Примечания", "type": "textarea" }
+      ]
+    },
+    {
+      "id": "cabinets",
+      "title": "Корпусная мебель",
+      "fields": [
+        {
+          "id": "cabinetsType", "label": "Тип", "type": "choice",
+          "options": ["Заказная", "Модульная"],
+          "notes": { "Заказная": "Исполнитель / бренд", "Модульная": "Бренд / коллекция" }
+        },
+        { "id": "cabinetsFront", "label": "Материал фасадов", "type": "text" },
+        { "id": "cabinetsBody", "label": "Материал корпуса", "type": "text" },
+        { "id": "cabinetsBack", "label": "Задняя стенка", "type": "text" },
+        { "id": "cabinetsHinges", "label": "Петли / фурнитура", "type": "text" },
+        {
+          "id": "cabinetsHandles", "label": "Ручки", "type": "choice",
+          "options": ["Да", "Нет"],
+          "notes": { "Да": "Какие именно" }
+        },
+        { "id": "cabinetsLight", "label": "Подсветка", "type": "text" },
+        { "id": "cabinetsNotes", "label": "Примечания", "type": "textarea" }
+      ]
+    },
+    {
+      "id": "lighting",
+      "title": "Освещение",
+      "fields": [
+        { "id": "lightingType", "label": "Тип", "hint": "можно несколько", "type": "multi", "options": ["Точечное", "Трековое"] },
+        { "id": "lightingBrand", "label": "Бренд", "type": "text" },
+        { "id": "lightingColor", "label": "Цвет", "type": "text" },
+        { "id": "lightingNotes", "label": "Примечания", "type": "textarea" }
+      ]
+    },
+    {
+      "id": "decorLight",
+      "title": "Декоративное освещение",
+      "fields": [
+        { "id": "decorLight", "label": "Наличие", "type": "choice", "options": ["Да", "Нет"] },
+        { "id": "decorLightBrand", "label": "Бренд", "type": "text", "showIf": { "field": "decorLight", "equals": "Да" } },
+        { "id": "decorLightColor", "label": "Цвет", "type": "text", "showIf": { "field": "decorLight", "equals": "Да" } },
+        { "id": "decorLightNotes", "label": "Примечания", "type": "textarea", "showIf": { "field": "decorLight", "equals": "Да" } }
+      ]
+    },
+    {
+      "id": "extra",
+      "title": "Материалы и примечания",
+      "hint": "общий блок",
+      "fields": [
+        {
+          "id": "references", "label": "Материалы по проекту",
+          "hint": "референсы, ссылки, файл проекта, выбранные позиции", "type": "textarea"
+        },
+        { "id": "notes", "label": "Примечания", "type": "textarea" },
+        { "id": "showroomPhotos", "label": "Фото из шоурума", "type": "textarea" }
+      ]
+    }
+  ]
+}

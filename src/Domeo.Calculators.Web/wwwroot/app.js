@@ -1,39 +1,64 @@
+// Движок опросника. Одна страница — одно описание в JSON; сам файл общий
+// для всех бланков, поэтому пути и имя страницы приходят из data-атрибутов
+// тега <script>, а не зашиты здесь.
+const config = (document.currentScript || {}).dataset || {};
+const FORM_URL = config.form || "form.json";
+const API_URL = config.api || "api/report/pdf";
+const PAGE_KEY = config.page || "";
+
 let schema = null;
 const state = {};
 
-// ---------- сборка формы из описания ----------
-function fieldNode(field) {
+// ---------- условный показ ----------
+function visible(field) {
+  const rule = field.showIf;
+  if (!rule) return true;
+
+  const value = state[rule.field];
+  if (rule.has) return Array.isArray(value) && value.indexOf(rule.has) !== -1;
+  return value === rule.equals;
+}
+
+// ---------- простые поля ----------
+function textNode(field, id, value, onInput) {
   const wrap = document.createElement("div");
   wrap.className = "field";
 
-  const hint = field.hint ? " <span class='hint'>— " + field.hint + "</span>" : "";
+  const label = document.createElement("label");
+  label.setAttribute("for", id);
+  label.innerHTML = field.label + hintHtml(field);
+  wrap.appendChild(label);
 
-  if (field.type === "text" || field.type === "textarea") {
-    const id = "f-" + field.id;
-    const label = document.createElement("label");
-    label.setAttribute("for", id);
-    label.innerHTML = field.label + hint;
-    wrap.appendChild(label);
-
-    const input = document.createElement(field.type === "textarea" ? "textarea" : "input");
-    if (field.type === "text") {
-      input.type = "text";
-      if (field.short) input.className = "short";
-    }
-    input.id = id;
-    input.value = state[field.id] || "";
-    input.addEventListener("input", function () {
-      state[field.id] = input.value;
-      if (field.type === "textarea") grow(input);
-    });
-    wrap.appendChild(input);
-    if (field.type === "textarea") requestAnimationFrame(function () { grow(input); });
-    return wrap;
+  const input = document.createElement(field.type === "textarea" ? "textarea" : "input");
+  if (field.type !== "textarea") {
+    input.type = "text";
+    if (field.short) input.className = "short";
   }
+  input.id = id;
+  if (field.placeholder) input.placeholder = field.placeholder;
+  input.value = value || "";
+  input.addEventListener("input", function () {
+    onInput(input.value);
+    if (field.type === "textarea") grow(input);
+  });
+
+  wrap.appendChild(input);
+  if (field.type === "textarea") requestAnimationFrame(function () { grow(input); });
+  return wrap;
+}
+
+function hintHtml(field) {
+  return field.hint ? " <span class='hint'>— " + field.hint + "</span>" : "";
+}
+
+// ---------- варианты ----------
+function optionsNode(field) {
+  const wrap = document.createElement("div");
+  wrap.className = "field";
 
   const legend = document.createElement("span");
   legend.className = "glabel";
-  legend.innerHTML = field.label + hint;
+  legend.innerHTML = field.label + hintHtml(field);
   wrap.appendChild(legend);
 
   const options = document.createElement("div");
@@ -66,18 +91,29 @@ function fieldNode(field) {
 
   wrap.appendChild(options);
 
-  // «Другой вариант» без поля для текста бесполезен — открываем строку.
-  if (field.other && isPicked(field, "другой вариант")) {
+  // Варианты вида «Под замену (бренд, коллекция)» — уточнение живёт
+  // отдельной строкой и появляется только у выбранного варианта.
+  for (const option of list) {
+    const placeholder = noteFor(field, option);
+    if (!placeholder || !isPicked(field, option)) continue;
+
+    const key = field.id + "Note:" + option;
     const note = document.createElement("input");
     note.type = "text";
     note.className = "other-note";
-    note.placeholder = "Что именно";
-    note.value = state[field.id + "Other"] || "";
-    note.addEventListener("input", function () { state[field.id + "Other"] = note.value; });
+    note.placeholder = placeholder;
+    note.value = state[key] || "";
+    note.addEventListener("input", function () { state[key] = note.value; });
     wrap.appendChild(note);
   }
 
   return wrap;
+}
+
+function noteFor(field, option) {
+  if (field.notes && field.notes[option]) return field.notes[option];
+  if (field.other && option === "другой вариант") return "Что именно";
+  return null;
 }
 
 function isPicked(field, option) {
@@ -99,6 +135,72 @@ function pick(field, option) {
   state[field.id] = current;
 }
 
+// ---------- повторяющийся блок ----------
+function repeatNode(field) {
+  const wrap = document.createElement("div");
+  wrap.className = "repeat";
+
+  const items = Array.isArray(state[field.id]) ? state[field.id] : [{}];
+  state[field.id] = items;
+
+  items.forEach(function (item, index) {
+    const block = document.createElement("div");
+    block.className = "repeat-item";
+
+    const head = document.createElement("div");
+    head.className = "repeat-head";
+
+    const title = document.createElement("span");
+    title.className = "repeat-title";
+    title.textContent = (field.itemLabel || "Позиция") + " " + (index + 1);
+    head.appendChild(title);
+
+    if (items.length > 1) {
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "link";
+      remove.textContent = "Убрать";
+      remove.addEventListener("click", function () {
+        items.splice(index, 1);
+        render();
+      });
+      head.appendChild(remove);
+    }
+
+    block.appendChild(head);
+
+    const fields = document.createElement("div");
+    fields.className = "fields";
+    for (const sub of field.fields) {
+      const id = "f-" + field.id + "-" + index + "-" + sub.id;
+      fields.appendChild(textNode(sub, id, item[sub.id], function (value) { item[sub.id] = value; }));
+    }
+    block.appendChild(fields);
+
+    wrap.appendChild(block);
+  });
+
+  const add = document.createElement("button");
+  add.type = "button";
+  add.className = "link add";
+  add.textContent = "+ " + (field.addLabel || "Добавить");
+  add.addEventListener("click", function () {
+    items.push({});
+    render();
+  });
+  wrap.appendChild(add);
+
+  return wrap;
+}
+
+function fieldNode(field) {
+  if (field.type === "repeat") return repeatNode(field);
+  if (field.type === "text" || field.type === "textarea") {
+    return textNode(field, "f-" + field.id, state[field.id], function (value) { state[field.id] = value; });
+  }
+  return optionsNode(field);
+}
+
 function grow(textarea) {
   textarea.style.height = "auto";
   textarea.style.height = textarea.scrollHeight + 2 + "px";
@@ -110,16 +212,25 @@ function render() {
   host.innerHTML = "";
 
   for (const section of schema.sections) {
+    const shown = section.fields.filter(visible);
+    if (shown.length === 0) continue;
+
     const block = document.createElement("section");
     block.className = "section";
 
     const heading = document.createElement("h2");
     heading.textContent = section.title;
+    if (section.hint) {
+      const hint = document.createElement("span");
+      hint.className = "hint";
+      hint.textContent = " — " + section.hint;
+      heading.appendChild(hint);
+    }
     block.appendChild(heading);
 
     const fields = document.createElement("div");
     fields.className = "fields";
-    for (const field of section.fields) fields.appendChild(fieldNode(field));
+    for (const field of shown) fields.appendChild(fieldNode(field));
     block.appendChild(fields);
 
     host.appendChild(block);
@@ -152,10 +263,10 @@ async function downloadPdf() {
   button.textContent = "Готовлю файл…";
 
   try {
-    const res = await fetch("api/report/pdf", {
+    const res = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(state)
+      body: JSON.stringify({ page: PAGE_KEY, answers: state })
     });
     if (!res.ok) throw new Error("HTTP " + res.status);
 
@@ -164,7 +275,7 @@ async function downloadPdf() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = match ? match[1] : "peredacha-v-komplektaciyu.pdf";
+    a.download = match ? match[1] : "oprosnik.pdf";
     document.body.appendChild(a);
     a.click();
     a.remove();
@@ -181,7 +292,7 @@ async function downloadPdf() {
 
 async function boot() {
   try {
-    const res = await fetch("form.json");
+    const res = await fetch(FORM_URL);
     if (!res.ok) throw new Error("HTTP " + res.status);
     schema = await res.json();
   } catch (err) {
@@ -189,6 +300,8 @@ async function boot() {
     return;
   }
 
+  document.title = schema.title;
+  document.getElementById("title").textContent = schema.title;
   document.getElementById("lede").textContent = schema.lede;
   document.getElementById("foot").textContent = schema.source;
   document.getElementById("btn-pdf").addEventListener("click", downloadPdf);
