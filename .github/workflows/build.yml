@@ -1,0 +1,70 @@
+name: Build calc image
+
+# Полу-авто: на пуш в main собираем образ опросников и публикуем в реестр Дизайна (Selectel),
+# печатаем @sha256. Выкат — по ПИНУ digest в манифесте calc-сервиса (ревью-гейт): публичный
+# инструмент без входа не должен уезжать в прод на каждый пуш. Argo авто-раскатку для calc НЕ включаем.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      # Пусто → публикация пропускается (образ не уйдёт в реестр), job не падает.
+      # Логин/токен реестра — секреты репо (из Infisical контура, даёт куратор; те же, что у design).
+      DESIGN_REGISTRY_PUSH_TOKEN: ${{ secrets.DESIGN_REGISTRY_PUSH_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # Образ тяжёлый (внутри Chromium ~1.3 ГБ) — подчистим диск раннера на всякий случай.
+      - name: Освободить диск
+        run: |
+          sudo rm -rf /usr/share/dotnet /opt/ghc /usr/local/.ghcup /usr/local/lib/android /opt/hostedtoolcache/CodeQL || true
+          docker image prune -af || true
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Вход в реестр Дизайна (cr.selcloud.ru)
+        if: ${{ env.DESIGN_REGISTRY_PUSH_TOKEN != '' }}
+        uses: docker/login-action@v3
+        with:
+          registry: cr.selcloud.ru
+          username: ${{ secrets.DESIGN_REGISTRY_USERNAME }}
+          password: ${{ secrets.DESIGN_REGISTRY_PUSH_TOKEN }}
+
+      - name: Сборка и публикация
+        id: build
+        if: ${{ env.DESIGN_REGISTRY_PUSH_TOKEN != '' }}
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: linux/amd64
+          push: true
+          provenance: false
+          tags: cr.selcloud.ru/domeo-design/calc:sha-${{ github.sha }}
+
+      - name: Digest для пина
+        if: ${{ env.DESIGN_REGISTRY_PUSH_TOKEN != '' }}
+        run: |
+          set -euo pipefail
+          REF="cr.selcloud.ru/domeo-design/calc@${{ steps.build.outputs.digest }}"
+          echo "::notice::Pin для манифеста calc: $REF"
+          {
+            echo "## calc образ опубликован"
+            echo "- Коммит: \`${{ github.sha }}\`"
+            echo "- Выкат — по готовности: вписать \`image:\` в манифест calc-сервиса (ревью-гейт):"
+            echo '```'
+            echo "$REF"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Токен реестра не задан
+        if: ${{ env.DESIGN_REGISTRY_PUSH_TOKEN == '' }}
+        run: echo "::notice::DESIGN_REGISTRY_PUSH_TOKEN не задан — образ не публикуется. Заведите секреты реестра (DESIGN_REGISTRY_USERNAME/PUSH_TOKEN)."
